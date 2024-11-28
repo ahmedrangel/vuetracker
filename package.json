@@ -1,0 +1,45 @@
+{
+  "name": "vue-tracker",
+  "version": "0.0.1",
+  "description": "Vue Tracker",
+  "author": "Ahmed Rangel",
+  "type": "module",
+  "homepage": "https://github.com/ahmedrangel/vue-tracker",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ahmedrangel/vue-tracker"
+  },
+  "bugs": {
+    "url": "https://github.com/ahmedrangel/vue-tracker/issues"
+  },
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev --port=5173 --host",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "pnpm lint:eslint --fix && pnpm lint:stylelint --fix",
+    "lint:eslint": "eslint --config .config/eslint.mjs",
+    "lint:stylelint": "stylelint \"**/*.{css,scss,sass}\" --config .config/stylelint.json",
+    "lint:eslint:inspect": "npx @eslint/config-inspector --config .config/eslint.mjs",
+    "test:types": "vue-tsc --noEmit"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^0.7.2",
+    "@nuxt/icon": "^1.8.2",
+    "@nuxthub/core": "^0.8.7",
+    "@nuxtjs/color-mode": "^3.5.2",
+    "@nuxtjs/sitemap": "^7.0.0",
+    "eslint": "^9.14.0",
+    "nuxt": "^3.14.1592",
+    "sass": "^1.81.0",
+    "stylelint": "^16.10.0",
+    "stylelint-config-standard-scss": "^13.1.0",
+    "typescript": "^5.7.2",
+    "vue-tsc": "^2.1.10"
+  },
+  "packageManager": "pnpm@9.14.2",
+  "dependencies": {
+    "@nuxt/ui": "^2.19.2"
+  }
+}
