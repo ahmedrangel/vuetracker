@@ -1,8 +1,8 @@
 export default defineCachedEventHandler(async (event) => {
   const { url } = getQuery(event) as { url: string };
   const config = useRuntimeConfig();
-  console.log(config.analyzer.proxy);
-  const result = await $fetch<VueTrackerResponse>(config.analyzer.proxy, {
+  console.log(config.analyzer.proxyURL);
+  const result = await $fetch<VueTrackerResponse>(config.analyzer.proxyURL, {
     query: { url }
   }).catch((e) => {
     console.log(e);
