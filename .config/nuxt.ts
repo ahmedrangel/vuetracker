@@ -45,7 +45,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     analyzer: {
-      proxy: ""
+      proxy: process.env.ANALYZER_PROXY
     }
   },
 
