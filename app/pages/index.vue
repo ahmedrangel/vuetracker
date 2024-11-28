@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const input = ref("");
 const result = ref<VueTrackerResponse>();
-const siteInfo = ref<{ title?: string, value?: string, img?: string }[]>([]);
+const siteInfo = ref<{ title?: string, value?: string, img?: string }[]>();
 
 watch(input, () => {
   if (input.value.startsWith("https://")) {
@@ -13,7 +13,7 @@ const lookup = async () => {
   if (input.value) {
     result.value = await $fetch<VueTrackerResponse>("/api/lookup", { query: { url: `https://${input.value}` } });
     if (result.value) {
-      siteInfo.value.push({
+      siteInfo.value = [{
         title: "Vue Version",
         value: result.value?.vueVersion,
         img: "/icons/vue.svg"
@@ -35,7 +35,7 @@ const lookup = async () => {
       {
         title: "Deployment",
         value: result.value.isStatic ? "Static" : "Server"
-      });
+      }];
     }
   }
 };
@@ -64,7 +64,7 @@ const lookup = async () => {
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
               <template v-for="(info, i) of siteInfo" :key="i">
-                <div class="flex flex-col w-full bg-gray-200 border-2 border-gray-300 rounded-xl overflow-hidden">
+                <div v-if="info.value" class="flex flex-col w-full bg-gray-200 border-2 border-gray-300 rounded-xl overflow-hidden">
                   <h6 class="self-start bg-gray-300 px-3 py-1 rounded-br-xl rounded-bl-none rounded-tr-none text-xs tracking-tight uppercase leading-sm font-bold">{{ info.title }}</h6>
                   <div class="flex justify-center items-center p-2 gap-1">
                     <img v-if="info.img" class="w-6 h-6" :src="info.img">
