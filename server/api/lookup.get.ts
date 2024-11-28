@@ -1,11 +1,15 @@
+import { parseURL } from "ufo";
+
+const cacheGroup = "lookup";
+const cacheName = "site";
+
 export default defineCachedEventHandler(async (event) => {
   const { url } = getQuery(event) as { url: string };
   const config = useRuntimeConfig();
-  console.log(config.analyzer.proxyURL);
   const result = await $fetch<VueTrackerResponse>(config.analyzer.proxyURL, {
     query: { url }
   }).catch((e) => {
-    console.log(e);
+    console.info(e);
     return null;
   });
   if (!result) {
@@ -17,5 +21,18 @@ export default defineCachedEventHandler(async (event) => {
   return result;
 }, {
   maxAge: 12 * 60 * 60,
-  swr: true
+  swr: true,
+  group: cacheGroup,
+  name: cacheName,
+  getKey: (event) => {
+    const { url } = getQuery(event) as { url: string };
+    const key = parseURL(url).host;
+    if (!key) {
+      throw createError({
+        statusCode: ErrorCode.BAD_REQUEST,
+        statusMessage: "Invalid URL"
+      });
+    }
+    return key.replace("www.", "");
+  }
 });
