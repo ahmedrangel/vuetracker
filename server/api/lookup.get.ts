@@ -3,6 +3,6 @@ export default defineCachedEventHandler(async (event) => {
   const config = useRuntimeConfig();
   const result = await $fetch<VueTrackerResponse>(config.analyzer.proxy, {
     query: { url }
-  });
+  }).catch(() => null);
   return result;
 });
