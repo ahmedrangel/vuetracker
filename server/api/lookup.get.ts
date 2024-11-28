@@ -1,9 +1,13 @@
 export default defineCachedEventHandler(async (event) => {
   const { url } = getQuery(event) as { url: string };
   const config = useRuntimeConfig();
+  console.log(config.analyzer.proxy);
   const result = await $fetch<VueTrackerResponse>(config.analyzer.proxy, {
     query: { url }
-  }).catch(() => null);
+  }).catch((e) => {
+    console.log(e);
+    return null;
+  });
   if (!result) {
     throw createError({
       statusCode: ErrorCode.INTERNAL_SERVER_ERROR,
