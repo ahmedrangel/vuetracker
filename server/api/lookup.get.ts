@@ -4,5 +4,11 @@ export default defineCachedEventHandler(async (event) => {
   const result = await $fetch<VueTrackerResponse>(config.analyzer.proxy, {
     query: { url }
   }).catch(() => null);
+  if (!result) {
+    throw createError({
+      statusCode: ErrorCode.INTERNAL_SERVER_ERROR,
+      statusMessage: 'An error occurred whil analyzing, please try again later'
+    });
+  }
   return result;
 });
