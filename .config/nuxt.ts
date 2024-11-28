@@ -27,7 +27,8 @@ export default defineNuxtConfig({
     "@nuxt/eslint",
     "@nuxt/icon",
     "@nuxtjs/color-mode",
-    "@nuxtjs/sitemap"
+    "@nuxtjs/sitemap",
+    "@nuxthub/core"
   ],
 
   icon: {
@@ -108,5 +109,9 @@ export default defineNuxtConfig({
 
   tailwindcss: {
     configPath: ".config/tailwind"
+  },
+
+  hub: {
+    cache: true
   }
 });
