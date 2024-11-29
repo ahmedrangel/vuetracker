@@ -5,7 +5,7 @@ CREATE TABLE `icons` (
 	`sizes` text,
 	FOREIGN KEY (`site_slug`) REFERENCES `sites`(`slug`) ON UPDATE no action ON DELETE cascade
 );
---> statement-breakpoint
+
 CREATE TABLE `sites` (
 	`slug` text PRIMARY KEY NOT NULL,
 	`url` text NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE `sites` (
 	`created_at` integer NOT NULL,
 	`updated_at` integer NOT NULL
 );
---> statement-breakpoint
+
 CREATE TABLE `technologies` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`site_slug` text NOT NULL,

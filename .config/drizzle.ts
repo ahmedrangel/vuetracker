@@ -4,6 +4,6 @@ export default defineConfig({
   dialect: "sqlite",
   schema: "./server/database/schema.ts",
   out: "./server/database/migrations",
-  breakpoints: true,
+  breakpoints: false,
   casing: "snake_case"
 });
