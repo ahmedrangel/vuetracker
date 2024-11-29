@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1732871752337,
+      "tag": "0000_lowly_moondragon",
+      "breakpoints": true
+    }
+  ]
+}

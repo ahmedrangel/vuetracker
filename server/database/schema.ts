@@ -1,7 +1,7 @@
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 
 export const sites = sqliteTable("sites", {
-  id: integer().primaryKey({ autoIncrement: true }),
+  slug: text().primaryKey(),
   url: text().notNull(),
   hostname: text().notNull(),
   domain: text().notNull(),
@@ -19,18 +19,16 @@ export const sites = sqliteTable("sites", {
 
 export const icons = sqliteTable("icons", {
   id: integer().primaryKey({ autoIncrement: true }),
-  siteId: integer().notNull().references(() => sites.id),
+  siteSlug: text().notNull().references(() => sites.slug, { onDelete: "cascade" }),
   url: text().notNull(),
   sizes: text()
 });
 
 export const technologies = sqliteTable("technologies", {
   id: integer().primaryKey({ autoIncrement: true }),
-  siteId: integer().notNull().references(() => sites.id),
-  name: text().notNull(),
+  siteSlug: text().notNull().references(() => sites.slug, { onDelete: "cascade" }),
   slug: text().notNull(),
-  imgPath: text(),
-  url: text().notNull(),
+  name: text().notNull(),
   type: text().notNull(),
   version: text()
 });

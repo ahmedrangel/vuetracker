@@ -5,39 +5,54 @@ export {};
 declare global {
   type ErrorCode = typeof ErrorCode;
 
-  interface GeneralTechnolgyInfo {
-    imgPath?: string;
-    name: string;
+  interface VueTrackerTechnology {
     slug: string;
+    name: string;
+    type: "framework" | "module" | "plugin" | "ui";
+    version?: string | null;
   }
 
-  interface Framework extends GeneralTechnolgyInfo {
-    version: string;
+  interface VueTrackerSiteIcons {
+    url?: sring | null;
+    sizes?: string | null;
   }
 
   interface Meta {
-    description: string;
-    icons?: {
-      url: sring;
-      sizes: string;
-    }[];
+    description?: string;
+    icons?: VueTrackerSiteIcons[];
     isAdultContent: false;
-    language: string;
-    siteName: string;
-    title: string;
+    language?: string;
+    siteName?: string;
+    title?: string;
   }
 
-  interface VueTrackerResponse {
-    domain: string;
-    framework?: Framework;
-    frameworkModules?: GeneralTechnolgyInfo[];
-    hasSSR: boolean;
-    hostname: string;
-    isStatic: boolean;
-    meta?: Meta;
-    plugins?: GeneralTechnolgyInfo[];
-    ui?: GeneralTechnolgyInfo;
+  interface VueTrackerProxyResponse {
     url: string;
-    vueVersion?: string;
+    domain: string;
+    framework?: VueTrackerTechnology;
+    frameworkModules?: VueTrackerTechnology[];
+    hasSSR: number;
+    hostname: string;
+    meta: Meta;
+    isAdultContent: number;
+    isStatic: number;
+    meta?: Meta;
+    plugins?: VueTrackerTechnology[];
+    ui?: VueTrackerTechnology | null;
+    url: string;
+    vueVersion: string;
+  }
+
+  interface VueTrackerResponse extends VueTrackerProxyResponse, Omit<meta, framework, frameworkModules, plugins, ui> {
+    slug: string;
+    icons: VueTrackerSiteIcons[];
+    technologies: VueTrackerTechnology[];
+    updatedAt: number;
+    createdAt: number;
+  }
+
+  interface VueTrackerRawResponse extends VueTrackerResponse, Omit<icons, technologies> {
+    icons: string;
+    technologies: string;
   }
 }
