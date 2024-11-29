@@ -3,7 +3,7 @@ import { parseURL } from "ufo";
 export default defineEventHandler(async (event) => {
   const url = (getQuery(event)?.url as string).replace("://www.", "");
 
-  const regex = /^(https?:\/\/)?[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$/;
+  const regex = /^(https?:\/\/)?[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}(:\d+)?(\/[^\s]*)?$/;
   if (!regex.test(url)) {
     throw createError({
       statusCode: ErrorCode.BAD_REQUEST,
