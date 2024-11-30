@@ -101,7 +101,7 @@ const lookup = async () => {
         <div id="results">
           <TransitionGroup name="fade">
             <div v-if="result && !error && !loading" class="flex flex-col gap-5">
-              <div class="tracking-tight flex gap-3 items-center bg-gray-200 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 p-2 rounded-xl">
+              <div class="tracking-tight flex gap-3 items-center bg-gray-200 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 p-3 rounded-xl">
                 <div v-if="result.icons?.length">
                   <div class="min-w-14 max-w-14 min-h-14 max-h-14">
                     <img :src="result.icons[0]?.url" class="min-w-14 max-w-14 min-h-14 max-h-14">
