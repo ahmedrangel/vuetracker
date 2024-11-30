@@ -1,7 +1,9 @@
 import { parseURL } from "ufo";
 
-export default defineEventHandler(async (event) => {
-  const url = (getQuery(event)?.url as string).replace("://www.", "");
+const maxAge = 1 * 60 * 60 * 24 * 1000;
+
+export default defineCachedEventHandler(async (event) => {
+  const url = (getQuery(event)?.url as string)?.replace("://www.", "");
 
   const regex = /^(https?:\/\/)?[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}(:\d+)?(\/[^\s]*)?$/;
   if (!regex.test(url)) {
@@ -11,12 +13,16 @@ export default defineEventHandler(async (event) => {
     });
   }
 
+  const redirectedURL = (await $fetch.raw(url, {
+    retry: 0,
+    headers: { "User-Agent": "VueTracker/1.0 (Cloudflare Workers); https://vuetracker.pages.dev" }
+  }).catch(() => null))?.url;
   const DB = useDB();
-  const hostname = parseURL(url).host!;
-  const siteSlug = hostname.replaceAll(".", "-");
+  const hostname = parseURL(redirectedURL || url).host!;
+  const siteSlug = hostname?.replaceAll(".", "-");
   const now = Date.now();
   // 1 day
-  const expiration = now - 1 * 60 * 60 * 24 * 1000;
+  const expiration = now - maxAge;
 
   const site = await DB.select({
     slug: tables.sites.slug,
@@ -27,6 +33,7 @@ export default defineEventHandler(async (event) => {
     title: tables.sites.title,
     siteName: tables.sites.siteName,
     description: tables.sites.description,
+    ogImage: tables.sites.ogImage,
     isAdultContent: tables.sites.isAdultContent,
     hasSSR: tables.sites.hasSSR,
     isStatic: tables.sites.isStatic,
@@ -45,6 +52,7 @@ export default defineEventHandler(async (event) => {
   const parsedTechnologies = site.technologies ? JSON.parse(site.technologies) : [];
   site.icons = parsedIcons;
   site.technologies = parsedTechnologies;
+
   if (!site.slug) {
     console.info("Site not found in database");
     const [result] = await Promise.all<VueTrackerResponse>([
@@ -60,6 +68,7 @@ export default defineEventHandler(async (event) => {
       title: result.meta?.title,
       siteName: result.meta?.siteName,
       description: result.meta?.description,
+      ogImage: result.meta?.ogImage,
       isAdultContent: Number(result.meta?.isAdultContent),
       hasSSR: Number(result.hasSSR),
       isStatic: Number(result.isStatic),
@@ -100,6 +109,7 @@ export default defineEventHandler(async (event) => {
       title: result.meta?.title,
       siteName: result.meta?.siteName,
       description: result.meta?.description,
+      ogImage: result.meta?.ogImage,
       isAdultContent: Number(result.meta?.isAdultContent),
       hasSSR: Number(result.hasSSR),
       isStatic: Number(result.isStatic),
@@ -118,4 +128,16 @@ export default defineEventHandler(async (event) => {
 
   console.info("Site found in database and is not expired");
   return site;
+}, {
+  swr: true,
+  maxAge,
+  group: "api",
+  name: "lookup",
+  getKey: event => (getQuery(event)?.url as string)?.replace(/[-.]/g, "_"),
+  shouldInvalidateCache: async (event) => {
+    const cacheKey = (getQuery(event)?.url as string)?.replace(/[-.]/g, "_");
+    const body = await getCachedItemBody(`api:lookup:${cacheKey}.json`);
+    const invalidate = body && !body?.slug;
+    return shouldInvalidateCacheByConditionHandler(event, invalidate);
+  }
 });

@@ -33,7 +33,7 @@ const getTechnologyIcon = (type: VueTrackerTechnology["type"], slug?: string) =>
 
 const lookup = async () => {
   if (input.value) {
-    result.value = await $fetch<VueTrackerResponse>("/api/lookup", { method: "POST", query: { url: `https://${input.value}` } });
+    result.value = await $fetch<VueTrackerResponse>("/api/lookup", { retry: 0, query: { url: `https://${input.value}` } });
     computedSiteModules.value = result.value.technologies;
     computedSitePlugins.value = result.value.technologies;
     const framework = computed(() => result.value?.technologies.find(el => el.type === "framework"));

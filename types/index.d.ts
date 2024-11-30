@@ -1,9 +1,11 @@
+import type { CacheEntry as C } from "nitropack/runtime/types";
 import type { ErrorCode } from "~~/server/utils/errors";
 
 export {};
 
 declare global {
   type ErrorCode = typeof ErrorCode;
+  type CacheEntry<T> = C<T> | undefined;
 
   interface VueTrackerTechnology {
     slug: string;
@@ -18,16 +20,16 @@ declare global {
   }
 
   interface Meta {
-    description?: string;
+    description?: string | null;
     icons?: VueTrackerSiteIcons[];
-    isAdultContent: false;
+    isAdultContent: boolean;
     language?: string;
-    siteName?: string;
+    siteName?: string | null;
     title?: string;
+    ogImage?: string | null;
   }
 
   interface VueTrackerProxyResponse {
-    url: string;
     domain: string;
     framework?: VueTrackerTechnology;
     frameworkModules?: VueTrackerTechnology[];

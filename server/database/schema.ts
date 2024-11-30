@@ -9,6 +9,7 @@ export const sites = sqliteTable("sites", {
   title: text(),
   siteName: text(),
   description: text(),
+  ogImage: text(),
   isAdultContent: integer().notNull().default(0),
   hasSSR: integer().notNull().default(0),
   isStatic: integer().notNull().default(1),
