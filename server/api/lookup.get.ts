@@ -3,15 +3,18 @@ import { parseURL } from "ufo";
 const maxAge = 1 * 60 * 60 * 24 * 1000; // 1 day
 
 export default defineCachedEventHandler(async (event) => {
-  const url = (getQuery(event)?.url as string)?.replace("://www.", "");
+  const rawURL = (getQuery(event)?.url as string)?.replace("://www.", "");
 
   const regex = /^(https?:\/\/)?[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}(:\d+)?(\/[^\s]*)?$/;
-  if (!regex.test(url)) {
+  if (!regex.test(rawURL)) {
     throw createError({
       statusCode: ErrorCode.BAD_REQUEST,
       statusMessage: "Invalid URL"
     });
   }
+
+  const { protocol, host } = parseURL(rawURL);
+  const url = protocol + "//" + host;
 
   const redirectedURL = (await $fetch.raw(url, {
     retry: 0,
@@ -127,7 +130,7 @@ export default defineCachedEventHandler(async (event) => {
   return site;
 }, {
   swr: true,
-  maxAge,
+  maxAge: maxAge / 2, // Browser cache 12 h
   group: "api",
   name: "lookup",
   getKey: event => (getQuery(event)?.url as string)?.replace(/[-.]/g, "_"),
