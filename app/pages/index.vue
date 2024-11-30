@@ -76,9 +76,7 @@ const lookup = async () => {
           <UButtonGroup size="xl" orientation="horizontal" class="w-full">
             <UInput v-model="input" class="w-full" :ui="{ leading: { padding: { xl: 'ps-[4.2rem] py-4' } } }">
               <template #leading>
-                <span class="text-md text-gray-400">
-                  https://
-                </span>
+                <span class="text-md text-gray-400">https://</span>
               </template>
             </UInput>
             <UButton label="Lookup" class="md:px-10" type="submit" />
@@ -92,9 +90,9 @@ const lookup = async () => {
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
               <template v-for="(info, i) of siteInfo" :key="i">
-                <div v-if="info.value" class="flex flex-col w-full bg-gray-200 dark:bg-gray-700 border-2 border-gray-300 dark:border-gray-800 rounded-xl overflow-hidden">
-                  <h6 class="self-start bg-gray-300 dark:bg-gray-800 px-3 py-1 rounded-br-xl rounded-bl-none rounded-tr-none text-xs tracking-tight uppercase leading-sm font-bold">{{ info.title }}</h6>
-                  <div class="flex justify-center items-center p-2 gap-1">
+                <div v-if="info.value" class="flex flex-col w-full bg-gray-200 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 rounded-xl overflow-hidden">
+                  <h6 class="self-start bg-gray-300 dark:bg-gray-700 px-3 py-1 rounded-br-xl rounded-bl-none rounded-tr-none text-xs tracking-tight uppercase leading-sm font-bold">{{ info.title }}</h6>
+                  <div class="flex justify-center items-center px-2 py-3 gap-1">
                     <img v-if="info.img" class="w-6 h-6" :src="info.img">
                     <p class="text-md font-bold tracking-tight">{{ info.value }}</p>
                   </div>
@@ -108,7 +106,7 @@ const lookup = async () => {
               </div>
               <div class="flex gap-4">
                 <template v-for="(plugin, i) of computedSitePlugins" :key="i">
-                  <div class="bg-gray-200 dark:bg-gray-700 border-2 border-gray-300 dark:border-gray-800 rounded-xl overflow-hidden px-4 py-2">
+                  <div class="bg-gray-200 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 rounded-xl overflow-hidden px-4 py-2">
                     <p class="text-md font-bold tracking-tight">{{ plugin.name }}</p>
                   </div>
                 </template>
@@ -121,7 +119,7 @@ const lookup = async () => {
               </div>
               <div class="flex gap-4">
                 <template v-for="(module, i) of computedSiteModules" :key="i">
-                  <div class="bg-gray-200 dark:bg-gray-700 border-2 border-gray-300 dark:border-gray-800 rounded-xl overflow-hidden px-4 py-2">
+                  <div class="bg-gray-200 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 rounded-xl overflow-hidden px-4 py-2">
                     <p class="text-md font-bold tracking-tight">{{ module.name }}</p>
                   </div>
                 </template>
