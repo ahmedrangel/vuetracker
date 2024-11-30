@@ -6,7 +6,6 @@ export {};
 declare global {
   type ErrorCode = typeof ErrorCode;
   type CacheEntry<T> = C<T> | undefined;
-
   interface VueTrackerTechnology {
     slug: string;
     name: string;
