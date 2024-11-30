@@ -1,16 +1,16 @@
 {
-  "name": "vue-tracker",
+  "name": "vuetracker",
   "version": "0.0.1",
-  "description": "Vue Tracker",
+  "description": "VueTracker",
   "author": "Ahmed Rangel",
   "type": "module",
-  "homepage": "https://github.com/ahmedrangel/vue-tracker",
+  "homepage": "https://github.com/ahmedrangel/vuetracker",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ahmedrangel/vue-tracker"
+    "url": "https://github.com/ahmedrangel/vuetracker"
   },
   "bugs": {
-    "url": "https://github.com/ahmedrangel/vue-tracker/issues"
+    "url": "https://github.com/ahmedrangel/vuetracker/issues"
   },
   "scripts": {
     "build": "nuxt build",
