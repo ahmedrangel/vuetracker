@@ -111,8 +111,8 @@ const lookup = async () => {
                   <h5 v-if="result.title" class="text-sm"><b>Title:</b> {{ result.title }}</h5>
                   <h5 v-if="result.description" class="text-sm"><b>Description:</b> {{ result.description }}</h5>
                   <h5 class="text-sm">
-                    <b>URL: </b>
-                    <NuxtLink target="_blank" class="hover:underline" :to="result.url">{{ result.url }}</NuxtLink>
+                    <b>SITE: </b>
+                    <NuxtLink target="_blank" class="underline" :to="result.url">{{ result.url }}</NuxtLink>
                   </h5>
                 </div>
               </div>
