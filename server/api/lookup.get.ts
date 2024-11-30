@@ -54,7 +54,7 @@ export default defineCachedEventHandler(async (event) => {
 
   if (!site.slug) {
     console.info("Site not found in database");
-    const [result] = await Promise.all<VueTrackerResponse>([
+    const [result] = await Promise.all<VueTrackerProxyResponse>([
       fetchVueTrackerProxy(url),
       DB.delete(tables.sites).where(eq(tables.sites.hostname, hostname)).run()
     ]);
@@ -93,7 +93,7 @@ export default defineCachedEventHandler(async (event) => {
   // Site found in DB but outdated
   if (site.slug && site.updatedAt < now - maxAge) {
     console.info("Site outdated, updating");
-    const [result] = await Promise.all<VueTrackerResponse>([
+    const [result] = await Promise.all<VueTrackerProxyResponse>([
       fetchVueTrackerProxy(url),
       DB.delete(tables.technologies).where(eq(tables.technologies.siteSlug, site.slug)).run(),
       DB.delete(tables.icons).where(eq(tables.icons.siteSlug, site.slug)).run()
