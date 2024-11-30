@@ -85,7 +85,7 @@ const lookup = async () => {
 
 <template>
   <main>
-    <div class="py-5 sm:py-12 md:py-16 relative md:pb-24">
+    <div class="pt-5 sm:pt-8 md:pt-8 relative">
       <h1 class="text-4xl font-bold tracking-tight md:text-5xl text-balance mb-10"><span class="text-primary-600 dark:text-primary-400">Vue</span>Tracker</h1>
       <div class="2xl:w-1/2 xl:w-3/5 lg:w-3/4 flex flex-col mx-auto gap-5">
         <form @submit.prevent="lookup">
@@ -101,6 +101,21 @@ const lookup = async () => {
         <div id="results">
           <TransitionGroup name="fade">
             <div v-if="result && !error && !loading" class="flex flex-col gap-5">
+              <div class="tracking-tight flex gap-3 items-center bg-gray-200 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 p-2 rounded-xl">
+                <div v-if="result.icons?.length">
+                  <div class="min-w-14 max-w-14 min-h-14 max-h-14">
+                    <img :src="result.icons[0]?.url" class="min-w-14 max-w-14 min-h-14 max-h-14">
+                  </div>
+                </div>
+                <div class="text-left">
+                  <h5 v-if="result.title" class="text-sm"><b>Title:</b> {{ result.title }}</h5>
+                  <h5 v-if="result.description" class="text-sm"><b>Description:</b> {{ result.description }}</h5>
+                  <h5 class="text-sm">
+                    <b>URL: </b>
+                    <NuxtLink target="_blank" class="hover:underline" :to="result.url">{{ result.url }}</NuxtLink>
+                  </h5>
+                </div>
+              </div>
               <div class="flex items-center gap-2 text-primary-600 dark:text-primary-400 font-bold tracking-tight">
                 <Icon name="fa6-solid:circle-info" size="2rem" />
                 <p>INFO</p>
@@ -110,7 +125,7 @@ const lookup = async () => {
                   <div v-if="info.value" class="flex flex-col w-full bg-gray-200 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 rounded-xl overflow-hidden">
                     <h6 class="self-start bg-gray-300 dark:bg-gray-700 px-3 py-1 rounded-br-xl rounded-bl-none rounded-tr-none text-xs tracking-tight uppercase leading-sm font-bold">{{ info.title }}</h6>
                     <div class="flex justify-center items-center px-2 py-3 gap-1">
-                      <img v-if="info.img" class="w-6 h-6" :src="info.img">
+                      <img v-if="info.img" class="w-7 h-7" :src="info.img">
                       <p class="text-md font-bold tracking-tight">{{ info.value }}</p>
                     </div>
                   </div>
@@ -121,7 +136,7 @@ const lookup = async () => {
                   <Icon name="fa6-solid:plug" size="2rem" />
                   <p>PLUGINS</p>
                 </div>
-                <div class="flex gap-4">
+                <div class="flex flex-wrap items-start gap-2">
                   <template v-for="(plugin, i) of computedSitePlugins" :key="i">
                     <div class="bg-gray-200 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 rounded-xl overflow-hidden px-4 py-2">
                       <p class="text-md font-bold tracking-tight">{{ plugin.name }}</p>
@@ -134,7 +149,7 @@ const lookup = async () => {
                   <Icon name="fa6-solid:cubes" size="2rem" />
                   <p>NUXT MODULES</p>
                 </div>
-                <div class="flex gap-4">
+                <div class="flex flex-wrap items-start gap-2">
                   <template v-for="(module, i) of computedSiteModules" :key="i">
                     <div class="bg-gray-200 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 rounded-xl overflow-hidden px-4 py-2">
                       <p class="text-md font-bold tracking-tight">{{ module.name }}</p>
