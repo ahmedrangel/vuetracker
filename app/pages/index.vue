@@ -98,7 +98,7 @@ const lookup = async () => {
             <UButton label="Lookup" class="md:px-10" type="submit" :disabled="loading" />
           </UButtonGroup>
         </form>
-        <div>
+        <div id="results">
           <TransitionGroup name="fade">
             <div v-if="result && !error && !loading" class="flex flex-col gap-5">
               <div class="flex items-center gap-2 text-primary-600 dark:text-primary-400 font-bold tracking-tight">
