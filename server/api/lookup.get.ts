@@ -1,6 +1,6 @@
 import { parseURL } from "ufo";
 
-const maxAge = 1 * 60 * 60 * 24 * 1000;
+const maxAge = 1 * 60 * 60 * 24 * 1000; // 1 day
 
 export default defineCachedEventHandler(async (event) => {
   const url = (getQuery(event)?.url as string)?.replace("://www.", "");
@@ -17,12 +17,11 @@ export default defineCachedEventHandler(async (event) => {
     retry: 0,
     headers: { "User-Agent": "VueTracker/1.0 (Cloudflare Workers); https://vuetracker.pages.dev" }
   }).catch(() => null))?.url;
-  const DB = useDB();
+
   const hostname = parseURL(redirectedURL || url).host!;
   const siteSlug = hostname?.replaceAll(".", "-");
   const now = Date.now();
-  // 1 day
-  const expiration = now - maxAge;
+  const DB = useDB();
 
   const site = await DB.select({
     slug: tables.sites.slug,
@@ -87,13 +86,12 @@ export default defineCachedEventHandler(async (event) => {
     return {
       ...site,
       icons,
-      technologies,
-      status: { code: 200, message: "site saved successfully" }
+      technologies
     };
   }
 
   // Site found in DB but outdated
-  if (site.slug && site.updatedAt < expiration) {
+  if (site.slug && site.updatedAt < now - maxAge) {
     console.info("Site outdated, updating");
     const [result] = await Promise.all<VueTrackerResponse>([
       fetchVueTrackerProxy(url),
@@ -121,8 +119,7 @@ export default defineCachedEventHandler(async (event) => {
     return {
       ...updatedSite,
       icons,
-      technologies,
-      status: { code: 200, message: "site updated successfully" }
+      technologies
     };
   }
 
