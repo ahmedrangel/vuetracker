@@ -111,7 +111,7 @@ const lookup = async () => {
         <div id="results" class="relative">
           <TransitionGroup name="fadeel">
             <div v-if="result && !error && !loading" class="flex flex-col gap-5">
-              <div class="tracking-tight flex gap-3 items-center bg-gray-200 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 p-3 rounded-xl">
+              <div class="tracking-tight flex gap-3 items-center bg-gray-200 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 p-3 rounded-xl transition">
                 <div v-if="result.icons?.length">
                   <div class="min-w-14 max-w-14 min-h-14 max-h-14">
                     <img :src="result.icons[0]?.url" class="min-w-14 max-w-14 min-h-14 max-h-14">
@@ -132,12 +132,12 @@ const lookup = async () => {
               </div>
               <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <template v-for="(info, i) of siteInfo" :key="i">
-                  <div v-if="info.value">
+                  <template v-if="info.value">
                     <NuxtLink v-if="info.url" target="_blank" :to="info.url">
-                      <TechCard :title="info.title" :img="info.img" :value="info.value" class="hover:bg-gray-100 hover:dark:bg-gray-900" />
+                      <TechCard v-ripple :title="info.title" :img="info.img" :value="info.value" class="hover:bg-gray-100 hover:dark:bg-gray-900" />
                     </NuxtLink>
                     <TechCard v-else :title="info.title" :img="info.img" :value="info.value" />
-                  </div>
+                  </template>
                 </template>
               </div>
               <div v-if="computedSitePlugins?.length" class="flex flex-col gap-5">
@@ -148,7 +148,7 @@ const lookup = async () => {
                 <div class="flex flex-wrap items-start gap-2">
                   <template v-for="(tech, i) of computedSitePlugins" :key="i">
                     <NuxtLink v-if="getTechnologyMetas('plugin', tech.slug)?.url" target="_blank" :to="getTechnologyMetas('plugin', tech.slug)?.url">
-                      <TechCardBasic :value="tech.name" class="hover:bg-gray-100 hover:dark:bg-gray-900" />
+                      <TechCardBasic v-ripple :value="tech.name" class="hover:bg-gray-100 hover:dark:bg-gray-900" />
                     </NuxtLink>
                     <TechCardBasic v-else :value="tech.name" />
                   </template>
@@ -162,7 +162,7 @@ const lookup = async () => {
                 <div class="flex flex-wrap items-start gap-2">
                   <template v-for="(tech, i) of computedSiteModules" :key="i">
                     <NuxtLink v-if="getTechnologyMetas('module', tech.slug)?.url" target="_blank" :to="getTechnologyMetas('module', tech.slug)?.url">
-                      <TechCardBasic :value="tech.name" class="hover:bg-gray-100 hover:dark:bg-gray-900" />
+                      <TechCardBasic v-ripple :value="tech.name" class="hover:bg-gray-100 hover:dark:bg-gray-900" />
                     </NuxtLink>
                     <TechCardBasic v-else :value="tech.name" />
                   </template>
