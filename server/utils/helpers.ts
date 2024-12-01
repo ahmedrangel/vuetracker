@@ -4,17 +4,15 @@ export const fetchVueTrackerProxy = async (url: string) => {
   console.info("Fetching data from proxy");
   const config = useRuntimeConfig();
   const result = await $fetch<VueTrackerProxyResponse>(config.analyzer.proxyURL, {
+    retry: 0,
     query: { url }
   }).catch((e) => {
-    console.info(e);
-    return null;
-  });
-  if (!result) {
+    console.info(e.data?.error);
     throw createError({
       statusCode: ErrorCode.INTERNAL_SERVER_ERROR,
-      statusMessage: "An error occurred while analyzing, please try again later"
+      statusMessage: e.data?.error || "An error occurred while analyzing, please try again later"
     });
-  }
+  });
   return result;
 };
 
