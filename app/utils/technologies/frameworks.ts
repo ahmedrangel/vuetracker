@@ -3,7 +3,7 @@ export const frameworks = {
     metas: {
       slug: "nuxtjs",
       name: "Nuxt",
-      imgPath: "/framework/nuxt.svg",
+      imgPath: "/icons/framework/nuxt.svg",
       url: "https://nuxt.com"
     }
   },
@@ -11,7 +11,7 @@ export const frameworks = {
     metas: {
       slug: "vuepress",
       name: "VuePress",
-      imgPath: "/framework/vuepress.svg",
+      imgPath: "/icons/framework/vuepress.svg",
       url: "https://vuepress.vuejs.org"
     }
   },
@@ -19,7 +19,7 @@ export const frameworks = {
     metas: {
       slug: "vitepress",
       name: "VitePress",
-      imgPath: "/framework/vitepress.svg",
+      imgPath: "/icons/framework/vitepress.svg",
       url: "https://vitepress.vuejs.org"
     }
   },
@@ -27,7 +27,7 @@ export const frameworks = {
     metas: {
       slug: "gridsome",
       name: "Gridsome",
-      imgPath: "/framework/gridsome.svg",
+      imgPath: "/icons/framework/gridsome.svg",
       url: "https://gridsome.org"
     }
   },
@@ -35,7 +35,7 @@ export const frameworks = {
     metas: {
       slug: "iles",
       name: "îles",
-      imgPath: "/framework/iles.svg",
+      imgPath: "/icons/framework/iles.svg",
       url: "https://iles-docs.netlify.app"
     }
   },
@@ -43,7 +43,7 @@ export const frameworks = {
     metas: {
       slug: "quasar",
       name: "Quasar",
-      imgPath: "/framework/quasar.svg",
+      imgPath: "/icons/framework/quasar.svg",
       url: "https://quasar.dev"
     }
   },
@@ -51,7 +51,7 @@ export const frameworks = {
     metas: {
       slug: "vuestorefront",
       name: "Vue Storefront",
-      imgPath: "/framework/vue-storefront.svg",
+      imgPath: "/icons/framework/vue-storefront.svg",
       url: "https://www.vuestorefront.io/"
     }
   },
@@ -59,7 +59,7 @@ export const frameworks = {
     metas: {
       slug: "tres-js",
       name: "Tresjs",
-      imgPath: "/framework/tres.svg",
+      imgPath: "/icons/framework/tres.svg",
       url: "https://tresjs.org/"
     }
   }

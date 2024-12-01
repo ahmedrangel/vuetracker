@@ -59,7 +59,7 @@ export const plugins = {
     metas: {
       slug: "vue-formulate",
       name: "@braid/vue-formulate",
-      imgPath: "/plugins/vue-formulate.svg",
+      imgPath: "/icons/plugins/vue-formulate.svg",
       url: "https://vueformulate.com/"
     }
   },
@@ -67,7 +67,7 @@ export const plugins = {
     metas: {
       slug: "inertia-vue",
       name: "@inertiajs/inertia-vue",
-      imgPath: "/plugins/inertiajs.svg",
+      imgPath: "/icons/plugins/inertiajs.svg",
       url: "https://inertiajs.com/"
     }
   },
@@ -75,7 +75,7 @@ export const plugins = {
     metas: {
       slug: "vee-validate",
       name: "vee-validate",
-      imgPath: "/plugins/vee-validate.svg",
+      imgPath: "/icons/plugins/vee-validate.svg",
       url: "https://vee-validate.logaretm.com/"
     }
   },
@@ -83,7 +83,7 @@ export const plugins = {
     metas: {
       slug: "vue-plausible",
       name: "vue-plausible",
-      imgPath: "/plugins/vue-plausible.png",
+      imgPath: "/icons/plugins/vue-plausible.png",
       url: "https://github.com/moritzsternemann/vue-plausible"
     }
   },
@@ -99,7 +99,7 @@ export const plugins = {
     metas: {
       slug: "pinia",
       name: "Pinia",
-      imgPath: "/plugins/pinia.svg",
+      imgPath: "/icons/plugins/pinia.svg",
       url: "https://pinia.esm.dev"
     }
   },
@@ -107,7 +107,7 @@ export const plugins = {
     metas: {
       slug: "harlem",
       name: "Harlem",
-      imgPath: "/plugins/harlem.svg",
+      imgPath: "/icons/plugins/harlem.svg",
       url: "https://harlemjs.com"
     }
   },
@@ -115,7 +115,7 @@ export const plugins = {
     metas: {
       slug: "formkit",
       name: "@formkit/vue",
-      imgPath: "/plugins/formkit.svg",
+      imgPath: "/icons/plugins/formkit.svg",
       url: "https://formkit.com/"
     }
   }

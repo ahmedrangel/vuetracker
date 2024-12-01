@@ -267,7 +267,7 @@ export const modules = {
     metas: {
       slug: "nuxt-i18n",
       name: "@nuxtjs/i18n",
-      imgPath: "/modules/nuxt-i18n.svg",
+      imgPath: "/icons/modules/nuxt-i18n.svg",
       url: "https://i18n.nuxtjs.org"
     }
   },
@@ -307,7 +307,7 @@ export const modules = {
     metas: {
       slug: "vuestorefront",
       name: "Vue Storefront",
-      imgPath: "/framework/vue-storefront.svg",
+      imgPath: "/icons/framework/vue-storefront.svg",
       url: "https://www.vuestorefront.io/"
     }
   },
@@ -315,7 +315,7 @@ export const modules = {
     metas: {
       slug: "nuxt-typo3",
       name: "nuxt-typo3",
-      imgPath: "/modules/typo3.svg",
+      imgPath: "/icons/modules/typo3.svg",
       url: "https://github.com/TYPO3-Initiatives/nuxt-typo3"
     }
   },
@@ -323,7 +323,7 @@ export const modules = {
     metas: {
       slug: "nuxt-booster",
       name: "nuxt-booster",
-      imgPath: "/modules/nuxt-booster.svg",
+      imgPath: "/icons/modules/nuxt-booster.svg",
       url: "https://basics.github.io/nuxt-booster"
     }
   },
@@ -331,7 +331,7 @@ export const modules = {
     metas: {
       slug: "nuxt-custom-elements",
       name: "nuxt-custom-elements",
-      imgPath: "/modules/custom-elements.svg",
+      imgPath: "/icons/modules/custom-elements.svg",
       url: "https://nuxt-custom-elements.grabarzundpartner.dev"
     }
   },

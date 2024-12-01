@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const input = ref("");
 const result = ref<VueTrackerResponse>();
-const siteInfo = ref<{ title?: string, value?: string, img?: string }[]>();
+const siteInfo = ref<{ title: string, value?: string, img?: string | null, url?: string }[]>();
 const sitePlugins = ref<VueTrackerResponse["technologies"]>();
 const siteModules = ref<VueTrackerResponse["technologies"]>();
 const loading = ref(false);
@@ -22,7 +22,7 @@ watch(input, () => {
   }
 });
 
-const getTechnologyIcon = (type: VueTrackerTechnology["type"], slug?: string) => {
+const getTechnologyMetas = (type: VueTrackerTechnology["type"], slug?: string) => {
   if (!slug) return undefined;
   const technology = [frameworks, modules, plugins, uis];
   const types = ["framework", "module", "plugin", "ui"] as const;
@@ -30,7 +30,7 @@ const getTechnologyIcon = (type: VueTrackerTechnology["type"], slug?: string) =>
   const technologyType = technology[index];
   if (!technologyType) return undefined;
   const map = Object.fromEntries(Object.entries(technologyType).map(([key, { metas }]) => [metas.slug, { key, metas }]));
-  return map[slug]?.metas?.imgPath ? `/icons${map[slug].metas.imgPath}` : undefined;
+  return map[slug]?.metas || undefined;
 };
 
 const lookup = async () => {
@@ -57,17 +57,21 @@ const lookup = async () => {
       siteInfo.value = [{
         title: "Vue Version",
         value: result.value?.vueVersion,
-        img: "/icons/vue.svg"
+        img: vue.imgPath,
+        url: vue.url
       },
       {
         title: framework.value?.version ? framework.value.name : "Framework",
         value: framework.value?.version ? framework.value.version : framework.value?.name,
-        img: getTechnologyIcon("framework", framework.value?.slug)
+        img: getTechnologyMetas("framework", framework.value?.slug)?.imgPath,
+        url: getTechnologyMetas("framework", framework.value?.slug)?.url
+
       },
       {
         title: "UI Framework",
         value: ui.value?.name,
-        img: getTechnologyIcon("ui", ui.value?.slug)
+        img: getTechnologyMetas("ui", ui.value?.slug)?.imgPath,
+        url: getTechnologyMetas("ui", ui.value?.slug)?.url
       },
       {
         title: "Rendering",
@@ -128,12 +132,11 @@ const lookup = async () => {
               </div>
               <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <template v-for="(info, i) of siteInfo" :key="i">
-                  <div v-if="info.value" class="flex flex-col w-full bg-gray-200 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 rounded-xl overflow-hidden">
-                    <h6 class="self-start bg-gray-300 dark:bg-gray-700 px-3 py-1 rounded-br-xl rounded-bl-none rounded-tr-none text-xs tracking-tight uppercase leading-sm font-bold">{{ info.title }}</h6>
-                    <div class="flex justify-center items-center px-2 py-3 gap-1">
-                      <img v-if="info.img" class="w-7 h-7" :src="info.img">
-                      <p class="text-md font-bold tracking-tight">{{ info.value }}</p>
-                    </div>
+                  <div v-if="info.value">
+                    <NuxtLink v-if="info.url" target="_blank" :to="info.url">
+                      <TechCard :title="info.title" :img="info.img" :value="info.value" class="hover:bg-gray-100 hover:dark:bg-gray-900" />
+                    </NuxtLink>
+                    <TechCard v-else :title="info.title" :img="info.img" :value="info.value" />
                   </div>
                 </template>
               </div>
@@ -143,10 +146,11 @@ const lookup = async () => {
                   <p>PLUGINS</p>
                 </div>
                 <div class="flex flex-wrap items-start gap-2">
-                  <template v-for="(plugin, i) of computedSitePlugins" :key="i">
-                    <div class="bg-gray-200 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 rounded-xl overflow-hidden px-4 py-2">
-                      <p class="text-md font-bold tracking-tight">{{ plugin.name }}</p>
-                    </div>
+                  <template v-for="(tech, i) of computedSitePlugins" :key="i">
+                    <NuxtLink v-if="getTechnologyMetas('plugin', tech.slug)?.url" target="_blank" :to="getTechnologyMetas('plugin', tech.slug)?.url">
+                      <TechCardBasic :value="tech.name" class="hover:bg-gray-100 hover:dark:bg-gray-900" />
+                    </NuxtLink>
+                    <TechCardBasic v-else :value="tech.name" />
                   </template>
                 </div>
               </div>
@@ -156,10 +160,11 @@ const lookup = async () => {
                   <p>NUXT MODULES</p>
                 </div>
                 <div class="flex flex-wrap items-start gap-2">
-                  <template v-for="(module, i) of computedSiteModules" :key="i">
-                    <div class="bg-gray-200 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 rounded-xl overflow-hidden px-4 py-2">
-                      <p class="text-md font-bold tracking-tight">{{ module.name }}</p>
-                    </div>
+                  <template v-for="(tech, i) of computedSiteModules" :key="i">
+                    <NuxtLink v-if="getTechnologyMetas('module', tech.slug)?.url" target="_blank" :to="getTechnologyMetas('module', tech.slug)?.url">
+                      <TechCardBasic :value="tech.name" class="hover:bg-gray-100 hover:dark:bg-gray-900" />
+                    </NuxtLink>
+                    <TechCardBasic v-else :value="tech.name" />
                   </template>
                 </div>
               </div>
