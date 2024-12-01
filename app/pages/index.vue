@@ -95,11 +95,17 @@ const lookup = async () => {
                 <span class="text-md text-gray-400">https://</span>
               </template>
             </UInput>
-            <UButton label="Lookup" class="md:px-10" type="submit" :disabled="loading" />
+            <UButton v-ripple class="md:px-10 w-20 sm:w-36 relative justify-center" type="submit" :disabled="loading">
+              <div v-if="!loading" class="absolute">
+                <span class="hidden sm:block">Lookup</span>
+                <Icon name="ph:magnifying-glass-duotone" class="sm:hidden block text-2xl" />
+              </div>
+              <LoadingSpinner v-else class="absolute" />
+            </UButton>
           </UButtonGroup>
         </form>
-        <div id="results">
-          <TransitionGroup name="fade">
+        <div id="results" class="relative">
+          <TransitionGroup name="fadeel">
             <div v-if="result && !error && !loading" class="flex flex-col gap-5">
               <div class="tracking-tight flex gap-3 items-center bg-gray-200 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 p-3 rounded-xl">
                 <div v-if="result.icons?.length">
@@ -158,7 +164,8 @@ const lookup = async () => {
                 </div>
               </div>
             </div>
-            <div v-else class="text-rose-600 dark:text-rose-400">{{ error }}</div>
+            <div v-else-if="!result && error && !loading" class="text-rose-600 dark:text-rose-400">{{ error }}</div>
+            <LoadingDots v-else-if="!result && !error && loading" />
           </TransitionGroup>
         </div>
       </div>

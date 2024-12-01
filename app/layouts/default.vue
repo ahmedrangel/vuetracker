@@ -21,7 +21,7 @@ onMounted(() => {
 
 <template>
   <UHorizontalNavigation :links="nav" class="container mx-auto px-2 pt-2 dark:border-gray-600" />
-  <div id="layout" class="xl:container mx-auto text-center px-2 py-5">
+  <div id="layout" class="xl:container mx-auto text-center px-2 py-5 overflow-hidden">
     <slot />
   </div>
 </template>

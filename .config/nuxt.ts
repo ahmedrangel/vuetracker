@@ -28,7 +28,8 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "@nuxtjs/color-mode",
     "@nuxtjs/sitemap",
-    "@nuxthub/core"
+    "@nuxthub/core",
+    "nuxt-ripple"
   ],
 
   icon: {
