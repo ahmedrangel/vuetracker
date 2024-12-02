@@ -1,19 +1,20 @@
 <script setup lang="ts">
 definePageMeta({ layout: "explore" });
-const frameworksOptions = Object.entries(frameworks).map(([_key, value]) => ({
-  label: value.metas.name,
-  value: value.metas.slug
-}));
 
-const uiOptions = Object.entries(uis).map(([_key, value]) => ({
+const frameworksOptions = computed(() => Object.entries(frameworks).map(([_key, value]) => ({
   label: value.metas.name,
   value: value.metas.slug
-}));
+})).sort((a, b) => a.label.localeCompare(b.label)));
 
-const pluginOptions = Object.entries(plugins).map(([_key, value]) => ({
+const uiOptions = computed(() => Object.entries(uis).map(([_key, value]) => ({
   label: value.metas.name,
   value: value.metas.slug
-}));
+})).sort((a, b) => a.label.localeCompare(b.label)));
+
+const pluginOptions = computed(() => Object.entries(plugins).map(([_key, value]) => ({
+  label: value.metas.name,
+  value: value.metas.slug
+})).sort((a, b) => a.label.localeCompare(b.label)));
 
 const selectedFramework = ref(undefined);
 const selectedUI = ref(undefined);
@@ -29,7 +30,7 @@ const selectedUI = ref(undefined);
     </button>
 
     <aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
-      <div class="text-start h-full px-3 py-4 overflow-y-auto bg-gray-300 dark:bg-gray-900 flex flex-col gap-4">
+      <div class="text-start h-full px-3 py-4 overflow-y-auto bg-gray-200 dark:bg-gray-900 flex flex-col gap-4">
         <NuxtLink class="text-center" to="/">
           <h1 class="font-bold tracking-tight"><span class="text-primary-600 dark:text-primary-400">Vue</span>Tracker</h1>
         </NuxtLink>
@@ -41,7 +42,7 @@ const selectedUI = ref(undefined);
               <template #label="{ option }">
                 <div class="flex gap-1 items-center">
                   <img :src="getTechnologyMetas('framework', option.value)?.imgPath!" class="w-4 h-4">
-                  <span>{{ option.label }}</span>
+                  <span class="text-gray-950 dark:text-gray-50">{{ option.label }}</span>
                 </div>
               </template>
             </URadioGroup>
@@ -52,14 +53,18 @@ const selectedUI = ref(undefined);
               <template #label="{ option }">
                 <div class="flex gap-1 items-center">
                   <img :src="getTechnologyMetas('ui', option.value)?.imgPath!" class="w-4 h-4">
-                  <span>{{ option.label }}</span>
+                  <span class="text-gray-950 dark:text-gray-50">{{ option.label }}</span>
                 </div>
               </template>
             </URadioGroup>
           </div>
           <div class="space-y-1">
             <h3 class="text-lg font-semibold text-primary-600 dark:text-primary-400">Plugin</h3>
-            <UCheckbox v-for="opt in pluginOptions" :key="opt.value" :name="opt.value" :label="opt.label" />
+            <UCheckbox v-for="opt in pluginOptions" :key="opt.value" :name="opt.value">
+              <template #label>
+                <span class="text-gray-950 dark:text-gray-50">{{ opt.label }}</span>
+              </template>
+            </UCheckbox>
           </div>
         </div>
       </div>

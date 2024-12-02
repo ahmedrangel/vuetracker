@@ -18,8 +18,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <nav class="text-gray-900 dark:text-gray-50 text-md tracking-tight sm:bg-gray-300 sm:dark:bg-gray-900">
-    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 bg-gray-300 dark:bg-gray-900 z-20 relative">
+  <nav class="text-gray-900 dark:text-gray-50 text-md tracking-tight sm:bg-gray-200 sm:dark:bg-gray-900">
+    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 bg-gray-200 dark:bg-gray-900 z-20 relative">
       <div class="relative flex h-14 items-center justify-between">
         <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
           <!-- Mobile menu button -->
@@ -42,11 +42,11 @@ onMounted(() => {
         <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-2">
           <div class="hidden sm:ml-6 sm:block">
             <div class="nav-tabs flex space-x-2">
-              <NuxtLink to="/explore" class="rounded-md px-2 py-1 font-semibold hover:bg-gray-200 hover:dark:bg-gray-800">Explore</NuxtLink>
+              <NuxtLink to="/explore" class="rounded-md px-2 py-1 font-semibold hover:bg-gray-100 hover:dark:bg-gray-800">Explore</NuxtLink>
             </div>
           </div>
           <div class="nav-tabs flex space-x-2">
-            <button type="button" class="rounded-md px-2 py-1 hover:bg-gray-200 hover:dark:bg-gray-800" @click="dark = !dark">
+            <button type="button" class="rounded-md px-2 py-1 hover:bg-gray-100 hover:dark:bg-gray-800" @click="dark = !dark">
               <Icon :name="modeIcon" size="1.4em" />
             </button>
           </div>
