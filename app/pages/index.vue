@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { format } from "date-fns";
-
 const input = ref("");
 const result = ref<VueTrackerResponse>();
 const siteInfo = ref<{ title: string, value?: string, img?: string | null, url?: string }[]>();
@@ -23,17 +21,6 @@ watch(input, () => {
     input.value = input.value.replace("https://", "");
   }
 });
-
-const getTechnologyMetas = (type: VueTrackerTechnology["type"], slug?: string) => {
-  if (!slug) return undefined;
-  const technology = [frameworks, modules, plugins, uis];
-  const types = ["framework", "module", "plugin", "ui"] as const;
-  const index = types.indexOf(type);
-  const technologyType = technology[index];
-  if (!technologyType) return undefined;
-  const map = Object.fromEntries(Object.entries(technologyType).map(([key, { metas }]) => [metas.slug, { key, metas }]));
-  return map[slug]?.metas || undefined;
-};
 
 const lookup = async () => {
   if (input.value) {
@@ -89,6 +76,19 @@ const lookup = async () => {
   }
   loading.value = false;
 };
+
+useSeoMeta({
+  title: "VueTracker",
+  ogTitle: "VueTracker",
+  description: result.value?.description,
+  ogDescription: result.value?.description
+});
+
+useHead({
+  link: [
+    { rel: "canonical", href: SITE.url }
+  ]
+});
 </script>
 
 <template>
@@ -114,63 +114,23 @@ const lookup = async () => {
         </form>
         <div id="results" class="relative">
           <TransitionGroup name="fadeel">
-            <div v-if="result && !error && !loading" class="flex flex-col gap-6">
-              <div class="flex flex-col gap-1 text-start">
-                <NuxtLink :to="`/${result.hostname}`" class="hover:underline">
-                  <div class="flex gap-2 items-center justify-start">
-                    <img v-if="result.icons?.length" :src="result.icons[0]?.url" class="min-w-6 max-w-6 min-h-6 max-h-6">
-                    <h2 class="text-xl font-semibold">/{{ result.hostname }}</h2>
-                  </div>
-                </NuxtLink>
-                <h4 class="text-md">{{ result.title }}</h4>
-                <NuxtLink target="_blank" :to="result.url" class="hover:underline">
-                  <h6 class="text-sm">{{ result.url }}</h6>
-                </NuxtLink>
-              </div>
-              <div class="flex items-center gap-2 text-primary-600 dark:text-primary-400 font-bold tracking-tight">
-                <Icon name="fa6-solid:circle-info" size="2rem" />
-                <p>INFO</p>
-              </div>
-              <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <template v-for="(info, i) of siteInfo" :key="i">
-                  <template v-if="info.value">
-                    <NuxtLink v-if="info.url" target="_blank" :to="info.url">
-                      <TechCard v-ripple :title="info.title" :img="info.img" :value="info.value" class="hover:bg-gray-100 hover:dark:bg-gray-900" />
-                    </NuxtLink>
-                    <TechCard v-else :title="info.title" :img="info.img" :value="info.value" />
-                  </template>
-                </template>
-              </div>
-              <div v-if="computedSitePlugins?.length" class="flex flex-col gap-5">
-                <div class="flex items-center gap-2 text-primary-600 dark:text-primary-400 font-bold tracking-tight">
-                  <Icon name="fa6-solid:plug" size="2rem" />
-                  <p>PLUGINS</p>
+            <template v-if="result && !error && !loading">
+              <div class="flex flex-col gap-6">
+                <div class="flex flex-col gap-1 text-start">
+                  <NuxtLink :to="`/${result.hostname}`" class="hover:underline">
+                    <div class="flex gap-2 items-center justify-start">
+                      <img v-if="result.icons?.length" :src="result.icons[0]?.url" class="min-w-6 max-w-6 min-h-6 max-h-6">
+                      <h2 class="text-xl font-semibold">/{{ result.hostname }}</h2>
+                    </div>
+                  </NuxtLink>
+                  <h4 class="text-md">{{ result.title }}</h4>
+                  <NuxtLink target="_blank" :to="result.url" class="hover:underline">
+                    <h6 class="text-sm">{{ result.url }}</h6>
+                  </NuxtLink>
                 </div>
-                <div class="flex flex-wrap items-start gap-2">
-                  <template v-for="(tech, i) of computedSitePlugins" :key="i">
-                    <NuxtLink v-if="getTechnologyMetas('plugin', tech.slug)?.url" target="_blank" :to="getTechnologyMetas('plugin', tech.slug)?.url">
-                      <TechCardBasic v-ripple :value="tech.name" class="hover:bg-gray-100 hover:dark:bg-gray-900" />
-                    </NuxtLink>
-                    <TechCardBasic v-else :value="tech.name" />
-                  </template>
-                </div>
+                <TrackerDetails :result="result" :site-info="siteInfo" :site-plugins="computedSitePlugins" :site-modules="computedSiteModules" />
               </div>
-              <div v-if="computedSiteModules?.length" class="flex flex-col gap-5">
-                <div class="flex items-center gap-2 text-primary-600 dark:text-primary-400 font-bold tracking-tight">
-                  <Icon name="fa6-solid:cubes" size="2rem" />
-                  <p>NUXT MODULES</p>
-                </div>
-                <div class="flex flex-wrap items-start gap-2">
-                  <template v-for="(tech, i) of computedSiteModules" :key="i">
-                    <NuxtLink v-if="getTechnologyMetas('module', tech.slug)?.url" target="_blank" :to="getTechnologyMetas('module', tech.slug)?.url">
-                      <TechCardBasic v-ripple :value="tech.name" class="hover:bg-gray-100 hover:dark:bg-gray-900" />
-                    </NuxtLink>
-                    <TechCardBasic v-else :value="tech.name" />
-                  </template>
-                </div>
-              </div>
-              <h5 class="text-sm text-start text-gray-500 dark:text-gray-400">Last updated: {{ format(result.updatedAt, "Pp") }}</h5>
-            </div>
+            </template>
             <div v-else-if="!result && error && !loading" class="text-rose-600 dark:text-rose-400">{{ error }}</div>
             <LoadingDots v-else-if="!result && !error && loading" />
           </TransitionGroup>

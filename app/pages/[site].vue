@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { format } from "date-fns";
-
 const { params } = useRoute("site");
 const { site } = params;
 
@@ -23,17 +21,6 @@ const computedSiteModules = computed({
   get: () => result.value?.technologies.filter(el => el.type === "module"),
   set: value => siteModules.value = value?.filter(el => el.type === "module")
 });
-
-const getTechnologyMetas = (type: VueTrackerTechnology["type"], slug?: string) => {
-  if (!slug) return undefined;
-  const technology = [frameworks, modules, plugins, uis];
-  const types = ["framework", "module", "plugin", "ui"] as const;
-  const index = types.indexOf(type);
-  const technologyType = technology[index];
-  if (!technologyType) return undefined;
-  const map = Object.fromEntries(Object.entries(technologyType).map(([key, { metas }]) => [metas.slug, { key, metas }]));
-  return map[slug]?.metas || undefined;
-};
 
 const framework = computed(() => result.value?.technologies.find(el => el.type === "framework"));
 const ui = computed(() => result.value?.technologies.find(el => el.type === "ui"));
@@ -98,49 +85,7 @@ useHead({
           <h5 v-if="result.description" class="text-sm text-start">{{ result.description }}</h5>
         </div>
       </div>
-      <div class="flex items-center gap-2 text-primary-600 dark:text-primary-400 font-bold tracking-tight">
-        <Icon name="fa6-solid:circle-info" size="2rem" />
-        <p>INFO</p>
-      </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-        <template v-for="(info, i) of siteInfo" :key="i">
-          <template v-if="info.value">
-            <NuxtLink v-if="info.url" target="_blank" :to="info.url">
-              <TechCard v-ripple :title="info.title" :img="info.img" :value="info.value" class="hover:bg-gray-100 hover:dark:bg-gray-900" />
-            </NuxtLink>
-            <TechCard v-else :title="info.title" :img="info.img" :value="info.value" />
-          </template>
-        </template>
-      </div>
-      <div v-if="computedSitePlugins?.length" class="flex flex-col gap-5">
-        <div class="flex items-center gap-2 text-primary-600 dark:text-primary-400 font-bold tracking-tight">
-          <Icon name="fa6-solid:plug" size="2rem" />
-          <p>PLUGINS</p>
-        </div>
-        <div class="flex flex-wrap items-start gap-2">
-          <template v-for="(tech, i) of computedSitePlugins" :key="i">
-            <NuxtLink v-if="getTechnologyMetas('plugin', tech.slug)?.url" target="_blank" :to="getTechnologyMetas('plugin', tech.slug)?.url">
-              <TechCardBasic v-ripple :value="tech.name" class="hover:bg-gray-100 hover:dark:bg-gray-900" />
-            </NuxtLink>
-            <TechCardBasic v-else :value="tech.name" />
-          </template>
-        </div>
-      </div>
-      <div v-if="computedSiteModules?.length" class="flex flex-col gap-5">
-        <div class="flex items-center gap-2 text-primary-600 dark:text-primary-400 font-bold tracking-tight">
-          <Icon name="fa6-solid:cubes" size="2rem" />
-          <p>NUXT MODULES</p>
-        </div>
-        <div class="flex flex-wrap items-start gap-2">
-          <template v-for="(tech, i) of computedSiteModules" :key="i">
-            <NuxtLink v-if="getTechnologyMetas('module', tech.slug)?.url" target="_blank" :to="getTechnologyMetas('module', tech.slug)?.url">
-              <TechCardBasic v-ripple :value="tech.name" class="hover:bg-gray-100 hover:dark:bg-gray-900" />
-            </NuxtLink>
-            <TechCardBasic v-else :value="tech.name" />
-          </template>
-        </div>
-      </div>
-      <h5 class="text-sm text-start text-gray-500 dark:text-gray-400">Last updated: {{ format(result.updatedAt, "Pp") }}</h5>
+      <TrackerDetails :result="result" :site-info="siteInfo" :site-plugins="computedSitePlugins" :site-modules="computedSiteModules" />
     </div>
   </main>
 </template>
