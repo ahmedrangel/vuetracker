@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { format } from "date-fns";
+
 const input = ref("");
 const result = ref<VueTrackerResponse>();
 const siteInfo = ref<{ title: string, value?: string, img?: string | null, url?: string }[]>();
@@ -115,7 +117,7 @@ const lookup = async () => {
                 <NuxtLink :to="`${SITE.url}/${result.hostname}`">
                   <div class="flex gap-2 items-center justify-start">
                     <img v-if="result.icons?.length" :src="result.icons[result.icons.length - 1]?.url" class="min-w-6 max-w-6 min-h-6 max-h-6">
-                    <h2 class="text-xl font-semibold">{{ result.hostname }}</h2>
+                    <h2 class="text-xl font-semibold">/{{ result.hostname }}</h2>
                   </div>
                 </NuxtLink>
                 <h4 class="text-md">{{ result.title }}</h4>
@@ -165,6 +167,7 @@ const lookup = async () => {
                   </template>
                 </div>
               </div>
+              <h5 v-if="result.description" class="text-sm text-start text-gray-500 dark:text-gray-400">Last updated: {{ format(result.updatedAt, "Pp") }}</h5>
             </div>
             <div v-else-if="!result && error && !loading" class="text-rose-600 dark:text-rose-400">{{ error }}</div>
             <LoadingDots v-else-if="!result && !error && loading" />

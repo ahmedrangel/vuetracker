@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { format } from "date-fns";
+
 const { params } = useRoute("site");
 const { site } = params;
 
@@ -83,7 +85,9 @@ useHead({
       <div class="tracking-tight flex flex-col gap-1">
         <div class="flex gap-2 items-center justify-center">
           <img v-if="result.icons?.length" :src="result.icons[result.icons.length - 1]?.url" class="min-w-6 max-w-6 min-h-6 max-h-6">
-          <h2 class="text-xl font-semibold">{{ site }}</h2>
+          <NuxtLink target="_blank" :to="result.url">
+            <h2 class="text-xl font-semibold hover:underline">{{ site }}</h2>
+          </NuxtLink>
         </div>
         <h4 class="text-md">{{ result.title }}</h4>
       </div>
@@ -136,6 +140,7 @@ useHead({
           </template>
         </div>
       </div>
+      <h5 v-if="result.description" class="text-sm text-start text-gray-500 dark:text-gray-400">Last updated: {{ format(result.updatedAt, "Pp") }}</h5>
     </div>
   </main>
 </template>
