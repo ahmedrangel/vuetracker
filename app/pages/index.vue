@@ -116,7 +116,7 @@ const lookup = async () => {
               <div class="flex flex-col gap-1 text-start">
                 <NuxtLink :to="`${SITE.url}/${result.hostname}`">
                   <div class="flex gap-2 items-center justify-start">
-                    <img v-if="result.icons?.length" :src="result.icons[result.icons.length - 1]?.url" class="min-w-6 max-w-6 min-h-6 max-h-6">
+                    <img v-if="result.icons?.length" :src="result.icons[0]?.url" class="min-w-6 max-w-6 min-h-6 max-h-6">
                     <h2 class="text-xl font-semibold">/{{ result.hostname }}</h2>
                   </div>
                 </NuxtLink>

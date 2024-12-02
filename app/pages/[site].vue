@@ -84,7 +84,7 @@ useHead({
     <div v-if="result" class="flex flex-col gap-6 2xl:w-1/2 xl:w-3/5 lg:w-3/4 mx-auto py-4">
       <div class="tracking-tight flex flex-col gap-1">
         <div class="flex gap-2 items-center justify-center">
-          <img v-if="result.icons?.length" :src="result.icons[result.icons.length - 1]?.url" class="min-w-6 max-w-6 min-h-6 max-h-6">
+          <img v-if="result.icons?.length" :src="result.icons[0]?.url" class="min-w-6 max-w-6 min-h-6 max-h-6">
           <NuxtLink target="_blank" :to="result.url">
             <h2 class="text-xl font-semibold hover:underline">{{ site }}</h2>
           </NuxtLink>
