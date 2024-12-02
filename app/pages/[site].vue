@@ -74,7 +74,7 @@ useSeoMeta({
 
 useHead({
   link: [
-    { rel: "canonical", href: `${SITE.url}${site}` }
+    { rel: "canonical", href: `${SITE.url}/${site}` }
   ]
 });
 </script>
