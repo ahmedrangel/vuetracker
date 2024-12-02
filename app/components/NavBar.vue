@@ -35,7 +35,7 @@ onMounted(() => {
           </button>
         </div>
         <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-          <NuxtLink v-if="route.path !== '/'" to="/">
+          <NuxtLink v-if="!['/', '/explore'].includes(route.path)" to="/">
             <h1 class="font-bold tracking-tight"><span class="text-primary-600 dark:text-primary-400">Vue</span>Tracker</h1>
           </NuxtLink>
         </div>
