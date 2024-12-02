@@ -114,14 +114,14 @@ const lookup = async () => {
           <TransitionGroup name="fadeel">
             <div v-if="result && !error && !loading" class="flex flex-col gap-6">
               <div class="flex flex-col gap-1 text-start">
-                <NuxtLink :to="`${SITE.url}/${result.hostname}`">
+                <NuxtLink :to="`${SITE.url}/${result.hostname}`" class="hover:underline">
                   <div class="flex gap-2 items-center justify-start">
                     <img v-if="result.icons?.length" :src="result.icons[0]?.url" class="min-w-6 max-w-6 min-h-6 max-h-6">
                     <h2 class="text-xl font-semibold">/{{ result.hostname }}</h2>
                   </div>
                 </NuxtLink>
                 <h4 class="text-md">{{ result.title }}</h4>
-                <NuxtLink target="_blank" :to="result.url">
+                <NuxtLink target="_blank" :to="result.url" class="hover:underline">
                   <h6 class="text-sm">{{ result.url }}</h6>
                 </NuxtLink>
               </div>
