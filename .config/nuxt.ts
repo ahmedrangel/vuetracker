@@ -58,7 +58,7 @@ export default defineNuxtConfig({
     fallback: "light"
   },
 
-  site: { url: "" },
+  site: { url: SITE.url },
 
   nitro: {
     prerender: {
