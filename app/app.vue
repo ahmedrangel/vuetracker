@@ -20,8 +20,8 @@ setScrollBehavior();
   @apply bg-gray-950 text-gray-50;
 }
 
-.fadeel-enter-active,
-.fadeel-leave-active {
+.fadeel-enter-active, .fade-enter-active,
+.fadeel-leave-active, .fade-leave-active {
   transition: opacity 0.3s ease-in-out;
 }
 
@@ -30,8 +30,8 @@ setScrollBehavior();
   width: 100%;
 }
 
-.fadeel-enter-from,
-.fadeel-leave-to {
+.fadeel-enter-from, .fade-enter-form,
+.fadeel-leave-to, .fade-leave-to {
   opacity: 0;
 }
 </style>

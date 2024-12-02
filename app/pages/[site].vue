@@ -81,7 +81,7 @@ useHead({
 
 <template>
   <main>
-    <div v-if="result" class="flex flex-col gap-6 2xl:w-1/2 xl:w-3/5 lg:w-3/4 mx-auto py-4">
+    <div v-if="result" class="flex flex-col gap-6 2xl:w-1/2 xl:w-3/5 lg:w-3/4 mx-auto py-2 sm:py-3 md:py-4">
       <div class="tracking-tight flex flex-col gap-1">
         <div class="flex gap-2 items-center justify-center">
           <img v-if="result.icons?.length" :src="result.icons[0]?.url" class="min-w-6 max-w-6 min-h-6 max-h-6">
@@ -140,7 +140,7 @@ useHead({
           </template>
         </div>
       </div>
-      <h5 v-if="result.description" class="text-sm text-start text-gray-500 dark:text-gray-400">Last updated: {{ format(result.updatedAt, "Pp") }}</h5>
+      <h5 class="text-sm text-start text-gray-500 dark:text-gray-400">Last updated: {{ format(result.updatedAt, "Pp") }}</h5>
     </div>
   </main>
 </template>

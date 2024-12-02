@@ -84,6 +84,8 @@ const lookup = async () => {
         value: result.value.hasSSR && result.value.isStatic ? "Static" : result.value.hasSSR && !result.value.isStatic ? "Server" : undefined
       }];
     }
+
+    input.value = "";
   }
   loading.value = false;
 };
@@ -91,7 +93,7 @@ const lookup = async () => {
 
 <template>
   <main>
-    <div class="pt-2 sm:pt-3 md:pt-4 relative">
+    <div class="py-2 sm:py-3 md:py-4 relative">
       <h1 class="text-4xl font-bold tracking-tight md:text-5xl text-balance mb-10"><span class="text-primary-600 dark:text-primary-400">Vue</span>Tracker</h1>
       <div class="2xl:w-1/2 xl:w-3/5 lg:w-3/4 flex flex-col mx-auto gap-6">
         <form @submit.prevent="lookup">
@@ -101,7 +103,7 @@ const lookup = async () => {
                 <span class="text-md text-gray-400">https://</span>
               </template>
             </UInput>
-            <UButton v-ripple class="md:px-10 w-20 sm:w-36 relative justify-center" type="submit" :disabled="loading">
+            <UButton v-ripple class="md:px-10 w-20 sm:w-32 relative justify-center" type="submit" :disabled="loading || !loading && input.length === 0">
               <div v-if="!loading" class="absolute">
                 <span class="hidden sm:block">Lookup</span>
                 <Icon name="ph:magnifying-glass-duotone" class="sm:hidden block text-2xl" />
@@ -114,7 +116,7 @@ const lookup = async () => {
           <TransitionGroup name="fadeel">
             <div v-if="result && !error && !loading" class="flex flex-col gap-6">
               <div class="flex flex-col gap-1 text-start">
-                <NuxtLink :to="`${SITE.url}/${result.hostname}`" class="hover:underline">
+                <NuxtLink :to="`/${result.hostname}`" class="hover:underline">
                   <div class="flex gap-2 items-center justify-start">
                     <img v-if="result.icons?.length" :src="result.icons[0]?.url" class="min-w-6 max-w-6 min-h-6 max-h-6">
                     <h2 class="text-xl font-semibold">/{{ result.hostname }}</h2>
@@ -167,7 +169,7 @@ const lookup = async () => {
                   </template>
                 </div>
               </div>
-              <h5 v-if="result.description" class="text-sm text-start text-gray-500 dark:text-gray-400">Last updated: {{ format(result.updatedAt, "Pp") }}</h5>
+              <h5 class="text-sm text-start text-gray-500 dark:text-gray-400">Last updated: {{ format(result.updatedAt, "Pp") }}</h5>
             </div>
             <div v-else-if="!result && error && !loading" class="text-rose-600 dark:text-rose-400">{{ error }}</div>
             <LoadingDots v-else-if="!result && !error && loading" />
