@@ -7,7 +7,7 @@ export const fetchVueTrackerProxy = async (url: string) => {
     retry: 0,
     query: { url }
   }).catch((e) => {
-    console.info(e.data?.error);
+    console.info(e);
     throw createError({
       statusCode: ErrorCode.INTERNAL_SERVER_ERROR,
       statusMessage: e.data?.error || "An error occurred while analyzing, please try again later"

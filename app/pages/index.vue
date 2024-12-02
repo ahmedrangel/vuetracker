@@ -89,7 +89,7 @@ const lookup = async () => {
 
 <template>
   <main>
-    <div class="pt-5 sm:pt-8 md:pt-8 relative">
+    <div class="pt-2 sm:pt-3 md:pt-4 relative">
       <h1 class="text-4xl font-bold tracking-tight md:text-5xl text-balance mb-10"><span class="text-primary-600 dark:text-primary-400">Vue</span>Tracker</h1>
       <div class="2xl:w-1/2 xl:w-3/5 lg:w-3/4 flex flex-col mx-auto gap-5">
         <form @submit.prevent="lookup">
