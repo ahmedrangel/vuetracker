@@ -62,25 +62,36 @@ const siteInfo = ref([{
   title: "Deployment",
   value: result.value?.hasSSR && result.value.isStatic ? "Static" : result.value?.hasSSR && !result.value.isStatic ? "Server" : undefined
 }]);
+
+useSeoMeta({
+  title: `${site} | VueTracker`,
+  ogTitle: `${site} | VueTracker`,
+  description: result.value?.description,
+  ogDescription: result.value?.description
+});
+
+useHead({
+  link: [
+    { rel: "canonical", href: `${SITE.url}${site}` }
+  ]
+});
 </script>
 
 <template>
   <main>
-    <div v-if="result" class="flex flex-col gap-5 2xl:w-1/2 xl:w-3/5 lg:w-3/4 mx-auto">
-      <img v-if="result.ogImage" :src="result.ogImage" class="rounded-xl">
-      <div class="tracking-tight flex gap-3 items-center bg-gray-200 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 p-3 rounded-xl transition">
-        <div v-if="result.icons?.length">
-          <div class="min-w-14 max-w-14 min-h-14 max-h-14">
-            <img :src="result.icons[0]?.url" class="min-w-14 max-w-14 min-h-14 max-h-14">
-          </div>
+    <div v-if="result" class="flex flex-col gap-6 2xl:w-1/2 xl:w-3/5 lg:w-3/4 mx-auto py-4">
+      <div class="tracking-tight flex flex-col gap-1">
+        <div class="flex gap-2 items-center justify-center">
+          <img v-if="result.icons?.length" :src="result.icons[result.icons.length - 1]?.url" class="min-w-6 max-w-6 min-h-6 max-h-6">
+          <h2 class="text-xl font-semibold">{{ site }}</h2>
         </div>
-        <div class="text-left">
-          <h5 v-if="result.title" class="text-sm"><b>Title:</b> {{ result.title }}</h5>
-          <h5 v-if="result.description" class="text-sm"><b>Description:</b> {{ result.description }}</h5>
-          <h5 class="text-sm">
-            <b>SITE: </b>
-            <NuxtLink target="_blank" class="underline" :to="result.url">{{ result.url }}</NuxtLink>
-          </h5>
+        <h4 class="text-md">{{ result.title }}</h4>
+      </div>
+      <img v-if="result.ogImage" :src="result.ogImage" class="rounded-xl">
+      <div class="tracking-tight flex gap-3 items-center rounded-xl transition">
+        <div class="text-left flex flex-col gap-1">
+          <h2 v-if="result.description" class="text-xl text-start">{{ result.siteName }}</h2>
+          <h5 v-if="result.description" class="text-sm text-start">{{ result.description }}</h5>
         </div>
       </div>
       <div class="flex items-center gap-2 text-primary-600 dark:text-primary-400 font-bold tracking-tight">

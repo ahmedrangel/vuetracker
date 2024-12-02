@@ -1,3 +1,5 @@
+import { SITE } from "../app/utils/site";
+
 export default defineNuxtConfig({
   future: { compatibilityVersion: 4 },
   devtools: { enabled: true },
@@ -13,7 +15,8 @@ export default defineNuxtConfig({
       },
       link: [],
       meta: [
-        { name: "robots", content: "index, follow" }
+        { name: "robots", content: "index, follow" },
+        { property: "og:site:name", content: SITE.name }
       ]
     }
   },
