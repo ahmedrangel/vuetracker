@@ -130,7 +130,7 @@ export default defineCachedEventHandler(async (event) => {
   return site;
 }, {
   swr: true,
-  maxAge: maxAge / 2, // Browser cache 12 h
+  maxAge: (maxAge / 2) / 1000, // Browser cache 12 h
   group: "api",
   name: "lookup",
   getKey: event => (getQuery(event)?.url as string)?.replace(/[-.]/g, "_"),
