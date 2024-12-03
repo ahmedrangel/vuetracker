@@ -390,5 +390,21 @@ export const modules = {
       imgPath: null,
       url: "https://github.com/nuxt-modules/plausible"
     }
+  },
+  "nuxt-auth-utils": {
+    metas: {
+      slug: "nuxt-auth-utils",
+      name: "nuxt-auth-utils",
+      imgPath: null,
+      url: "https://github.com/atinux/nuxt-auth-utils"
+    }
+  },
+  "@nuxt/scripts": {
+    metas: {
+      slug: "nuxt-scripts",
+      name: "@nuxt/scripts",
+      imgPath: null,
+      url: "https://scripts.nuxt.com"
+    }
   }
 };
