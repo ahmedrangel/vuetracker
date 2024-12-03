@@ -71,8 +71,6 @@ const lookup = async () => {
         value: result.value.hasSSR && result.value.isStatic ? "Static" : result.value.hasSSR && !result.value.isStatic ? "Server" : undefined
       }];
     }
-
-    input.value = "";
   }
   loading.value = false;
 };
@@ -98,12 +96,12 @@ useHead({
       <div class="2xl:w-1/2 xl:w-3/5 lg:w-3/4 flex flex-col mx-auto gap-6">
         <form @submit.prevent="lookup">
           <UButtonGroup size="xl" orientation="horizontal" class="w-full">
-            <UInput v-model="input" class="w-full" :ui="{ leading: { padding: { xl: 'ps-[4.2rem] py-4' } } }">
+            <UInput v-model="input" class="w-full" :ui="{ leading: { padding: { xl: 'ps-[4.2rem] py-4' } } }" required>
               <template #leading>
                 <span class="text-md text-gray-400">https://</span>
               </template>
             </UInput>
-            <UButton v-ripple class="md:px-10 w-20 sm:w-32 relative justify-center" type="submit" :disabled="loading || !loading && input.length === 0">
+            <UButton v-ripple class="md:px-10 w-20 sm:w-32 relative justify-center" type="submit" :disabled="loading">
               <div v-if="!loading" class="absolute">
                 <span class="hidden sm:block">Lookup</span>
                 <Icon name="ph:magnifying-glass-duotone" class="sm:hidden block text-2xl" />
