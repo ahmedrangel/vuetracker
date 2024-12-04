@@ -103,7 +103,7 @@ useHead({
             </UInput>
             <UButton v-ripple class="md:px-10 w-20 sm:w-32 relative justify-center" type="submit" :disabled="loading">
               <div v-if="!loading" class="absolute">
-                <span class="hidden sm:block">Lookup</span>
+                <span class="hidden sm:block font-bold">Lookup</span>
                 <Icon name="ph:magnifying-glass-duotone" class="sm:hidden block text-2xl" />
               </div>
               <LoadingSpinner v-else class="absolute" />
