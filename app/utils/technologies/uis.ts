@@ -3,7 +3,7 @@ export const uis = {
     metas: {
       slug: "oruga",
       name: "Oruga",
-      imgPath: "/icons/ui/oruga.svg",
+      icon: "oruga",
       url: "https://oruga.io"
     }
   },
@@ -11,7 +11,7 @@ export const uis = {
     metas: {
       slug: "element-ui",
       name: "Element UI",
-      imgPath: "/icons/ui/element.svg",
+      icon: "element",
       url: "https://element.eleme.io/"
     }
   },
@@ -19,7 +19,7 @@ export const uis = {
     metas: {
       slug: "vuetify",
       name: "Vuetify",
-      imgPath: "/icons/ui/vuetify.svg",
+      icon: "vuetify",
       url: "https://vuetifyjs.com/"
     }
   },
@@ -27,7 +27,7 @@ export const uis = {
     metas: {
       slug: "bootstrap-vue",
       name: "Bootstrap Vue",
-      imgPath: "/icons/ui/bootstrap.svg",
+      icon: "bootstrap",
       url: "https://bootstrap-vue.org/"
     }
   },
@@ -35,7 +35,7 @@ export const uis = {
     metas: {
       slug: "vue-tailwind",
       name: "VueTailwind",
-      imgPath: "/icons/ui/vue-tailwind.svg",
+      icon: "vue-tailwind",
       url: "https://www.vue-tailwind.com/"
     }
   },
@@ -43,7 +43,7 @@ export const uis = {
     metas: {
       slug: "tailwind-css",
       name: "Tailwind CSS",
-      imgPath: "/icons/ui/tailwind.svg",
+      icon: "tailwind",
       url: "https://tailwindcss.com/"
     }
   },
@@ -51,7 +51,7 @@ export const uis = {
     metas: {
       slug: "buefy",
       name: "Buefy",
-      imgPath: "/icons/ui/buefy.svg",
+      icon: "buefy",
       url: "https://buefy.org/"
     }
   },
@@ -59,7 +59,7 @@ export const uis = {
     metas: {
       slug: "inkline",
       name: "Inkline",
-      imgPath: "/icons/ui/inkline.svg",
+      icon: "inkline",
       url: "https://inkline.io/"
     }
   },
@@ -67,7 +67,7 @@ export const uis = {
     metas: {
       slug: "chakra-ui",
       name: "Chakra UI",
-      imgPath: "/icons/ui/chakra-ui.svg",
+      icon: "chakra-ui",
       url: "https://vue.chakra-ui.com"
     }
   },
@@ -75,7 +75,7 @@ export const uis = {
     metas: {
       slug: "primevue",
       name: "PrimeVue",
-      imgPath: "/icons/ui/primevue.svg",
+      icon: "primevue",
       url: "https://www.primefaces.org/primevue/showcase"
     }
   },
@@ -83,7 +83,7 @@ export const uis = {
     metas: {
       slug: "vuesax",
       name: "Vuesax",
-      imgPath: "/icons/ui/vuesax.svg",
+      icon: "vuesax",
       url: "https://vuesax.com"
     }
   },
@@ -91,7 +91,7 @@ export const uis = {
     metas: {
       slug: "iview",
       name: "iView",
-      imgPath: "/icons/ui/iview.svg",
+      icon: "iview",
       url: "http://iview.talkingdata.com"
     }
   },
@@ -99,7 +99,7 @@ export const uis = {
     metas: {
       slug: "vue-material",
       name: "Vue Material",
-      imgPath: "/icons/ui/vue-material.png",
+      icon: "vue-material",
       url: "https://www.creative-tim.com/vuematerial"
     }
   },
@@ -107,7 +107,7 @@ export const uis = {
     metas: {
       slug: "vulk",
       name: "Vulk",
-      imgPath: "/icons/ui/vulk.svg",
+      icon: "vulk",
       url: "https://vulk.cssninja.io"
     }
   },
@@ -115,7 +115,7 @@ export const uis = {
     metas: {
       slug: "arco-design",
       name: "Arco Design",
-      imgPath: "/icons/ui/arco.svg",
+      icon: "arco",
       url: "https://arco.design"
     }
   }

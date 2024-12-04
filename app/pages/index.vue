@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const input = ref("");
 const result = ref<VueTrackerResponse>();
-const siteInfo = ref<{ title: string, value?: string, img?: string | null, url?: string }[]>();
+const siteInfo = ref<{ title: string, value?: string, icon?: string | null, url?: string }[]>();
 const sitePlugins = ref<VueTrackerResponse["technologies"]>();
 const siteModules = ref<VueTrackerResponse["technologies"]>();
 const loading = ref(false);
@@ -46,20 +46,20 @@ const lookup = async () => {
       siteInfo.value = [{
         title: "Vue Version",
         value: result.value?.vueVersion,
-        img: vue.imgPath,
+        icon: vue.icon,
         url: vue.url
       },
       {
         title: framework.value?.version ? framework.value.name : "Framework",
         value: framework.value?.version ? framework.value.version : framework.value?.name,
-        img: getTechnologyMetas("framework", framework.value?.slug)?.imgPath,
+        icon: getTechnologyMetas("framework", framework.value?.slug)?.icon,
         url: getTechnologyMetas("framework", framework.value?.slug)?.url
 
       },
       {
         title: "UI Framework",
         value: ui.value?.name,
-        img: getTechnologyMetas("ui", ui.value?.slug)?.imgPath,
+        icon: getTechnologyMetas("ui", ui.value?.slug)?.icon,
         url: getTechnologyMetas("ui", ui.value?.slug)?.url
       },
       {

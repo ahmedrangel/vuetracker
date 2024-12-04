@@ -27,20 +27,20 @@ const ui = computed(() => result.value?.technologies.find(el => el.type === "ui"
 const siteInfo = ref([{
   title: "Vue Version",
   value: result.value?.vueVersion,
-  img: vue.imgPath,
+  icon: vue.icon,
   url: vue.url
 },
 {
   title: framework.value?.version ? framework.value.name : "Framework",
   value: framework.value?.version ? framework.value.version : framework.value?.name,
-  img: getTechnologyMetas("framework", framework.value?.slug)?.imgPath,
+  icon: getTechnologyMetas("framework", framework.value?.slug)?.icon,
   url: getTechnologyMetas("framework", framework.value?.slug)?.url
 
 },
 {
   title: "UI Framework",
   value: ui.value?.name,
-  img: getTechnologyMetas("ui", ui.value?.slug)?.imgPath,
+  icon: getTechnologyMetas("ui", ui.value?.slug)?.icon,
   url: getTechnologyMetas("ui", ui.value?.slug)?.url
 },
 {

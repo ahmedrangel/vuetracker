@@ -3,7 +3,7 @@ export const frameworks = {
     metas: {
       slug: "nuxtjs",
       name: "Nuxt",
-      imgPath: "/icons/framework/nuxt.svg",
+      icon: "nuxt",
       url: "https://nuxt.com"
     }
   },
@@ -11,7 +11,7 @@ export const frameworks = {
     metas: {
       slug: "vuepress",
       name: "VuePress",
-      imgPath: "/icons/framework/vuepress.svg",
+      icon: "vuepress",
       url: "https://vuepress.vuejs.org"
     }
   },
@@ -19,7 +19,7 @@ export const frameworks = {
     metas: {
       slug: "vitepress",
       name: "VitePress",
-      imgPath: "/icons/framework/vitepress.svg",
+      icon: "vitepress",
       url: "https://vitepress.vuejs.org"
     }
   },
@@ -27,7 +27,7 @@ export const frameworks = {
     metas: {
       slug: "gridsome",
       name: "Gridsome",
-      imgPath: "/icons/framework/gridsome.svg",
+      icon: "gridsome",
       url: "https://gridsome.org"
     }
   },
@@ -35,7 +35,7 @@ export const frameworks = {
     metas: {
       slug: "iles",
       name: "îles",
-      imgPath: "/icons/framework/iles.svg",
+      icon: "iles",
       url: "https://iles-docs.netlify.app"
     }
   },
@@ -43,7 +43,7 @@ export const frameworks = {
     metas: {
       slug: "quasar",
       name: "Quasar",
-      imgPath: "/icons/framework/quasar.svg",
+      icon: "quasar",
       url: "https://quasar.dev"
     }
   },
@@ -51,7 +51,7 @@ export const frameworks = {
     metas: {
       slug: "vuestorefront",
       name: "Vue Storefront",
-      imgPath: "/icons/framework/vue-storefront.svg",
+      icon: "vue-storefront",
       url: "https://www.vuestorefront.io/"
     }
   },
@@ -59,7 +59,7 @@ export const frameworks = {
     metas: {
       slug: "tres-js",
       name: "Tresjs",
-      imgPath: "/icons/framework/tres.svg",
+      icon: "tres",
       url: "https://tresjs.org/"
     }
   }

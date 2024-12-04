@@ -3,7 +3,7 @@ export const modules = {
     metas: {
       slug: "nuxtjs-axios",
       name: "@nuxtjs/axios",
-      imgPath: null,
+      icon: null,
       url: "https://axios.nuxtjs.org"
     }
   },
@@ -11,7 +11,7 @@ export const modules = {
     metas: {
       slug: "nuxt-http",
       name: "@nuxt/http",
-      imgPath: null,
+      icon: null,
       url: "https://http.nuxtjs.org"
     }
   },
@@ -19,7 +19,7 @@ export const modules = {
     metas: {
       slug: "nuxtjs-pwa",
       name: "@nuxtjs/pwa",
-      imgPath: null,
+      icon: null,
       url: "https://pwa.nuxtjs.org"
     }
   },
@@ -27,7 +27,7 @@ export const modules = {
     metas: {
       slug: "nuxtjs-apollo",
       name: "@nuxtjs/apollo",
-      imgPath: null,
+      icon: null,
       url: "https://github.com/nuxt-modules/apollo"
     }
   },
@@ -35,7 +35,7 @@ export const modules = {
     metas: {
       slug: "nuxtjs-auth",
       name: "@nuxtjs/auth",
-      imgPath: null,
+      icon: null,
       url: "https://auth.nuxtjs.org"
     }
   },
@@ -43,7 +43,7 @@ export const modules = {
     metas: {
       slug: "nuxtjs-sentry",
       name: "@nuxtjs/sentry",
-      imgPath: null,
+      icon: null,
       url: "https://sentry.nuxtjs.org/"
     }
   },
@@ -51,7 +51,7 @@ export const modules = {
     metas: {
       slug: "nuxtjs-vuetify",
       name: "@nuxtjs/vuetify",
-      imgPath: null,
+      icon: null,
       url: "https://github.com/nuxt-community/vuetify-module"
     }
   },
@@ -59,7 +59,7 @@ export const modules = {
     metas: {
       slug: "nuxtjs-device",
       name: "@nuxtjs/device",
-      imgPath: null,
+      icon: null,
       url: "https://github.com/nuxt-modules/device"
     }
   },
@@ -67,7 +67,7 @@ export const modules = {
     metas: {
       slug: "nuxtjs-firebase",
       name: "@nuxtjs/firebase",
-      imgPath: null,
+      icon: null,
       url: "https://firebase.nuxtjs.org"
     }
   },
@@ -75,7 +75,7 @@ export const modules = {
     metas: {
       slug: "nuxt-user-agent",
       name: "nuxt-user-agent",
-      imgPath: null,
+      icon: null,
       url: "https://github.com/fukuiretu/nuxt-user-agent"
     }
   },
@@ -83,7 +83,7 @@ export const modules = {
     metas: {
       slug: "nuxt-shopify",
       name: "nuxt-shopify",
-      imgPath: null,
+      icon: null,
       url: "https://github.com/Gomah/nuxt-shopify"
     }
   },
@@ -91,7 +91,7 @@ export const modules = {
     metas: {
       slug: "nuxtjs-recaptcha",
       name: "@nuxtjs/recaptcha",
-      imgPath: null,
+      icon: null,
       url: "https://github.com/nuxt-community/recaptcha-module"
     }
   },
@@ -99,7 +99,7 @@ export const modules = {
     metas: {
       slug: "nuxtjs-google-gtag",
       name: "@nuxtjs/google-gtag",
-      imgPath: null,
+      icon: null,
       url: "https://github.com/nuxt-community/google-gtag"
     }
   },
@@ -107,7 +107,7 @@ export const modules = {
     metas: {
       slug: "nuxtjs-google-analytics",
       name: "@nuxtjs/google-analytics",
-      imgPath: null,
+      icon: null,
       url: "https://google-analytics.nuxtjs.org"
     }
   },
@@ -115,7 +115,7 @@ export const modules = {
     metas: {
       slug: "nuxtjs-google-tag-manager",
       name: "@nuxtjs/gtm",
-      imgPath: null,
+      icon: null,
       url: "https://github.com/nuxt-community/gtm-module"
     }
   },
@@ -123,7 +123,7 @@ export const modules = {
     metas: {
       slug: "nuxt-matomo",
       name: "nuxt-matomo",
-      imgPath: null,
+      icon: null,
       url: "https://github.com/pimlie/nuxt-matomo"
     }
   },
@@ -131,7 +131,7 @@ export const modules = {
     metas: {
       slug: "cookie-universal-nuxt",
       name: "cookie-universal-nuxt",
-      imgPath: null,
+      icon: null,
       url: "https://github.com/microcipcip/cookie-universal/tree/master/packages/cookie-universal-nuxt"
     }
   },
@@ -139,7 +139,7 @@ export const modules = {
     metas: {
       slug: "nuxt-socket-io",
       name: "nuxt-socket-io",
-      imgPath: null,
+      icon: null,
       url: "https://github.com/richardeschloss/nuxt-socket-io"
     }
   },
@@ -147,7 +147,7 @@ export const modules = {
     metas: {
       slug: "nuxt-facebook-pixel-module",
       name: "nuxt-facebook-pixel-module",
-      imgPath: null,
+      icon: null,
       url: "https://github.com/WilliamDASILVA/nuxt-facebook-pixel-module"
     }
   },
@@ -155,7 +155,7 @@ export const modules = {
     metas: {
       slug: "nuxt-rollbar-module",
       name: "nuxt-rollbar-module",
-      imgPath: null,
+      icon: null,
       url: "https://github.com/gaelreyrol/nuxt-rollbar-module"
     }
   },
@@ -163,7 +163,7 @@ export const modules = {
     metas: {
       slug: "nuxt-dayjs-module",
       name: "@nuxtjs/dayjs",
-      imgPath: null,
+      icon: null,
       url: "https://github.com/nuxt-community/dayjs-module"
     }
   },
@@ -171,7 +171,7 @@ export const modules = {
     metas: {
       slug: "nuxtjs-date-fns",
       name: "@nuxtjs/date-fns",
-      imgPath: null,
+      icon: null,
       url: "https://github.com/nuxt-community/date-fns-module"
     }
   },
@@ -179,7 +179,7 @@ export const modules = {
     metas: {
       slug: "nuxtjs-moment",
       name: "@nuxtjs/moment",
-      imgPath: null,
+      icon: null,
       url: "https://github.com/nuxt-community/moment-module"
     }
   },
@@ -187,7 +187,7 @@ export const modules = {
     metas: {
       slug: "nuxtjs-universal-storage",
       name: "@nuxtjs/universal-storage",
-      imgPath: null,
+      icon: null,
       url: "https://github.com/nuxt-community/universal-storage-module"
     }
   },
@@ -195,7 +195,7 @@ export const modules = {
     metas: {
       slug: "nuxtjs-prismic",
       name: "@nuxtjs/prismic",
-      imgPath: null,
+      icon: null,
       url: "https://prismic.nuxtjs.org"
     }
   },
@@ -203,7 +203,7 @@ export const modules = {
     metas: {
       slug: "storyblok-nuxt",
       name: "storyblok-nuxt",
-      imgPath: null,
+      icon: null,
       url: "https://github.com/storyblok/storyblok-nuxt"
     }
   },
@@ -211,7 +211,7 @@ export const modules = {
     metas: {
       slug: "nuxt-sanity",
       name: "nuxt-sanity",
-      imgPath: null,
+      icon: null,
       url: "https://sanity.nuxtjs.org"
     }
   },
@@ -219,7 +219,7 @@ export const modules = {
     metas: {
       slug: "nuxt-content",
       name: "@nuxt/content",
-      imgPath: null,
+      icon: null,
       url: "https://content.nuxt.com"
     }
   },
@@ -227,7 +227,7 @@ export const modules = {
     metas: {
       slug: "nuxtjs-color-mode",
       name: "@nuxtjs/color-mode",
-      imgPath: null,
+      icon: null,
       url: "https://color-mode.nuxtjs.org"
     }
   },
@@ -235,7 +235,7 @@ export const modules = {
     metas: {
       slug: "nuxt-ackee",
       name: "nuxt-ackee",
-      imgPath: null,
+      icon: null,
       url: "https://github.com/bdrtsky/nuxt-ackee"
     }
   },
@@ -243,7 +243,7 @@ export const modules = {
     metas: {
       slug: "nuxtjs-strapi",
       name: "@nuxtjs/strapi",
-      imgPath: null,
+      icon: null,
       url: "https://strapi.nuxtjs.org"
     }
   },
@@ -251,7 +251,7 @@ export const modules = {
     metas: {
       slug: "nuxtjs-supabase",
       name: "@nuxtjs/supabase",
-      imgPath: null,
+      icon: null,
       url: "https://supabase.nuxtjs.org"
     }
   },
@@ -259,7 +259,7 @@ export const modules = {
     metas: {
       slug: "nuxt-i18n",
       name: "nuxt-i18n",
-      imgPath: null,
+      icon: null,
       url: "https://i18n.nuxtjs.org"
     }
   },
@@ -267,7 +267,7 @@ export const modules = {
     metas: {
       slug: "nuxt-i18n",
       name: "@nuxtjs/i18n",
-      imgPath: "/icons/modules/nuxt-i18n.svg",
+      icon: "nuxt-i18n",
       url: "https://i18n.nuxtjs.org"
     }
   },
@@ -275,7 +275,7 @@ export const modules = {
     metas: {
       slug: "nuxt-image",
       name: "@nuxt/image",
-      imgPath: null,
+      icon: null,
       url: "https://image.nuxt.com"
     }
   },
@@ -283,7 +283,7 @@ export const modules = {
     metas: {
       slug: "nuxt-cloudinary",
       name: "@nuxtjs/cloudinary",
-      imgPath: null,
+      icon: null,
       url: "https://cloudinary.nuxtjs.org"
     }
   },
@@ -291,7 +291,7 @@ export const modules = {
     metas: {
       slug: "docus",
       name: "docus",
-      imgPath: null,
+      icon: null,
       url: "https://docus.dev"
     }
   },
@@ -299,7 +299,7 @@ export const modules = {
     metas: {
       slug: "druxt",
       name: "druxt",
-      imgPath: null,
+      icon: null,
       url: "https://druxtjs.org"
     }
   },
@@ -307,7 +307,7 @@ export const modules = {
     metas: {
       slug: "vuestorefront",
       name: "Vue Storefront",
-      imgPath: "/icons/framework/vue-storefront.svg",
+      icon: "/icons/framework/vue-storefront",
       url: "https://www.vuestorefront.io/"
     }
   },
@@ -315,7 +315,7 @@ export const modules = {
     metas: {
       slug: "nuxt-typo3",
       name: "nuxt-typo3",
-      imgPath: "/icons/modules/typo3.svg",
+      icon: "typo3",
       url: "https://github.com/TYPO3-Initiatives/nuxt-typo3"
     }
   },
@@ -323,7 +323,7 @@ export const modules = {
     metas: {
       slug: "nuxt-booster",
       name: "nuxt-booster",
-      imgPath: "/icons/modules/nuxt-booster.svg",
+      icon: "nuxt-booster",
       url: "https://basics.github.io/nuxt-booster"
     }
   },
@@ -331,7 +331,7 @@ export const modules = {
     metas: {
       slug: "nuxt-custom-elements",
       name: "nuxt-custom-elements",
-      imgPath: "/icons/modules/custom-elements.svg",
+      icon: "custom-elements",
       url: "https://nuxt-custom-elements.grabarzundpartner.dev"
     }
   },
@@ -339,7 +339,7 @@ export const modules = {
     metas: {
       slug: "nuxtjs-algolia",
       name: "@nuxtjs/algolia",
-      imgPath: null,
+      icon: null,
       url: "https://algolia.nuxtjs.org"
     }
   },
@@ -347,7 +347,7 @@ export const modules = {
     metas: {
       slug: "nuxt-directus",
       name: "nuxt-directus",
-      imgPath: null,
+      icon: null,
       url: "https://nuxt-directus.netlify.app/"
     }
   },
@@ -355,7 +355,7 @@ export const modules = {
     metas: {
       slug: "nuxt-ui",
       name: "@nuxt/ui",
-      imgPath: null,
+      icon: null,
       url: "https://ui.nuxt.com"
     }
   },
@@ -363,7 +363,7 @@ export const modules = {
     metas: {
       slug: "nuxt-ui-pro",
       name: "@nuxt/ui-pro",
-      imgPath: null,
+      icon: null,
       url: "https://ui.nuxt.com/pro"
     }
   },
@@ -371,7 +371,7 @@ export const modules = {
     metas: {
       slug: "nuxt-mdc",
       name: "@nuxtjs/mdc",
-      imgPath: null,
+      icon: null,
       url: "https://github.com/nuxt-modules/mdc"
     }
   },
@@ -379,7 +379,7 @@ export const modules = {
     metas: {
       slug: "nuxt-studio",
       name: "@nuxthq/studio",
-      imgPath: null,
+      icon: null,
       url: "https://nuxt.studio"
     }
   },
@@ -387,7 +387,7 @@ export const modules = {
     metas: {
       slug: "nuxt-plausible",
       name: "@nuxtjs/plausible",
-      imgPath: null,
+      icon: null,
       url: "https://github.com/nuxt-modules/plausible"
     }
   },
@@ -395,7 +395,7 @@ export const modules = {
     metas: {
       slug: "nuxt-auth-utils",
       name: "nuxt-auth-utils",
-      imgPath: null,
+      icon: null,
       url: "https://github.com/atinux/nuxt-auth-utils"
     }
   },
@@ -403,7 +403,7 @@ export const modules = {
     metas: {
       slug: "nuxt-scripts",
       name: "@nuxt/scripts",
-      imgPath: null,
+      icon: null,
       url: "https://scripts.nuxt.com"
     }
   },
@@ -411,7 +411,7 @@ export const modules = {
     metas: {
       slug: "nuxt-icon",
       name: "@nuxt/icon",
-      imgPath: null,
+      icon: null,
       url: "https://github.com/nuxt/icon"
     }
   },
@@ -419,7 +419,7 @@ export const modules = {
     metas: {
       slug: "nuxthub-core",
       name: "@nuxthub/core",
-      imgPath: null,
+      icon: null,
       url: "https://hub.nuxt.com"
     }
   }

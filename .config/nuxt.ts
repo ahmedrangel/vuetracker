@@ -39,7 +39,10 @@ export default defineNuxtConfig({
 
   icon: {
     mode: "svg",
-    clientBundle: { scan: true, sizeLimitKb: 2048 }
+    clientBundle: { scan: true, sizeLimitKb: 2048 },
+    customCollections: [
+      { prefix: "vuetracker", dir: "./public/icons" }
+    ]
   },
 
   eslint: {

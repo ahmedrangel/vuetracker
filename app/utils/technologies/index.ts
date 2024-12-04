@@ -6,6 +6,6 @@ export * from "./uis";
 export const vue = {
   slug: "vue",
   name: "Vue",
-  imgPath: "/icons/vue.svg",
+  icon: "vue",
   url: "https://vuejs.org"
 };

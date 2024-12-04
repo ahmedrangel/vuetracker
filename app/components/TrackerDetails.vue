@@ -3,7 +3,7 @@ import { format } from "date-fns";
 
 defineProps<{
   result: VueTrackerResponse;
-  siteInfo?: { title: string, value?: string, img?: string | null, url?: string }[];
+  siteInfo?: { title: string, value?: string, icon?: string | null, url?: string }[];
   sitePlugins?: VueTrackerTechnology[];
   siteModules?: VueTrackerTechnology[];
 }>();
@@ -18,9 +18,9 @@ defineProps<{
     <template v-for="(info, i) of siteInfo" :key="i">
       <template v-if="info.value">
         <NuxtLink v-if="info.url" target="_blank" :to="info.url">
-          <TechCard v-ripple :title="info.title" :img="info.img" :value="info.value" class="hover:bg-gray-100 hover:dark:bg-gray-900" />
+          <TechCard v-ripple :title="info.title" :icon="info.icon" :value="info.value" class="hover:bg-gray-100 hover:dark:bg-gray-900" />
         </NuxtLink>
-        <TechCard v-else :title="info.title" :img="info.img" :value="info.value" />
+        <TechCard v-else :title="info.title" :icon="info.icon" :value="info.value" />
       </template>
     </template>
   </div>

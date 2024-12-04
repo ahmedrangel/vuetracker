@@ -41,7 +41,7 @@ const selectedUI = ref(undefined);
             <URadioGroup v-model="selectedFramework" :options="frameworksOptions" :ui="{ fieldset: 'space-y-1' }">
               <template #label="{ option }">
                 <div class="flex gap-1 items-center">
-                  <img :src="getTechnologyMetas('framework', option.value)?.imgPath!" class="w-4 h-4">
+                  <Icon :name="'vuetracker:' + getTechnologyMetas('framework', option.value)?.icon!" size="1.2em" />
                   <span class="text-gray-950 dark:text-gray-50">{{ option.label }}</span>
                 </div>
               </template>
@@ -52,7 +52,7 @@ const selectedUI = ref(undefined);
             <URadioGroup v-model="selectedUI" :options="uiOptions" :ui="{ fieldset: 'space-y-1' }">
               <template #label="{ option }">
                 <div class="flex gap-1 items-center">
-                  <img :src="getTechnologyMetas('ui', option.value)?.imgPath!" class="w-4 h-4">
+                  <Icon :name="'vuetracker:' + getTechnologyMetas('ui', option.value)?.icon!" size="1.2em" />
                   <span class="text-gray-950 dark:text-gray-50">{{ option.label }}</span>
                 </div>
               </template>
