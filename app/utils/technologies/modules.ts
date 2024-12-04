@@ -414,5 +414,13 @@ export const modules = {
       imgPath: null,
       url: "https://github.com/nuxt/icon"
     }
+  },
+  "@nuxthub/core": {
+    metas: {
+      slug: "nuxthub-core",
+      name: "@nuxthub/core",
+      imgPath: null,
+      url: "https://hub.nuxt.com"
+    }
   }
 };
