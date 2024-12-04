@@ -34,22 +34,22 @@
     "@nuxtjs/color-mode": "^3.5.2",
     "@nuxtjs/sitemap": "^7.0.0",
     "date-fns": "^4.1.0",
-    "drizzle-kit": "^0.28.1",
-    "drizzle-orm": "^0.36.4",
+    "drizzle-kit": "^0.29.1",
+    "drizzle-orm": "^0.37.0",
     "eslint": "^9.16.0",
     "nuxt": "^3.14.1592",
     "nuxt-ripple": "^0.0.7",
-    "sass": "^1.81.0",
+    "sass": "^1.82.0",
     "stylelint": "^16.11.0",
     "stylelint-config-standard-scss": "^14.0.0",
     "typescript": "^5.7.2",
     "ufo": "^1.5.4",
     "vue-tsc": "^2.1.10",
-    "wrangler": "^3.91.0"
+    "wrangler": "^3.92.0"
   },
   "packageManager": "pnpm@9.14.4",
   "dependencies": {
     "@nuxt/ui": "^2.19.2",
-    "vuetracker-analyzer": "^0.1.1"
+    "vuetracker-analyzer": "^0.1.2"
   }
 }
