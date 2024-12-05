@@ -1,6 +1,5 @@
 export default defineEventHandler(async (event) => {
   const { host } = getRouterParams(event);
-  const siteSlug = host?.replaceAll(".", "-");
   const DB = useDB();
 
   const site = await DB.select({
@@ -22,7 +21,7 @@ export default defineEventHandler(async (event) => {
     icons: sql`json_group_array(DISTINCT json_object( 'url', ${tables.icons.url}, 'sizes', ${tables.icons.sizes})) FILTER (WHERE ${tables.icons.id} IS NOT NULL)`.as("icons"),
     technologies: sql`json_group_array(DISTINCT json_object('slug', ${tables.technologies.slug}, 'name', ${tables.technologies.name}, 'type', ${tables.technologies.type}, 'version', ${tables.technologies.version})) FILTER (WHERE ${tables.technologies.id} IS NOT NULL)`.as("technologies")
   }).from(tables.sites)
-    .where(eq(tables.sites.slug, siteSlug))
+    .where(eq(tables.sites.hostname, host))
     .leftJoin(tables.icons, eq(tables.icons.siteSlug, tables.sites.slug))
     .leftJoin(tables.technologies, eq(tables.technologies.siteSlug, tables.sites.slug))
     .get() as unknown as VueTrackerRawResponse;
