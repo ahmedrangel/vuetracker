@@ -18,8 +18,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <nav class="text-gray-900 dark:text-gray-50 text-md tracking-tight sm:bg-gray-200 sm:dark:bg-gray-900">
-    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 bg-gray-200 dark:bg-gray-900 z-20 relative">
+  <nav class="text-gray-900 dark:text-gray-50 text-base tracking-tight sm:bg-gray-200 sm:dark:bg-gray-900">
+    <div class="mx-auto sm:px-6 lg:px-8 px-2 bg-gray-200 dark:bg-gray-900 z-20 relative" :class="route.path !== '/explore' ? 'max-w-7xl' : ''">
       <div class="relative flex h-14 items-center justify-between">
         <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
           <!-- Mobile menu button -->

@@ -98,7 +98,7 @@ useHead({
           <UButtonGroup size="xl" orientation="horizontal" class="w-full">
             <UInput v-model="input" class="w-full" :ui="{ leading: { padding: { xl: 'ps-[4.2rem] py-4' } } }" required>
               <template #leading>
-                <span class="text-md text-gray-400">https://</span>
+                <span class="text-base text-gray-400">https://</span>
               </template>
             </UInput>
             <UButton v-ripple class="md:px-10 w-20 sm:w-32 relative justify-center" type="submit" :disabled="loading">
@@ -121,7 +121,7 @@ useHead({
                       <h2 class="text-xl font-semibold">/{{ result.hostname }}</h2>
                     </div>
                   </NuxtLink>
-                  <h4 class="text-md">{{ result.title }}</h4>
+                  <h4 class="text-base">{{ result.title }}</h4>
                   <NuxtLink target="_blank" :to="result.url" class="hover:underline">
                     <h6 class="text-sm">{{ result.url }}</h6>
                   </NuxtLink>

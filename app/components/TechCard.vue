@@ -11,7 +11,7 @@ defineProps<{
     <h6 class="self-start bg-gray-300 dark:bg-gray-700 px-3 py-1 rounded-br-xl rounded-bl-none rounded-tr-none text-xs tracking-tight uppercase leading-sm font-bold">{{ title }}</h6>
     <div class="flex justify-center items-center px-2 py-3 gap-1">
       <Icon v-if="icon" :name="'vuetracker:' + icon" size="1.8rem" />
-      <p class="text-md font-bold tracking-tight">{{ value }}</p>
+      <p class="text-base font-bold tracking-tight">{{ value }}</p>
     </div>
   </div>
 </template>

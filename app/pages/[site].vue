@@ -76,7 +76,7 @@ useHead({
             <h2 class="text-xl font-semibold hover:underline">{{ site }}</h2>
           </NuxtLink>
         </div>
-        <h4 class="text-md">{{ result.title }}</h4>
+        <h4 class="text-base">{{ result.title }}</h4>
       </div>
       <img v-if="result.ogImage" :src="result.ogImage" class="rounded-xl">
       <div class="tracking-tight flex gap-3 items-center rounded-xl transition">
