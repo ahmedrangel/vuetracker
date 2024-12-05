@@ -25,7 +25,7 @@ const sortDesc = ref(true);
 const selectedFramework = ref(undefined);
 const selectedUI = ref(undefined);
 const loading = ref(false);
-const { data: results } = await useFetch<VueTrackerResponse[]>("/api/explore");
+const results = ref<VueTrackerResponse[]>();
 
 watchEffect(async () => {
   loading.value = true;
