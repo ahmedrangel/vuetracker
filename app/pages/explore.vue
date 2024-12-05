@@ -24,9 +24,12 @@ const sortIcon = ref("ph:arrow-down-bold");
 const sortDesc = ref(true);
 const selectedFramework = ref(undefined);
 const selectedUI = ref(undefined);
+const loading = ref(false);
 const { data: results } = await useFetch<VueTrackerResponse[]>("/api/explore");
 
 watchEffect(async () => {
+  loading.value = true;
+  results.value = [];
   results.value = await $fetch<VueTrackerResponse[]>("/api/explore", {
     query: {
       ...selectedFramework.value ? selectedFramework.value !== "vue" ? { framework: selectedFramework.value } : { vueOnly: 1 } : {},
@@ -35,6 +38,7 @@ watchEffect(async () => {
       order: sortDesc.value ? "desc" : "asc"
     }
   }).catch(() => []);
+  loading.value = false;
 });
 
 const toggleSort = () => {
@@ -92,42 +96,47 @@ const toggleSort = () => {
     </aside>
 
     <div class="md:px-2 md:ml-64">
-      <div class="flex gap-2 justify-between items-end mb-4">
+      <div class="flex gap-2 justify-between items-end">
         <h3 class="text-lg tracking-tight"><b>{{ results?.length }}</b> websites found</h3>
         <div class="flex gap-1 items-center">
           <USelect v-model="filter" :options="filters" option-attribute="name" />
           <UButton :icon="sortIcon" @click="toggleSort" />
         </div>
       </div>
-      <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        <template v-for="(r, i) of results" :key="i">
-          <div class="flex flex-col bg-gray-200 dark:bg-gray-900 rounded overflow-hidden">
-            <div class="relative h-[100px] sm:h-[160px] md:h-[140px] lg:h-[140px] xl:h-[180px]">
-              <img v-if="r.ogImage" :src="r.ogImage" class="absolute object-cover h-full w-full" :title="r.title || r.hostname">
-              <div v-else class="absolute flex items-center justify-center h-full w-full bg-gray-300 dark:bg-gray-800" title="No OG Image">
-                <Icon name="ph:image" size="2em" />
-              </div>
-            </div>
-            <div class="flex gap-2 items-center justify-between p-2">
-              <NuxtLink :to="`/${r.hostname}`" class="hover:underline">
-                <div class="flex gap-1 items-center">
-                  <img v-if="r.icons?.length" :src="r.icons[0]?.url" class="min-w-6 max-w-6 min-h-6 max-h-6">
-                  <h4 class="text-xs xl:text-sm font-semibold">/{{ r.hostname }}</h4>
+      <div class="relative py-4">
+        <TransitionGroup name="fade">
+          <div v-if="!loading && results" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <template v-for="(r, i) of results" :key="i">
+              <div class="flex flex-col bg-gray-200 dark:bg-gray-900 rounded overflow-hidden">
+                <div class="relative h-[100px] sm:h-[160px] md:h-[140px] lg:h-[140px] xl:h-[180px]">
+                  <img v-if="r.ogImage" :src="r.ogImage" class="absolute object-cover h-full w-full" :title="r.title || r.hostname">
+                  <div v-else class="absolute flex items-center justify-center h-full w-full bg-gray-300 dark:bg-gray-800" title="No OG Image">
+                    <Icon name="ph:image" size="2em" />
+                  </div>
                 </div>
-              </NuxtLink>
-              <div class="flex gap-1 items-center">
-                <span v-if="!r.technologies.some(el => el.type === 'framework')" :title="vue.name">
-                  <Icon :name="'vuetracker:vue'" size="1.5em" />
-                </span>
-                <template v-for="(tech, j) of r.technologies" :key="j">
-                  <span v-if="getTechnologyMetas(tech.type, tech.slug)?.icon" :title="getTechnologyMetas(tech.type, tech.slug)?.name">
-                    <Icon :name="'vuetracker:' + getTechnologyMetas(tech.type, tech.slug)?.icon" size="1.5em" />
-                  </span>
-                </template>
+                <div class="flex gap-2 items-center justify-between p-2">
+                  <NuxtLink :to="`/${r.hostname}`" class="hover:underline">
+                    <div class="flex gap-1 items-center">
+                      <img v-if="r.icons?.length" :src="r.icons[0]?.url" class="min-w-6 max-w-6 min-h-6 max-h-6">
+                      <h4 class="text-xs xl:text-sm font-semibold">/{{ r.hostname }}</h4>
+                    </div>
+                  </NuxtLink>
+                  <div class="flex gap-1 items-center">
+                    <span v-if="!r.technologies.some(el => el.type === 'framework')" :title="vue.name">
+                      <Icon :name="'vuetracker:vue'" size="1.5em" />
+                    </span>
+                    <template v-for="(tech, j) of r.technologies" :key="j">
+                      <span v-if="getTechnologyMetas(tech.type, tech.slug)?.icon" :title="getTechnologyMetas(tech.type, tech.slug)?.name">
+                        <Icon :name="'vuetracker:' + getTechnologyMetas(tech.type, tech.slug)?.icon" size="1.5em" />
+                      </span>
+                    </template>
+                  </div>
+                </div>
               </div>
-            </div>
+            </template>
           </div>
-        </template>
+          <LoadingDots v-else-if="loading" class="absolute w-full top-0" />
+        </TransitionGroup>
       </div>
     </div>
   </main>

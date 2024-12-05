@@ -111,7 +111,7 @@ useHead({
           </UButtonGroup>
         </form>
         <div id="results" class="relative">
-          <TransitionGroup name="fadeel">
+          <TransitionGroup name="fade">
             <template v-if="result && !error && !loading">
               <div class="flex flex-col gap-6">
                 <div class="flex flex-col gap-1 text-start">
@@ -130,7 +130,7 @@ useHead({
               </div>
             </template>
             <div v-else-if="!result && error && !loading" class="text-rose-600 dark:text-rose-400">{{ error }}</div>
-            <LoadingDots v-else-if="!result && !error && loading" />
+            <LoadingDots v-else-if="!result && !error && loading" class="absolute w-full top-0" />
           </TransitionGroup>
         </div>
       </div>

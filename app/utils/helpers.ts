@@ -1,5 +1,5 @@
-export const sleep = (ms?: number) => {
-  return new Promise(resolve => setTimeout(resolve, ms));
+export const sleep = async (ms?: number) => {
+  return await new Promise(resolve => setTimeout(resolve, ms));
 };
 
 export const getTechnologyMetas = (type: VueTrackerTechnology["type"], slug?: string) => {
