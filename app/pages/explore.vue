@@ -26,6 +26,7 @@ const selectedFramework = ref(undefined);
 const selectedUI = ref(undefined);
 const loading = ref(false);
 const results = ref<VueTrackerResponse[]>();
+const openSideBar = ref(false);
 
 watchEffect(async () => {
   loading.value = true;
@@ -45,22 +46,34 @@ const toggleSort = () => {
   sortDesc.value = !sortDesc.value;
   sortIcon.value = sortDesc.value ? "ph:arrow-down-bold" : "ph:arrow-up-bold";
 };
+
+onMounted(() => {
+  addEventListener("resize", () => {
+    openSideBar.value = false;
+  });
+});
 </script>
 
 <template>
   <main>
-    <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+    <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" @click="openSideBar = !openSideBar">
       <span class="sr-only">Open sidebar</span>
-      <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-        <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z" />
-      </svg>
+      <Icon name="ph:sliders-horizontal-bold" size="1.8em" />
     </button>
 
-    <aside id="default-sidebar" class="fixed top-0 left-0 z-40 md:w-64 h-screen transition-transform -translate-x-full md:translate-x-0" aria-label="Sidebar">
+    <aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-full md:w-64 h-screen transition-transform md:translate-x-0" aria-label="Sidebar" :class="{ '-translate-x-full': !openSideBar, 'translate-x-0': openSideBar }">
       <div class="text-start h-full px-3 py-4 overflow-y-auto bg-gray-200 dark:bg-gray-900 flex flex-col gap-4">
-        <NuxtLink class="text-center" to="/">
+        <NuxtLink v-if="!openSideBar" class="text-center" to="/">
           <h1 class="font-bold tracking-tight"><span class="text-primary-600 dark:text-primary-400">Vue</span>Tracker</h1>
         </NuxtLink>
+        <div v-else class="flex justify-between gap-2">
+          <NuxtLink class="text-center" to="/">
+            <h1 class="font-bold tracking-tight"><span class="text-primary-600 dark:text-primary-400">Vue</span>Tracker</h1>
+          </NuxtLink>
+          <button class="text-center" @click="openSideBar = !openSideBar">
+            <Icon name="ph:x-bold" size="1.5em" />
+          </button>
+        </div>
         <UInput icon="ph:magnifying-glass" placeholder="Search a website" />
         <div class="flex flex-col gap-4">
           <div class="space-y-1">
@@ -96,7 +109,7 @@ const toggleSort = () => {
     </aside>
 
     <div class="md:px-2 md:ml-64">
-      <div class="flex gap-2 justify-between items-end">
+      <div class="flex gap-2 flex-wrap justify-between items-end">
         <h3 class="text-lg tracking-tight"><b>{{ results?.length }}</b> websites found</h3>
         <div class="flex gap-1 items-center">
           <USelect v-model="filter" :options="filters" option-attribute="name" />
@@ -105,7 +118,7 @@ const toggleSort = () => {
       </div>
       <div class="relative py-4">
         <TransitionGroup name="fade">
-          <div v-if="!loading && results" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <div v-if="!loading && results" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
             <template v-for="(r, i) of results" :key="i">
               <div class="flex flex-col bg-gray-200 dark:bg-gray-900 rounded overflow-hidden">
                 <div class="relative h-[100px] sm:h-[160px] md:h-[140px] lg:h-[140px] xl:h-[180px]">
@@ -114,11 +127,11 @@ const toggleSort = () => {
                     <Icon name="ph:image" size="2em" />
                   </div>
                 </div>
-                <div class="flex gap-2 items-center justify-between p-2">
-                  <NuxtLink :to="`/${r.hostname}`" class="hover:underline">
+                <div class="flex flex-wrap gap-2 items-center justify-between p-2">
+                  <NuxtLink :to="`/${r.hostname}`" class="hover:underline truncate">
                     <div class="flex gap-1 items-center">
-                      <img v-if="r.icons?.length" :src="r.icons[0]?.url" class="min-w-6 max-w-6 min-h-6 max-h-6">
-                      <h4 class="text-xs xl:text-sm font-semibold">/{{ r.hostname }}</h4>
+                      <img v-if="r.icons?.length" :src="r.icons[0]?.url" class="max-w-5 max-h-5">
+                      <h4 class="text-xs xl:text-sm font-semibold truncate">/{{ r.hostname }}</h4>
                     </div>
                   </NuxtLink>
                   <div class="flex gap-1 items-center">
