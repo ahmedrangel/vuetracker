@@ -52,8 +52,8 @@ importers:
         specifier: ^3.14.1592
         version: 3.14.1592(@parcel/watcher@2.5.0)(@types/node@22.10.0)(drizzle-orm@0.37.0(@cloudflare/workers-types@4.20241127.0))(eslint@9.16.0(jiti@2.4.0))(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.4)(sass@1.82.0)(stylelint@16.11.0(typescript@5.7.2))(terser@5.36.0)(typescript@5.7.2)(vite@5.4.11(@types/node@22.10.0)(sass@1.82.0)(terser@5.36.0))(vue-tsc@2.1.10(typescript@5.7.2))
       nuxt-ripple:
-        specifier: ^0.0.7
-        version: 0.0.7(magicast@0.3.5)(rollup@4.27.4)
+        specifier: ^0.0.8
+        version: 0.0.8(magicast@0.3.5)(rollup@4.27.4)
       sass:
         specifier: ^1.82.0
         version: 1.82.0
@@ -3911,8 +3911,8 @@ packages:
     engines: {node: ^16.10.0 || >=18.0.0}
     hasBin: true
 
-  nuxt-ripple@0.0.7:
-    resolution: {integrity: sha512-6+d/IEiHVlLRCCri/Fgb2D6sKnGNZ6aV9MiSbDmMMekBezl6+x3f7HAf9OAaTs+dK3CeCLNH/2cf3CgKggvOzw==}
+  nuxt-ripple@0.0.8:
+    resolution: {integrity: sha512-ellqn8+OXIS4SffFhIqZHSdTNQglAwGJ7B8R2ISR4+BauP360E7cfK6vr1FGqd40HyoeSLV03Z142bTey25hCg==}
 
   nuxt-site-config-kit@3.0.4:
     resolution: {integrity: sha512-g7aphMDHHwsry4Wez2FvuUE0QjOi32BqPzcP2DRpr5IpvNHQxcHEUrS6z1P0UxpnDUecv7CPLC/bRlERir+otA==}
@@ -9546,7 +9546,7 @@ snapshots:
 
   nuxi@3.15.0: {}
 
-  nuxt-ripple@0.0.7(magicast@0.3.5)(rollup@4.27.4):
+  nuxt-ripple@0.0.8(magicast@0.3.5)(rollup@4.27.4):
     dependencies:
       '@nuxt/kit': 3.14.1592(magicast@0.3.5)(rollup@4.27.4)
     transitivePeerDependencies:
