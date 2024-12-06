@@ -197,13 +197,17 @@ useHead({
                     </div>
                   </NuxtLink>
                   <div class="flex gap-1 items-center">
-                    <span v-if="!r.technologies.some(el => el.type === 'framework')" :title="vue.name">
-                      <Icon :name="'vuetracker:vue'" width="1.3em" height="1.3em" />
-                    </span>
-                    <template v-for="(tech, j) of r.technologies" :key="j">
-                      <span v-if="getTechnologyMetas(tech.type, tech.slug)?.icon" :title="getTechnologyMetas(tech.type, tech.slug)?.name">
-                        <Icon :name="'vuetracker:' + getTechnologyMetas(tech.type, tech.slug)?.icon" width="1.3em" height="1.3em" />
+                    <UTooltip v-if="!r.technologies.some(el => el.type === 'framework')" :text="vue.name" :popper="{ placement: 'top', arrow: true }">
+                      <span :title="vue.name">
+                        <Icon :name="'vuetracker:vue'" width="1.3em" height="1.3em" />
                       </span>
+                    </UTooltip>
+                    <template v-for="(tech, j) of r.technologies" :key="j">
+                      <UTooltip v-if="getTechnologyMetas(tech.type, tech.slug)?.icon" :text="getTechnologyMetas(tech.type, tech.slug)?.name" :popper="{ placement: 'top', arrow: true }">
+                        <span :title="getTechnologyMetas(tech.type, tech.slug)?.name">
+                          <Icon :name="'vuetracker:' + getTechnologyMetas(tech.type, tech.slug)?.icon" width="1.3em" height="1.3em" />
+                        </span>
+                      </UTooltip>
                     </template>
                   </div>
                 </div>
