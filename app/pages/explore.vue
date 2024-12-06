@@ -135,7 +135,7 @@ useHead({
             </div>
             <URadioGroup v-model="selectedFramework" :options="frameworksOptions" :ui="{ fieldset: 'space-y-1' }" :ui-radio="{ inner: 'ms-1' }">
               <template #label="{ option }">
-                <div class="flex gap-1 items-center">
+                <div class="flex gap-1 items-center text-base">
                   <Icon :name="'vuetracker:' + (option.value !== 'vue' ? getTechnologyMetas('framework', option.value)?.icon! : vue.icon)" width="1.2em" height="1.2em" />
                   <span class="text-gray-950 dark:text-gray-50">{{ option.label }}</span>
                 </div>
@@ -149,7 +149,7 @@ useHead({
             </div>
             <URadioGroup v-model="selectedUI" :options="uiOptions" :ui="{ fieldset: 'space-y-1' }" :ui-radio="{ inner: 'ms-1' }">
               <template #label="{ option }">
-                <div class="flex gap-1 items-center">
+                <div class="flex gap-1 items-center text-base">
                   <Icon :name="'vuetracker:' + getTechnologyMetas('ui', option.value)?.icon!" width="1.2em" height="1.2em" />
                   <span class="text-gray-950 dark:text-gray-50">{{ option.label }}</span>
                 </div>
