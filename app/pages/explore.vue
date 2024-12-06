@@ -190,7 +190,7 @@ onMounted(async () => {
               <span v-if="i === results?.length - 1" ref="lastSite" class="m-0 p-0" />
             </template>
           </div>
-          <LoadingDots v-else-if="loading" class="absolute w-full top-0" />
+          <LoadingDots v-else-if="loading" class="absolute w-full top-0 mt-8" />
         </TransitionGroup>
       </div>
     </div>
