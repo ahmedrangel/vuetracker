@@ -11,11 +11,16 @@ export default defineNuxtConfig({
     head: {
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
-      title: "",
       htmlAttrs: {
         lang: "en"
       },
-      link: [],
+      link: [
+        { rel: "apple-touch-icon", sizes: "180x180", href: "/images/apple-touch-icon.png" },
+        { rel: "icon", type: "image/png", sizes: "96x96", href: "/images/favicon-96x96.png" },
+        { rel: "icon", type: "image/svg+xml", href: "/images/favicon.svg" },
+        { rel: "manifest", href: "/site.webmanifest" },
+        { rel: "shortcut icon", href: "/favicon.ico" }
+      ],
       meta: [
         { name: "robots", content: "index, follow" },
         { property: "og:site:name", content: SITE.name }
@@ -67,7 +72,7 @@ export default defineNuxtConfig({
     prerender: {
       autoSubfolderIndex: false,
       crawlLinks: false,
-      routes: ["/sitemap.xml"]
+      routes: ["/", "/sitemap.xml"]
     },
     cloudflare: {
       pages: {
@@ -83,6 +88,7 @@ export default defineNuxtConfig({
 
   sitemap: {
     discoverImages: false,
+    sources: ["/api/__sitemap"],
     xslColumns: [
       { label: "URL", width: "65%" },
       { label: "Priority", select: "sitemap:priority", width: "12.5%" },

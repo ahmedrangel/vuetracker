@@ -79,7 +79,8 @@ useSeoMeta({
   title: "VueTracker",
   ogTitle: "VueTracker",
   description: result.value?.description,
-  ogDescription: result.value?.description
+  ogDescription: result.value?.description,
+  ogImage: `${SITE.url}${SITE.ogImage}`
 });
 
 useHead({

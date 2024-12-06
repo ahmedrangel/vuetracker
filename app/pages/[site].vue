@@ -56,7 +56,8 @@ useSeoMeta({
   title: `${site} | VueTracker`,
   ogTitle: `${site} | VueTracker`,
   description: result.value?.description,
-  ogDescription: result.value?.description
+  ogDescription: result.value?.description,
+  ogImage: result.value?.ogImage
 });
 
 useHead({
