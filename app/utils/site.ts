@@ -1,5 +1,5 @@
 export const SITE = {
   name: "VueTracker",
-  url: "https://vuetracker.pages.dev",
+  url: "https://vuetracker.nuxt.dev",
   ogImage: "/images/og-card.jpg"
 };
