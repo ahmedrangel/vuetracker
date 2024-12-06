@@ -12,8 +12,8 @@ importers:
         specifier: ^2.19.2
         version: 2.19.2(change-case@5.4.4)(magicast@0.3.5)(rollup@4.27.4)(vite@5.4.11(@types/node@22.10.0)(sass@1.82.0)(terser@5.36.0))(vue@3.5.13(typescript@5.7.2))
       vuetracker-analyzer:
-        specifier: ^0.1.2
-        version: 0.1.2(typescript@5.7.2)
+        specifier: ^0.1.3
+        version: 0.1.3(typescript@5.7.2)
     devDependencies:
       '@iconify-json/fa6-solid':
         specifier: ^1.2.2
@@ -5326,8 +5326,8 @@ packages:
       typescript:
         optional: true
 
-  vuetracker-analyzer@0.1.2:
-    resolution: {integrity: sha512-W/uOid5hMF54Kwcb6dcXiQtYlC5LjWgGmDhMdk+7A/K5y1pjQs6Xa6/l3JlUxQxnxt0wBrErp94+hZTU6ZJyaw==}
+  vuetracker-analyzer@0.1.3:
+    resolution: {integrity: sha512-QDIBHoOkcO+kwMQm07BRDXDILR7JeXuCdF47rV8kBYxmXR74R4mYflEKfEgpzAxtWWhOJt/cMLa4TWKpjOgt4w==}
 
   webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
@@ -11221,7 +11221,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.7.2
 
-  vuetracker-analyzer@0.1.2(typescript@5.7.2):
+  vuetracker-analyzer@0.1.3(typescript@5.7.2):
     dependencies:
       consola: 3.2.3
       puppeteer: 23.10.0(typescript@5.7.2)
