@@ -24,15 +24,9 @@ importers:
       '@nuxt/eslint':
         specifier: ^0.7.2
         version: 0.7.2(@vue/compiler-sfc@3.5.13)(eslint@9.16.0(jiti@2.4.0))(magicast@0.3.5)(rollup@4.27.4)(typescript@5.7.2)(vite@5.4.11(@types/node@22.10.0)(sass@1.82.0)(terser@5.36.0))
-      '@nuxt/icon':
-        specifier: ^1.9.0
-        version: 1.9.0(magicast@0.3.5)(rollup@4.27.4)(vite@5.4.11(@types/node@22.10.0)(sass@1.82.0)(terser@5.36.0))(vue@3.5.13(typescript@5.7.2))
       '@nuxthub/core':
         specifier: ^0.8.7
         version: 0.8.7(ioredis@5.4.1)(magicast@0.3.5)(rollup@4.27.4)(vite@5.4.11(@types/node@22.10.0)(sass@1.82.0)(terser@5.36.0))
-      '@nuxtjs/color-mode':
-        specifier: ^3.5.2
-        version: 3.5.2(magicast@0.3.5)(rollup@4.27.4)
       '@nuxtjs/sitemap':
         specifier: ^7.0.0
         version: 7.0.0(h3@1.13.0)(magicast@0.3.5)(rollup@4.27.4)(vite@5.4.11(@types/node@22.10.0)(sass@1.82.0)(terser@5.36.0))(vue@3.5.13(typescript@5.7.2))
