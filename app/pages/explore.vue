@@ -51,6 +51,7 @@ const fetchNewFilter = async () => {
   count.value = 1;
   nexted.value = false;
   hasNextPage.value = false;
+  totalResults.value = 0;
   const { pageInfo, data } = await getData();
   totalResults.value = pageInfo.totalRecords;
   hasNextPage.value = pageInfo.hasNextPage;
@@ -134,7 +135,7 @@ useHead({
               <h3 class="text-lg font-semibold text-primary-600 dark:text-primary-400">Framework</h3>
               <button v-if="selectedFramework" class="text-xs border px-2 rounded bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600 hover:bg-rose-500 hover:text-gray-100 hover:dark:bg-rose-700" @click="selectedFramework = undefined">Clear</button>
             </div>
-            <URadioGroup v-model="selectedFramework" :options="frameworksOptions" :ui="{ fieldset: 'space-y-1' }" :ui-radio="{ inner: 'ms-1' }">
+            <URadioGroup v-model="selectedFramework" :options="frameworksOptions" :ui="{ fieldset: 'space-y-1' }" :ui-radio="{ inner: 'ms-1' }" :disabled="loading || nexted">
               <template #label="{ option }">
                 <div class="flex gap-1 items-center text-base">
                   <Icon :name="'vuetracker:' + (option.value !== 'vue' ? getTechnologyMetas('framework', option.value)?.icon! : vue.icon)" width="1.2em" height="1.2em" />
@@ -148,7 +149,7 @@ useHead({
               <h3 class="text-lg font-semibold text-primary-600 dark:text-primary-400">UI Framework</h3>
               <button v-if="selectedUI" class="text-xs border px-2 rounded bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600 hover:bg-rose-500 hover:text-gray-100 hover:dark:bg-rose-700" @click="selectedUI = undefined">Clear</button>
             </div>
-            <URadioGroup v-model="selectedUI" :options="uiOptions" :ui="{ fieldset: 'space-y-1' }" :ui-radio="{ inner: 'ms-1' }">
+            <URadioGroup v-model="selectedUI" :options="uiOptions" :ui="{ fieldset: 'space-y-1' }" :ui-radio="{ inner: 'ms-1' }" :disabled="loading || nexted">
               <template #label="{ option }">
                 <div class="flex gap-1 items-center text-base">
                   <Icon :name="'vuetracker:' + getTechnologyMetas('ui', option.value)?.icon!" width="1.2em" height="1.2em" />
@@ -165,8 +166,8 @@ useHead({
       <div class="flex gap-2 flex-wrap justify-between items-end">
         <h3 class="text-lg tracking-tight"><b>{{ totalResults }}</b> websites found</h3>
         <div class="flex gap-1 items-center">
-          <USelect v-model="filter" :options="filters" option-attribute="name" />
-          <UButton :icon="sortIcon" @click="toggleSort" />
+          <USelect v-model="filter" :options="filters" option-attribute="name" :disabled="loading || nexted" />
+          <UButton :icon="sortIcon" :disabled="loading || nexted" @click="toggleSort" />
         </div>
       </div>
       <div class="flex items-center justify-start pt-2 gap-1">
