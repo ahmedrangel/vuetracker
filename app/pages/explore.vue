@@ -88,7 +88,9 @@ onMounted(async () => {
   addEventListener("resize", () => {
     openSideBar.value = false;
   });
+  loading.value = true;
   await getNextData();
+  loading.value = false;
   addEventListener("scroll", scrollHandler);
 });
 </script>
