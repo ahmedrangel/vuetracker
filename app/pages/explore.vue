@@ -55,6 +55,7 @@ const fetchNewFilter = async () => {
   totalResults.value = pageInfo.totalRecords;
   hasNextPage.value = pageInfo.hasNextPage;
   results.value = data;
+  count.value = pageInfo.currentPage + 1;
   loading.value = false;
 };
 
