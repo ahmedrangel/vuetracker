@@ -18,8 +18,8 @@ export default defineEventHandler(async (event) => {
     ogImage: tables.sites.ogImage,
     createdAt: tables.sites.createdAt,
     updatedAt: tables.sites.updatedAt,
-    icons: sql`GROUP_CONCAT(DISTINCT JSON_OBJECT('url', ${tables.icons.url}, 'sizes', ${tables.icons.sizes}))`.as("icons"),
-    technologies: sql`GROUP_CONCAT(DISTINCT JSON_OBJECT('slug', ${tables.technologies.slug}, 'type', ${tables.technologies.type}))`.as("technologies")
+    icons: sql<string>`json_group_array(DISTINCT JSON_OBJECT('url', ${tables.icons.url}, 'sizes', ${tables.icons.sizes}))`.as("icons"),
+    technologies: sql<string>`json_group_array(DISTINCT JSON_OBJECT('slug', ${tables.technologies.slug}, 'type', ${tables.technologies.type}))`.as("technologies")
   })
     .from(tables.sites)
     .leftJoin(tables.icons, eq(tables.sites.slug, tables.icons.siteSlug))
@@ -29,39 +29,49 @@ export default defineEventHandler(async (event) => {
     .orderBy(dbOrder)
     .limit(pageSize).offset(offset).all();
 
-  const totalResultCount = await DB.select({ count: count() })
+  const totalResultCount = await DB.select({ count: count(tables.sites.slug) })
     .from(tables.sites)
     .where(whereCondition()).get();
 
   function whereCondition () {
-    return and(vueOnly === "1" ? notExists(
-      DB.select().from(tables.technologies)
-        .where(
-          and(
-            eq(tables.technologies.siteSlug, tables.sites.slug),
-            eq(tables.technologies.type, "framework")
+    const conditions = [];
+    if (vueOnly === "1") {
+      conditions.push(notExists(
+        DB.select().from(tables.technologies)
+          .where(
+            and(
+              eq(tables.technologies.siteSlug, tables.sites.slug),
+              eq(tables.technologies.type, "framework")
+            )
           )
-        )
-    ) : framework ? exists(
-      DB.select().from(tables.technologies)
-        .where(
-          and(
-            eq(tables.technologies.siteSlug, tables.sites.slug),
-            eq(tables.technologies.slug, framework),
-            eq(tables.technologies.type, "framework")
+      ));
+    }
+    if (framework) {
+      conditions.push(exists(
+        DB.select().from(tables.technologies)
+          .where(
+            and(
+              eq(tables.technologies.siteSlug, tables.sites.slug),
+              eq(tables.technologies.slug, framework),
+              eq(tables.technologies.type, "framework")
+            )
           )
-        )
-    ) : undefined,
-    ui ? exists(
-      DB.select().from(tables.technologies)
-        .where(
-          and(
-            eq(tables.technologies.siteSlug, tables.sites.slug),
-            eq(tables.technologies.slug, ui),
-            eq(tables.technologies.type, "ui")
+      ));
+    }
+    if (ui) {
+      conditions.push(exists(
+        DB.select().from(tables.technologies)
+          .where(
+            and(
+              eq(tables.technologies.siteSlug, tables.sites.slug),
+              eq(tables.technologies.slug, ui),
+              eq(tables.technologies.type, "ui")
+            )
           )
-        )
-    ) : undefined, includeAdult === "1" ? undefined : eq(tables.sites.isAdultContent, 0));
+      ));
+    }
+    if (includeAdult !== "1") conditions.push(eq(tables.sites.isAdultContent, 0));
+    return and(...conditions);
   }
 
   return {
@@ -74,8 +84,8 @@ export default defineEventHandler(async (event) => {
     },
     data: results.map(row => ({
       ...row,
-      icons: row.icons ? JSON.parse(`[${row.icons}]`).filter((el: { url: string }) => el.url) : [],
-      technologies: row.technologies ? JSON.parse(`[${row.technologies}]`).filter((el: { slug: string }) => el.slug) : []
+      icons: row.icons ? JSON.parse(row.icons).filter((el: { url: string }) => el.url) : [],
+      technologies: row.technologies ? JSON.parse(row.technologies).filter((el: { slug: string }) => el.slug) : []
     }))
   };
 });
