@@ -93,6 +93,17 @@ onMounted(async () => {
   loading.value = false;
   addEventListener("scroll", scrollHandler);
 });
+
+useSeoMeta({
+  title: "Explore | VueTracker",
+  ogTitle: "Explore | VueTracker"
+});
+
+useHead({
+  link: [
+    { rel: "canonical", href: `${SITE.url}/explore` }
+  ]
+});
 </script>
 
 <template>
