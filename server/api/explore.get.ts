@@ -24,78 +24,45 @@ export default defineEventHandler(async (event) => {
     .from(tables.sites)
     .leftJoin(tables.icons, eq(tables.sites.slug, tables.icons.siteSlug))
     .leftJoin(tables.technologies, eq(tables.sites.slug, tables.technologies.siteSlug))
-    .where(
-      and(vueOnly === "1" ? notExists(
-        DB.select()
-          .from(tables.technologies)
-          .where(
-            and(
-              eq(tables.technologies.siteSlug, tables.sites.slug),
-              eq(tables.technologies.type, "framework")
-            )
-          )
-      ) : framework ? exists(
-        DB.select()
-          .from(tables.technologies)
-          .where(
-            and(
-              eq(tables.technologies.siteSlug, tables.sites.slug),
-              eq(tables.technologies.slug, framework),
-              eq(tables.technologies.type, "framework")
-            )
-          )
-      ) : undefined,
-      ui ? exists(
-        DB.select()
-          .from(tables.technologies)
-          .where(
-            and(
-              eq(tables.technologies.siteSlug, tables.sites.slug),
-              eq(tables.technologies.slug, ui),
-              eq(tables.technologies.type, "ui")
-            )
-          )
-      ) : undefined)
-    )
+    .where(whereCondition())
     .groupBy(tables.sites.slug)
     .orderBy(dbOrder)
     .limit(pageSize).offset(offset).all();
 
   const totalResultCount = await DB.select({ count: count() })
     .from(tables.sites)
-    .where(
-      and(vueOnly === "1" ? notExists(
-        DB.select()
-          .from(tables.technologies)
-          .where(
-            and(
-              eq(tables.technologies.siteSlug, tables.sites.slug),
-              eq(tables.technologies.type, "framework")
-            )
+    .where(whereCondition()).get();
+
+  function whereCondition () {
+    return and(vueOnly === "1" ? notExists(
+      DB.select().from(tables.technologies)
+        .where(
+          and(
+            eq(tables.technologies.siteSlug, tables.sites.slug),
+            eq(tables.technologies.type, "framework")
           )
-      ) : framework ? exists(
-        DB.select()
-          .from(tables.technologies)
-          .where(
-            and(
-              eq(tables.technologies.siteSlug, tables.sites.slug),
-              eq(tables.technologies.slug, framework),
-              eq(tables.technologies.type, "framework")
-            )
+        )
+    ) : framework ? exists(
+      DB.select().from(tables.technologies)
+        .where(
+          and(
+            eq(tables.technologies.siteSlug, tables.sites.slug),
+            eq(tables.technologies.slug, framework),
+            eq(tables.technologies.type, "framework")
           )
-      ) : undefined,
-      ui ? exists(
-        DB.select()
-          .from(tables.technologies)
-          .where(
-            and(
-              eq(tables.technologies.siteSlug, tables.sites.slug),
-              eq(tables.technologies.slug, ui),
-              eq(tables.technologies.type, "ui")
-            )
+        )
+    ) : undefined,
+    ui ? exists(
+      DB.select().from(tables.technologies)
+        .where(
+          and(
+            eq(tables.technologies.siteSlug, tables.sites.slug),
+            eq(tables.technologies.slug, ui),
+            eq(tables.technologies.type, "ui")
           )
-      ) : undefined)
-    ).get();
+        )
+    ) : undefined);
+  }
 
   return {
     pageInfo: {
