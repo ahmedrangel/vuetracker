@@ -172,10 +172,10 @@ useHead({
       </div>
       <div class="flex items-center justify-start pt-2 gap-1">
         <template v-for="(tech, i) of [selectedFramework === 'vue' ? { name: 'Vue', type: 'framework' } : { name: getTechnologyMetas('framework', selectedFramework)?.name, type: 'framework' }, { name: getTechnologyMetas('ui', selectedUI)?.name, type: 'ui' }]" :key="i">
-          <UBadge v-if="tech.name" role="button" size="lg" variant="solid" class="flex gap-1 select-none" @click="tech.type === 'framework' ? selectedFramework = undefined : selectedUI = undefined">
+          <UButton v-if="tech.name" variant="solid" class="flex gap-1 select-none" :disabled="loading || nexted" @click="tech.type === 'framework' ? selectedFramework = undefined : selectedUI = undefined">
             <span>{{ tech.name }}</span>
             <Icon name="ph:x" />
-          </UBadge>
+          </UButton>
         </template>
       </div>
       <div class="relative py-4">
