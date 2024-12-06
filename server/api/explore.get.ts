@@ -1,15 +1,51 @@
+import type { SQL } from "drizzle-orm";
+
 export default defineEventHandler(async (event) => {
   const { framework, ui, sort, order, vueOnly, page, includeAdult } = getQuery(event) as Record<string, string>;
   const DB = useDB();
   const dbSort = sort === "updated" ? tables.sites.updatedAt : tables.sites.createdAt;
   const dbOrder = order === "asc" ? asc(dbSort) : desc(dbSort);
-  const filters = [];
   const pageSize = 24;
   const currentPage = parseInt(page || "1", 10);
   const offset = (currentPage - 1) * pageSize;
+  const conditions: SQL[] = [];
 
-  if (framework) filters.push(eq(tables.technologies.slug, framework));
-  if (ui) filters.push(eq(tables.technologies.slug, ui));
+  if (vueOnly === "1") {
+    conditions.push(notExists(
+      DB.select().from(tables.technologies)
+        .where(
+          and(
+            eq(tables.technologies.siteSlug, tables.sites.slug),
+            eq(tables.technologies.type, "framework")
+          )
+        )
+    ));
+  }
+  if (framework) {
+    conditions.push(exists(
+      DB.select().from(tables.technologies)
+        .where(
+          and(
+            eq(tables.technologies.siteSlug, tables.sites.slug),
+            eq(tables.technologies.slug, framework),
+            eq(tables.technologies.type, "framework")
+          )
+        )
+    ));
+  }
+  if (ui) {
+    conditions.push(exists(
+      DB.select().from(tables.technologies)
+        .where(
+          and(
+            eq(tables.technologies.siteSlug, tables.sites.slug),
+            eq(tables.technologies.slug, ui),
+            eq(tables.technologies.type, "ui")
+          )
+        )
+    ));
+  }
+  if (includeAdult !== "1") conditions.push(eq(tables.sites.isAdultContent, 0));
 
   const results = await DB.select({
     url: tables.sites.url,
@@ -24,55 +60,14 @@ export default defineEventHandler(async (event) => {
     .from(tables.sites)
     .leftJoin(tables.icons, eq(tables.sites.slug, tables.icons.siteSlug))
     .leftJoin(tables.technologies, eq(tables.sites.slug, tables.technologies.siteSlug))
-    .where(whereCondition())
+    .where(and(...conditions))
     .groupBy(tables.sites.slug)
     .orderBy(dbOrder)
     .limit(pageSize).offset(offset).all();
 
   const totalResultCount = await DB.select({ count: count(tables.sites.slug) })
     .from(tables.sites)
-    .where(whereCondition()).get();
-
-  function whereCondition () {
-    const conditions = [];
-    if (vueOnly === "1") {
-      conditions.push(notExists(
-        DB.select().from(tables.technologies)
-          .where(
-            and(
-              eq(tables.technologies.siteSlug, tables.sites.slug),
-              eq(tables.technologies.type, "framework")
-            )
-          )
-      ));
-    }
-    if (framework) {
-      conditions.push(exists(
-        DB.select().from(tables.technologies)
-          .where(
-            and(
-              eq(tables.technologies.siteSlug, tables.sites.slug),
-              eq(tables.technologies.slug, framework),
-              eq(tables.technologies.type, "framework")
-            )
-          )
-      ));
-    }
-    if (ui) {
-      conditions.push(exists(
-        DB.select().from(tables.technologies)
-          .where(
-            and(
-              eq(tables.technologies.siteSlug, tables.sites.slug),
-              eq(tables.technologies.slug, ui),
-              eq(tables.technologies.type, "ui")
-            )
-          )
-      ));
-    }
-    if (includeAdult !== "1") conditions.push(eq(tables.sites.isAdultContent, 0));
-    return and(...conditions);
-  }
+    .where(and(...conditions)).get();
 
   return {
     pageInfo: {
