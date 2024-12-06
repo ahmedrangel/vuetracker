@@ -72,7 +72,7 @@ export default defineNuxtConfig({
     prerender: {
       autoSubfolderIndex: false,
       crawlLinks: false,
-      routes: ["/", "/sitemap.xml"]
+      routes: ["/"]
     },
     cloudflare: {
       pages: {
