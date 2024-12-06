@@ -55,8 +55,8 @@ const siteInfo = ref([{
 useSeoMeta({
   title: `${site} | VueTracker`,
   ogTitle: `${site} | VueTracker`,
-  description: result.value?.description,
-  ogDescription: result.value?.description,
+  description: result.value?.description || result.value?.title,
+  ogDescription: result.value?.description || result.value?.title,
   ogImage: result.value?.ogImage
 });
 
