@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event) => {
-  const { framework, ui, sort, order, vueOnly, page } = getQuery(event) as Record<string, string>;
+  const { framework, ui, sort, order, vueOnly, page, includeAdult } = getQuery(event) as Record<string, string>;
   const DB = useDB();
   const dbSort = sort === "updated" ? tables.sites.updatedAt : tables.sites.createdAt;
   const dbOrder = order === "asc" ? asc(dbSort) : desc(dbSort);
@@ -61,7 +61,7 @@ export default defineEventHandler(async (event) => {
             eq(tables.technologies.type, "ui")
           )
         )
-    ) : undefined);
+    ) : undefined, includeAdult === "1" ? undefined : eq(tables.sites.isAdultContent, 0));
   }
 
   return {
