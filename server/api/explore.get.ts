@@ -1,11 +1,12 @@
-import { technologies } from "../database/schema";
-
 export default defineEventHandler(async (event) => {
-  const { framework, ui, sort, order, vueOnly } = getQuery(event) as Record<string, string>;
+  const { framework, ui, sort, order, vueOnly, page } = getQuery(event) as Record<string, string>;
   const DB = useDB();
   const dbSort = sort === "updated" ? tables.sites.updatedAt : tables.sites.createdAt;
   const dbOrder = order === "asc" ? asc(dbSort) : desc(dbSort);
   const filters = [];
+  const pageSize = 24;
+  const currentPage = parseInt(page || "1", 10);
+  const offset = (currentPage - 1) * pageSize;
 
   if (framework) filters.push(eq(tables.technologies.slug, framework));
   if (ui) filters.push(eq(tables.technologies.slug, ui));
@@ -18,13 +19,13 @@ export default defineEventHandler(async (event) => {
     createdAt: tables.sites.createdAt,
     updatedAt: tables.sites.updatedAt,
     icons: sql`GROUP_CONCAT(DISTINCT JSON_OBJECT('url', ${tables.icons.url}, 'sizes', ${tables.icons.sizes}))`.as("icons"),
-    technologies: sql`GROUP_CONCAT(DISTINCT JSON_OBJECT('slug', ${technologies.slug}, 'type', ${technologies.type}))`.as("technologies")
+    technologies: sql`GROUP_CONCAT(DISTINCT JSON_OBJECT('slug', ${tables.technologies.slug}, 'type', ${tables.technologies.type}))`.as("technologies")
   })
     .from(tables.sites)
     .leftJoin(tables.icons, eq(tables.sites.slug, tables.icons.siteSlug))
     .leftJoin(tables.technologies, eq(tables.sites.slug, tables.technologies.siteSlug))
     .where(
-      vueOnly === "1" ? notExists(
+      and(vueOnly === "1" ? notExists(
         DB.select()
           .from(tables.technologies)
           .where(
@@ -33,37 +34,81 @@ export default defineEventHandler(async (event) => {
               eq(tables.technologies.type, "framework")
             )
           )
-      ) : and(
-        framework ? exists(
-          DB.select()
-            .from(tables.technologies)
-            .where(
-              and(
-                eq(tables.technologies.siteSlug, tables.sites.slug),
-                eq(tables.technologies.slug, framework),
-                eq(tables.technologies.type, "framework")
-              )
+      ) : framework ? exists(
+        DB.select()
+          .from(tables.technologies)
+          .where(
+            and(
+              eq(tables.technologies.siteSlug, tables.sites.slug),
+              eq(tables.technologies.slug, framework),
+              eq(tables.technologies.type, "framework")
             )
-        ) : undefined,
-        ui ? exists(
-          DB.select()
-            .from(tables.technologies)
-            .where(
-              and(
-                eq(tables.technologies.siteSlug, tables.sites.slug),
-                eq(tables.technologies.slug, ui),
-                eq(tables.technologies.type, "ui")
-              )
+          )
+      ) : undefined,
+      ui ? exists(
+        DB.select()
+          .from(tables.technologies)
+          .where(
+            and(
+              eq(tables.technologies.siteSlug, tables.sites.slug),
+              eq(tables.technologies.slug, ui),
+              eq(tables.technologies.type, "ui")
             )
-        ) : undefined
-      )
+          )
+      ) : undefined)
     )
     .groupBy(tables.sites.slug)
     .orderBy(dbOrder)
-    .limit(30).all();
-  return results.map(row => ({
-    ...row,
-    icons: row.icons ? JSON.parse(`[${row.icons}]`).filter((el: { url: string }) => el.url) : [],
-    technologies: row.technologies ? JSON.parse(`[${row.technologies}]`).filter((el: { slug: string }) => el.slug) : []
-  }));
+    .limit(pageSize).offset(offset).all();
+
+  const totalResultCount = await DB.select({ count: count() })
+    .from(tables.sites)
+    .where(
+      and(vueOnly === "1" ? notExists(
+        DB.select()
+          .from(tables.technologies)
+          .where(
+            and(
+              eq(tables.technologies.siteSlug, tables.sites.slug),
+              eq(tables.technologies.type, "framework")
+            )
+          )
+      ) : framework ? exists(
+        DB.select()
+          .from(tables.technologies)
+          .where(
+            and(
+              eq(tables.technologies.siteSlug, tables.sites.slug),
+              eq(tables.technologies.slug, framework),
+              eq(tables.technologies.type, "framework")
+            )
+          )
+      ) : undefined,
+      ui ? exists(
+        DB.select()
+          .from(tables.technologies)
+          .where(
+            and(
+              eq(tables.technologies.siteSlug, tables.sites.slug),
+              eq(tables.technologies.slug, ui),
+              eq(tables.technologies.type, "ui")
+            )
+          )
+      ) : undefined)
+    ).get();
+
+  return {
+    pageInfo: {
+      currentPage,
+      limit: pageSize,
+      hasNextPage: totalResultCount?.count ? currentPage < Math.ceil(totalResultCount?.count / pageSize) : false,
+      totalPages: totalResultCount?.count ? Math.ceil(totalResultCount.count / pageSize) : 1,
+      totalRecords: totalResultCount?.count || 0
+    },
+    data: results.map(row => ({
+      ...row,
+      icons: row.icons ? JSON.parse(`[${row.icons}]`).filter((el: { url: string }) => el.url) : [],
+      technologies: row.technologies ? JSON.parse(`[${row.technologies}]`).filter((el: { slug: string }) => el.slug) : []
+    }))
+  };
 });

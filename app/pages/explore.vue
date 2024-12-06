@@ -25,32 +25,71 @@ const sortDesc = ref(true);
 const selectedFramework = ref(undefined);
 const selectedUI = ref(undefined);
 const loading = ref(false);
-const results = ref<VueTrackerResponse[]>();
+const results = ref<VueTrackerResponse[]>([]);
+const totalResults = ref(0);
 const openSideBar = ref(false);
+const count = ref(1);
+const hasNextPage = ref(false);
+const nexted = ref(false);
+const lastSite = useTemplateRef<HTMLElement[]>("lastSite");
 
-watchEffect(async () => {
-  loading.value = true;
-  results.value = [];
-  results.value = await $fetch<VueTrackerResponse[]>("/api/explore", {
+const getData = async () => {
+  return (await $fetch<{ pageInfo: PageInfo, data: VueTrackerResponse[] }>("/api/explore", {
     query: {
       ...selectedFramework.value ? selectedFramework.value !== "vue" ? { framework: selectedFramework.value } : { vueOnly: 1 } : {},
       ...selectedUI.value ? { ui: selectedUI.value } : {},
       sort: filter.value,
-      order: sortDesc.value ? "desc" : "asc"
+      order: sortDesc.value ? "desc" : "asc",
+      page: count.value
     }
-  }).catch(() => []);
+  }).catch(() => null) || { pageInfo: { totalRecords: 0, hasNextPage: false, currentPage: 1 }, data: [] });
+};
+
+const fetchNewFilter = async () => {
+  loading.value = true;
+  results.value = [];
+  count.value = 1;
+  nexted.value = false;
+  hasNextPage.value = false;
+  const { pageInfo, data } = await getData();
+  totalResults.value = pageInfo.totalRecords;
+  hasNextPage.value = pageInfo.hasNextPage;
+  results.value = data;
   loading.value = false;
-});
+};
+
+watch(selectedFramework, async () => await fetchNewFilter());
+watch(selectedUI, async () => await fetchNewFilter());
+watch(filter, async () => await fetchNewFilter());
+watch(sortDesc, async () => await fetchNewFilter());
 
 const toggleSort = () => {
   sortDesc.value = !sortDesc.value;
   sortIcon.value = sortDesc.value ? "ph:arrow-down-bold" : "ph:arrow-up-bold";
 };
 
-onMounted(() => {
+const getNextData = async () => {
+  nexted.value = true;
+  const { pageInfo, data } = await getData();
+  results.value?.push(...data);
+  if (count.value === 1) totalResults.value = pageInfo.totalRecords;
+  hasNextPage.value = pageInfo.hasNextPage;
+  count.value = pageInfo.currentPage + 1;
+  nexted.value = false;
+};
+
+const scrollHandler = async () => {
+  if (lastSite.value?.length && onScreen(lastSite.value[0]!) && !nexted.value && count.value && hasNextPage.value) {
+    await getNextData();
+  }
+};
+
+onMounted(async () => {
   addEventListener("resize", () => {
     openSideBar.value = false;
   });
+  await getNextData();
+  addEventListener("scroll", scrollHandler);
 });
 </script>
 
@@ -84,7 +123,7 @@ onMounted(() => {
             <URadioGroup v-model="selectedFramework" :options="frameworksOptions" :ui="{ fieldset: 'space-y-1' }" :ui-radio="{ inner: 'ms-1' }">
               <template #label="{ option }">
                 <div class="flex gap-1 items-center">
-                  <Icon :name="'vuetracker:' + (option.value !== 'vue' ? getTechnologyMetas('framework', option.value)?.icon! : vue.icon)" size="1.2em" />
+                  <Icon :name="'vuetracker:' + (option.value !== 'vue' ? getTechnologyMetas('framework', option.value)?.icon! : vue.icon)" width="1.2em" height="1.2em" />
                   <span class="text-gray-950 dark:text-gray-50">{{ option.label }}</span>
                 </div>
               </template>
@@ -98,7 +137,7 @@ onMounted(() => {
             <URadioGroup v-model="selectedUI" :options="uiOptions" :ui="{ fieldset: 'space-y-1' }" :ui-radio="{ inner: 'ms-1' }">
               <template #label="{ option }">
                 <div class="flex gap-1 items-center">
-                  <Icon :name="'vuetracker:' + getTechnologyMetas('ui', option.value)?.icon!" size="1.2em" />
+                  <Icon :name="'vuetracker:' + getTechnologyMetas('ui', option.value)?.icon!" width="1.2em" height="1.2em" />
                   <span class="text-gray-950 dark:text-gray-50">{{ option.label }}</span>
                 </div>
               </template>
@@ -110,7 +149,7 @@ onMounted(() => {
 
     <div class="md:px-2 md:ml-64">
       <div class="flex gap-2 flex-wrap justify-between items-end">
-        <h3 class="text-lg tracking-tight"><b>{{ results?.length }}</b> websites found</h3>
+        <h3 class="text-lg tracking-tight"><b>{{ totalResults }}</b> websites found</h3>
         <div class="flex gap-1 items-center">
           <USelect v-model="filter" :options="filters" option-attribute="name" />
           <UButton :icon="sortIcon" @click="toggleSort" />
@@ -130,22 +169,23 @@ onMounted(() => {
                 <div class="flex flex-wrap gap-2 items-center justify-between p-2">
                   <NuxtLink :to="`/${r.hostname}`" class="hover:underline truncate">
                     <div class="flex gap-1 items-center">
-                      <img v-if="r.icons?.length" :src="r.icons[0]?.url" class="max-w-5 max-h-5">
+                      <img v-if="r.icons?.length" :src="r.icons[0]?.url" class="max-w-4 max-h-4 min-w-4 min-h-4">
                       <h4 class="text-xs xl:text-sm font-semibold truncate">/{{ r.hostname }}</h4>
                     </div>
                   </NuxtLink>
                   <div class="flex gap-1 items-center">
                     <span v-if="!r.technologies.some(el => el.type === 'framework')" :title="vue.name">
-                      <Icon :name="'vuetracker:vue'" size="1.5em" />
+                      <Icon :name="'vuetracker:vue'" width="1.3em" height="1.3em" />
                     </span>
                     <template v-for="(tech, j) of r.technologies" :key="j">
                       <span v-if="getTechnologyMetas(tech.type, tech.slug)?.icon" :title="getTechnologyMetas(tech.type, tech.slug)?.name">
-                        <Icon :name="'vuetracker:' + getTechnologyMetas(tech.type, tech.slug)?.icon" size="1.5em" />
+                        <Icon :name="'vuetracker:' + getTechnologyMetas(tech.type, tech.slug)?.icon" width="1.3em" height="1.3em" />
                       </span>
                     </template>
                   </div>
                 </div>
               </div>
+              <span v-if="i === results?.length - 1" ref="lastSite" class="m-0 p-0" />
             </template>
           </div>
           <LoadingDots v-else-if="loading" class="absolute w-full top-0" />
