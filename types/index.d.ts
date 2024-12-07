@@ -44,8 +44,10 @@ declare global {
     vueVersion: string;
   }
 
-  interface VueTrackerResponse extends VueTrackerProxyResponse, Omit<meta, framework, frameworkModules, plugins, ui> {
+  interface VueTrackerResponse {
     slug: string;
+    hostname: string;
+    url: string;
     description?: string | null;
     icons?: VueTrackerSiteIcons[];
     isAdultContent: boolean;
@@ -55,6 +57,9 @@ declare global {
     ogImage?: string | null;
     icons: VueTrackerSiteIcons[];
     technologies: VueTrackerTechnology[];
+    isStatic: number;
+    hasSSR: number;
+    vueVersion: string;
     updatedAt: number;
     createdAt: number;
   }
