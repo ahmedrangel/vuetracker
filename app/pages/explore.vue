@@ -22,6 +22,7 @@ const filters = [{
   value: "updated"
 }];
 
+const inputQuery = ref("");
 const sortType = ref(sort || "added");
 const selectedFramework = ref(framework || undefined);
 const selectedUI = ref(ui || undefined);
@@ -45,10 +46,13 @@ const filteredResults = computed({
       else
         return (a.updatedAt - b.updatedAt) * -1;
     });
+    if (inputQuery.value)
+      value = value.filter(value => normalizeSITE(value.url).toLowerCase().replace(/[^a-zA-Z0-9]/g, "").includes(inputQuery.value.toLowerCase().replace(/[^a-zA-Z0-9]/g, "")));
     router.push({
       query: {
         framework: selectedFramework.value,
         ui: selectedUI.value,
+        q: inputQuery.value ? inputQuery.value : undefined,
         sort: sortType.value,
         page: currentPage.value.toString()
       }
@@ -63,6 +67,7 @@ watch(selectedFramework, () => filteredResults.value = results.value);
 watch(selectedUI, () => filteredResults.value = results.value);
 watch(sortType, () => filteredResults.value = results.value);
 watch(currentPage, () => filteredResults.value = results.value);
+watch(inputQuery, () => filteredResults.value = results.value);
 
 onMounted(async () => {
   addEventListener("resize", () => {
@@ -102,7 +107,7 @@ useHead({
             <Icon name="ph:x-bold" size="1.5em" />
           </button>
         </div>
-        <UInput icon="ph:magnifying-glass" placeholder="Search a website" />
+        <UInput v-model="inputQuery" icon="ph:magnifying-glass" placeholder="Search a website" />
         <div class="flex flex-col gap-4">
           <div class="space-y-1">
             <div class="flex gap-2 justify-between">
