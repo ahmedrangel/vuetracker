@@ -1,8 +1,8 @@
 export default defineEventHandler(async (event) => {
-  const { host } = getRouterParams(event);
+  const { site } = getRouterParams(event);
   const DB = useDB();
 
-  const site = await DB.select({
+  const result = await DB.select({
     slug: tables.sites.slug,
     url: tables.sites.url,
     hostname: tables.sites.hostname,
@@ -21,22 +21,22 @@ export default defineEventHandler(async (event) => {
     icons: sql`json_group_array(DISTINCT json_object( 'url', ${tables.icons.url}, 'sizes', ${tables.icons.sizes})) FILTER (WHERE ${tables.icons.id} IS NOT NULL)`.as("icons"),
     technologies: sql`json_group_array(DISTINCT json_object('slug', ${tables.technologies.slug}, 'name', ${tables.technologies.name}, 'type', ${tables.technologies.type}, 'version', ${tables.technologies.version})) FILTER (WHERE ${tables.technologies.id} IS NOT NULL)`.as("technologies")
   }).from(tables.sites)
-    .where(eq(tables.sites.hostname, host))
+    .where(eq(tables.sites.url, `https://${site}/`))
     .leftJoin(tables.icons, eq(tables.icons.siteSlug, tables.sites.slug))
     .leftJoin(tables.technologies, eq(tables.technologies.siteSlug, tables.sites.slug))
     .get() as unknown as VueTrackerRawResponse;
 
-  const parsedIcons = site.icons ? JSON.parse(site.icons) : [];
-  const parsedTechnologies = site.technologies ? JSON.parse(site.technologies) : [];
-  site.icons = parsedIcons;
-  site.technologies = parsedTechnologies;
+  const parsedIcons = result.icons ? JSON.parse(result.icons) : [];
+  const parsedTechnologies = result.technologies ? JSON.parse(result.technologies) : [];
+  result.icons = parsedIcons;
+  result.technologies = parsedTechnologies;
 
-  if (!site.slug) {
+  if (!result.slug) {
     throw createError({
       statusCode: ErrorCode.NOT_FOUND,
       statusMessage: "Site not found"
     });
   }
 
-  return site;
+  return result;
 });

@@ -157,16 +157,16 @@ useHead({
             <template v-for="(r, i) of filteredResults" :key="i">
               <div class="flex flex-col bg-gray-200 dark:bg-gray-900 rounded overflow-hidden">
                 <div class="relative h-[100px] sm:h-[160px] md:h-[140px] lg:h-[140px] xl:h-[180px]">
-                  <img v-if="r.ogImage" :src="r.ogImage" class="absolute object-cover h-full w-full" :title="r.title || r.hostname">
+                  <img v-if="r.ogImage" :src="r.ogImage" class="absolute object-cover h-full w-full" :title="r.title || normalizeSITE(r.url)">
                   <div v-else class="absolute flex items-center justify-center h-full w-full bg-gray-300 dark:bg-gray-800" title="No OG Image">
                     <Icon name="ph:image" size="2em" />
                   </div>
                 </div>
                 <div class="flex flex-wrap gap-2 items-center justify-between p-2">
-                  <NuxtLink :to="`/${r.hostname}`" class="hover:underline truncate">
+                  <NuxtLink :to="`/${normalizeSITE(r.url)}`" class="hover:underline truncate">
                     <div class="flex gap-1 items-center">
                       <img v-if="r.icons?.length" :src="r.icons[0]?.url" class="max-w-4 max-h-4 min-w-4 min-h-4">
-                      <h4 class="text-xs xl:text-sm font-semibold truncate">/{{ r.hostname }}</h4>
+                      <h4 class="text-xs xl:text-sm font-semibold truncate">/{{ normalizeSITE(r.url) }}</h4>
                     </div>
                   </NuxtLink>
                   <div class="flex gap-1 items-center">
@@ -176,7 +176,7 @@ useHead({
                           <Icon :name="'vuetracker:vue'" width="1.2em" height="1.2em" />
                         </span>
                       </UTooltip>
-                      <template v-for="(tech, j) of r.technologies" :key="j">
+                      <template v-for="(tech, j) of toRaw(r.technologies)" :key="j">
                         <UTooltip v-if="getTechnologyMetas(tech.type, tech.slug)?.icon" :text="getTechnologyMetas(tech.type, tech.slug)?.name" :popper="{ placement: 'top', arrow: true }">
                           <span :title="getTechnologyMetas(tech.type, tech.slug)?.name">
                             <Icon :name="'vuetracker:' + getTechnologyMetas(tech.type, tech.slug)?.icon" width="1.2em" height="1.2em" />

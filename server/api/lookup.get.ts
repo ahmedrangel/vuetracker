@@ -21,8 +21,9 @@ export default defineCachedEventHandler(async (event) => {
     headers: { "User-Agent": "VueTracker/1.0 (Cloudflare Workers); https://vuetracker.nuxt.dev" }
   }).catch(() => null))?.url;
 
-  const hostname = parseURL(redirectedURL || url).host!;
-  const siteSlug = hostname?.replaceAll(".", "-");
+  const parsedURL = parseURL(redirectedURL || url)!;
+  const finalURL = `${parsedURL.protocol}//${parsedURL.host}${parsedURL.pathname || ""}`;
+  const siteSlug = normalizeSITE(finalURL)?.replaceAll(".", "-").replaceAll("/", "_");
   const now = Date.now();
   const DB = useDB();
 
@@ -59,7 +60,7 @@ export default defineCachedEventHandler(async (event) => {
     console.info("Site not found in database");
     const [result] = await Promise.all<VueTrackerProxyResponse>([
       fetchVueTrackerProxy(url),
-      DB.delete(tables.sites).where(eq(tables.sites.hostname, hostname)).run()
+      DB.delete(tables.sites).where(eq(tables.sites.slug, siteSlug)).run()
     ]);
     const site = await DB.insert(tables.sites).values({
       slug: siteSlug,

@@ -1,8 +1,9 @@
 <script setup lang="ts">
-const { params } = useRoute("site");
-const { site } = params;
-
+const { params } = useRoute("siteParts");
+const { siteParts } = params;
+const site = siteParts?.join("/");
 const { data: result, error } = await useFetch<VueTrackerResponse>(`/api/site/${site}`);
+
 if (error.value) {
   throw createError({
     statusCode: 404,

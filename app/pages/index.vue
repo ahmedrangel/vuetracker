@@ -119,10 +119,10 @@ useHead({
             <template v-if="result && !error && !loading">
               <div class="flex flex-col gap-6">
                 <div class="flex flex-col gap-1 text-start">
-                  <NuxtLink :to="`/${result.hostname}`" class="hover:underline">
+                  <NuxtLink :to="`/${normalizeSITE(result.url)}`" class="hover:underline">
                     <div class="flex gap-2 items-center justify-start">
                       <img v-if="result.icons?.length" :src="result.icons[0]?.url" class="min-w-6 max-w-6 min-h-6 max-h-6">
-                      <h2 class="text-xl font-semibold">/{{ result.hostname }}</h2>
+                      <h2 class="text-xl font-semibold">/{{ normalizeSITE(result.url) }}</h2>
                     </div>
                   </NuxtLink>
                   <h4 class="text-base">{{ result.title }}</h4>
