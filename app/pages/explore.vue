@@ -28,7 +28,7 @@ const selectedFramework = ref(framework || undefined);
 const selectedUI = ref(ui || undefined);
 const openSideBar = ref(false);
 const totalResults = ref(results.value?.length || 0);
-const pageSize = 24;
+const pageSize = 32;
 const currentPage = ref(Number(page) || 1);
 const computedResults = ref(results.value);
 const filteredResults = computed({
@@ -63,11 +63,20 @@ const filteredResults = computed({
 });
 
 filteredResults.value = results.value;
-watch(selectedFramework, () => filteredResults.value = results.value);
-watch(selectedUI, () => filteredResults.value = results.value);
+watch(selectedFramework, () => {
+  currentPage.value = 1;
+  filteredResults.value = results.value;
+});
+watch(selectedUI, () => {
+  currentPage.value = 1;
+  filteredResults.value = results.value;
+});
 watch(sortType, () => filteredResults.value = results.value);
 watch(currentPage, () => filteredResults.value = results.value);
-watch(inputQuery, () => filteredResults.value = results.value);
+watch(inputQuery, () => {
+  currentPage.value = 1;
+  filteredResults.value = results.value;
+});
 
 onMounted(async () => {
   addEventListener("resize", () => {
