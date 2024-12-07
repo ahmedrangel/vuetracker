@@ -63,12 +63,4 @@ declare global {
     icons: string;
     technologies: string;
   }
-
-  interface PageInfo {
-    currentPage: number;
-    limit: number;
-    hasNextPage: boolean;
-    totalRecords: number;
-    totalPages: number;
-  }
 }
