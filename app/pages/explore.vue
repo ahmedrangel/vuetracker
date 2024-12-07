@@ -7,12 +7,12 @@ const { data: results } = await useFetch<VueTrackerResponse[]>("/api/explore");
 const frameworksOptions = computed(() => Object.entries({ ...frameworks, vue: { metas: vue } }).map(([_key, value]) => ({
   label: value.metas.name,
   value: value.metas.slug
-})).sort((a, b) => a.label.localeCompare(b.label)));
+})).toSorted((a, b) => a.label.localeCompare(b.label)));
 
 const uiOptions = computed(() => Object.entries(uis).map(([_key, value]) => ({
   label: value.metas.name,
   value: value.metas.slug
-})).sort((a, b) => a.label.localeCompare(b.label)));
+})).toSorted((a, b) => a.label.localeCompare(b.label)));
 
 const filters = [{
   name: "Date added",
@@ -30,7 +30,7 @@ const openSideBar = ref(false);
 const totalResults = ref(results.value?.length || 0);
 const pageSize = 32;
 const currentPage = ref(Number(page) || 1);
-const computedResults = ref(results.value);
+const computedResults = ref<VueTrackerResponse[] | undefined>(results.value);
 const filteredResults = computed({
   get: () => computedResults.value?.slice((currentPage.value - 1) * pageSize, currentPage.value * pageSize),
   set: (value) => {
@@ -94,11 +94,21 @@ useHead({
     { rel: "canonical", href: `${SITE.url}/explore` }
   ]
 });
+
+const radioGroups = computed<{
+  name: string;
+  options: { label: string, value: string }[];
+  type: "framework" | "ui";
+  vModel: Ref<string | undefined>;
+}[]>(() => [
+  { name: "Frameworks", options: frameworksOptions.value, type: "framework" as const, vModel: selectedFramework },
+  { name: "UI Framework", options: uiOptions.value, type: "ui" as const, vModel: selectedUI }
+]);
 </script>
 
 <template>
   <main>
-    <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" @click="openSideBar = !openSideBar">
+    <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mb-5 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" @click="openSideBar = !openSideBar">
       <span class="sr-only">Open sidebar</span>
       <Icon name="ph:sliders-horizontal-bold" size="1.8em" />
     </button>
@@ -118,34 +128,22 @@ useHead({
         </div>
         <UInput v-model="inputQuery" icon="ph:magnifying-glass" placeholder="Search a website" />
         <div class="flex flex-col gap-4">
-          <div class="space-y-1">
-            <div class="flex gap-2 justify-between">
-              <h3 class="text-lg font-semibold text-primary-600 dark:text-primary-400">Framework</h3>
-              <button v-if="selectedFramework" class="text-xs border px-2 rounded bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600 hover:bg-rose-500 hover:text-gray-100 hover:dark:bg-rose-700" @click="selectedFramework = undefined">Clear</button>
+          <template v-for="(radio, i) of radioGroups" :key="i">
+            <div class="space-y-1">
+              <div class="flex gap-2 justify-between">
+                <h3 class="text-lg font-semibold text-primary-600 dark:text-primary-400">{{ radio.name }}</h3>
+                <button v-if="radio.vModel.value" class="text-xs border px-2 rounded bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600 hover:bg-rose-500 hover:text-gray-100 hover:dark:bg-rose-700" @click="radio.vModel.value = undefined">Clear</button>
+              </div>
+              <URadioGroup v-model="radio.vModel.value" :name="radio.name" :options="radio.options" :ui="{ fieldset: 'space-y-1' }" :ui-radio="{ inner: 'ms-1' }">
+                <template #label="{ option }">
+                  <div class="flex gap-1 items-center text-base">
+                    <Icon :name="'vuetracker:' + (option.value !== 'vue' ? getTechnologyMetas(radio.type, option.value)?.icon! : vue.icon)" width="1.2em" height="1.2em" />
+                    <span class="text-gray-950 dark:text-gray-50">{{ option.label }}</span>
+                  </div>
+                </template>
+              </URadioGroup>
             </div>
-            <URadioGroup v-model="selectedFramework" :options="frameworksOptions" :ui="{ fieldset: 'space-y-1' }" :ui-radio="{ inner: 'ms-1' }">
-              <template #label="{ option }">
-                <div class="flex gap-1 items-center text-base">
-                  <Icon :name="'vuetracker:' + (option.value !== 'vue' ? getTechnologyMetas('framework', option.value)?.icon! : vue.icon)" width="1.2em" height="1.2em" />
-                  <span class="text-gray-950 dark:text-gray-50">{{ option.label }}</span>
-                </div>
-              </template>
-            </URadioGroup>
-          </div>
-          <div class="space-y-1">
-            <div class="flex gap-2 justify-between">
-              <h3 class="text-lg font-semibold text-primary-600 dark:text-primary-400">UI Framework</h3>
-              <button v-if="selectedUI" class="text-xs border px-2 rounded bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600 hover:bg-rose-500 hover:text-gray-100 hover:dark:bg-rose-700" @click="selectedUI = undefined">Clear</button>
-            </div>
-            <URadioGroup v-model="selectedUI" :options="uiOptions" :ui="{ fieldset: 'space-y-1' }" :ui-radio="{ inner: 'ms-1' }">
-              <template #label="{ option }">
-                <div class="flex gap-1 items-center text-base">
-                  <Icon :name="'vuetracker:' + getTechnologyMetas('ui', option.value)?.icon!" width="1.2em" height="1.2em" />
-                  <span class="text-gray-950 dark:text-gray-50">{{ option.label }}</span>
-                </div>
-              </template>
-            </URadioGroup>
-          </div>
+          </template>
         </div>
       </div>
     </aside>
@@ -168,39 +166,8 @@ useHead({
       <div class="relative py-4">
         <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
           <TransitionGroup name="slide">
-            <template v-for="(r, i) of filteredResults" :key="i">
-              <div class="flex flex-col bg-gray-200 dark:bg-gray-900 rounded overflow-hidden">
-                <div class="relative h-[100px] sm:h-[160px] md:h-[140px] lg:h-[140px] xl:h-[180px]">
-                  <img v-if="r.ogImage" :src="r.ogImage" class="absolute object-cover h-full w-full" :title="r.title || normalizeSITE(r.url)">
-                  <div v-else class="absolute flex items-center justify-center h-full w-full bg-gray-300 dark:bg-gray-800" title="No OG Image">
-                    <Icon name="ph:image" size="2em" />
-                  </div>
-                </div>
-                <div class="flex flex-wrap gap-2 items-center justify-between p-2">
-                  <NuxtLink :to="`/${normalizeSITE(r.url)}`" class="hover:underline truncate">
-                    <div class="flex gap-1 items-center">
-                      <img v-if="r.icons?.length" :src="r.icons[0]?.url" class="max-w-4 max-h-4 min-w-4 min-h-4">
-                      <h4 class="text-xs xl:text-sm font-semibold truncate">/{{ normalizeSITE(r.url) }}</h4>
-                    </div>
-                  </NuxtLink>
-                  <div class="flex gap-1 items-center">
-                    <ClientOnly>
-                      <UTooltip v-if="!r.technologies.some(el => el.type === 'framework')" :text="vue.name" :popper="{ placement: 'top', arrow: true }">
-                        <span :title="vue.name">
-                          <Icon :name="'vuetracker:vue'" width="1.2em" height="1.2em" />
-                        </span>
-                      </UTooltip>
-                      <template v-for="(tech, j) of toRaw(r.technologies)" :key="j">
-                        <UTooltip v-if="getTechnologyMetas(tech.type, tech.slug)?.icon" :text="getTechnologyMetas(tech.type, tech.slug)?.name" :popper="{ placement: 'top', arrow: true }">
-                          <span :title="getTechnologyMetas(tech.type, tech.slug)?.name">
-                            <Icon :name="'vuetracker:' + getTechnologyMetas(tech.type, tech.slug)?.icon" width="1.2em" height="1.2em" />
-                          </span>
-                        </UTooltip>
-                      </template>
-                    </ClientOnly>
-                  </div>
-                </div>
-              </div>
+            <template v-for="(site, i) of filteredResults" :key="i">
+              <SiteCard :site="site" />
             </template>
           </TransitionGroup>
         </div>
