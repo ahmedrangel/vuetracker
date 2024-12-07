@@ -143,7 +143,7 @@ useHead({
           <USelect v-model="sortType" :options="filters" option-attribute="name" />
         </div>
       </div>
-      <div class="flex items-center justify-start pt-2 gap-1">
+      <div v-if="selectedFramework || selectedUI" class="flex items-center justify-start pt-2 gap-1">
         <template v-for="(tech, i) of [selectedFramework === 'vue' ? { name: 'Vue', type: 'framework' } : { name: getTechnologyMetas('framework', selectedFramework)?.name, type: 'framework' }, { name: getTechnologyMetas('ui', selectedUI)?.name, type: 'ui' }]" :key="i">
           <UButton v-if="tech.name" variant="solid" class="flex gap-1 select-none" @click="tech.type === 'framework' ? selectedFramework = undefined : selectedUI = undefined">
             <span>{{ tech.name }}</span>
