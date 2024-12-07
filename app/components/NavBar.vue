@@ -15,6 +15,15 @@ onMounted(() => {
     modeIcon.value = val ? icons.moon : icons.sun;
   }, { immediate: true });
 });
+
+const rightItems = [
+  { label: "Explore", to: "/explore", type: "link" }
+];
+
+const iconItems = computed(() => [
+  { icon: modeIcon.value, type: "button", action: () => dark.value = !dark.value },
+  { icon: "ph:github-logo-duotone", to: "https://github.com/ahmedrangel/vuetracker", type: "link", target: "_blank" }
+]);
 </script>
 
 <template>
@@ -37,14 +46,21 @@ onMounted(() => {
         </div>
         <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-2">
           <div class="hidden sm:ml-6 sm:block">
-            <div class="nav-tabs flex space-x-2">
-              <NuxtLink v-ripple to="/explore" class="rounded-md px-2 py-1 font-semibold hover:bg-gray-100 hover:dark:bg-gray-800">Explore</NuxtLink>
+            <div class="nav-tabs flex space-x-1">
+              <template v-for="(it, i) of rightItems" :key="i">
+                <NuxtLink v-if="it.type === 'link'" v-ripple :to="it.to" class="rounded-md px-2 py-1 font-semibold hover:bg-gray-100 hover:dark:bg-gray-800">{{ it.label }}</NuxtLink>
+              </template>
             </div>
           </div>
-          <div class="nav-tabs flex space-x-2">
-            <button v-ripple type="button" class="rounded-md px-2 py-1 hover:bg-gray-100 hover:dark:bg-gray-800" @click="dark = !dark">
-              <Icon :name="modeIcon" size="1.4em" />
-            </button>
+          <div class="nav-tabs flex space-x-1">
+            <template v-for="(it, i) of iconItems" :key="i">
+              <button v-if="it.type === 'button'" v-ripple type="button" class="rounded-md px-1 py-1 hover:bg-gray-100 hover:dark:bg-gray-800" @click="it.action">
+                <Icon :name="it.icon" size="1.4em" />
+              </button>
+              <NuxtLink v-else-if="it.type === 'link'" v-ripple :to="it.to" :target="it.target" class="rounded-md px-2 py-1 hover:bg-gray-100 hover:dark:bg-gray-800">
+                <Icon :name="it.icon" size="1.4em" />
+              </NuxtLink>
+            </template>
           </div>
         </div>
       </div>
@@ -52,9 +68,11 @@ onMounted(() => {
 
     <!-- Mobile menu -->
     <Transition name="slide-menu">
-      <div v-if="menuOpen" id="mobile-menu" class="sm:hidden bg-gray-300 dark:bg-gray-900 z-10 relative">
+      <div v-if="menuOpen" id="mobile-menu" class="sm:hidden bg-gray-300 dark:bg-gray-900 z-10 absolute w-full">
         <div class="nav-tabs space-y-1 px-2 pb-3 pt-2">
-          <NuxtLink to="/explore" class="block rounded-md px-3 py-2 font-semibold hover:bg-gray-200 hover:dark:bg-gray-800">Explore</NuxtLink>
+          <template v-for="(it, i) of rightItems" :key="i">
+            <NuxtLink v-if="it.type === 'link'" v-ripple :to="it.to" class="block rounded-md px-3 py-2 font-semibold hover:bg-gray-200 hover:dark:bg-gray-800" @click="menuOpen = false">{{ it.label }}</NuxtLink>
+          </template>
         </div>
       </div>
     </Transition>
