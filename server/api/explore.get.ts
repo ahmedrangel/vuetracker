@@ -1,52 +1,5 @@
-import type { SQL } from "drizzle-orm";
-
-export default defineEventHandler(async (event) => {
-  const { framework, ui, sort, order, vueOnly, page, includeAdult } = getQuery(event) as Record<string, string>;
+export default defineEventHandler(async () => {
   const DB = useDB();
-  const dbSort = sort === "updated" ? tables.sites.updatedAt : tables.sites.createdAt;
-  const dbOrder = order === "asc" ? asc(dbSort) : desc(dbSort);
-  const pageSize = 24;
-  const currentPage = parseInt(page || "1", 10);
-  const offset = (currentPage - 1) * pageSize;
-  const conditions: SQL[] = [];
-
-  if (vueOnly === "1") {
-    conditions.push(notExists(
-      DB.select().from(tables.technologies)
-        .where(
-          and(
-            eq(tables.technologies.siteSlug, tables.sites.slug),
-            eq(tables.technologies.type, "framework")
-          )
-        )
-    ));
-  }
-  if (framework) {
-    conditions.push(exists(
-      DB.select().from(tables.technologies)
-        .where(
-          and(
-            eq(tables.technologies.siteSlug, tables.sites.slug),
-            eq(tables.technologies.slug, framework),
-            eq(tables.technologies.type, "framework")
-          )
-        )
-    ));
-  }
-  if (ui) {
-    conditions.push(exists(
-      DB.select().from(tables.technologies)
-        .where(
-          and(
-            eq(tables.technologies.siteSlug, tables.sites.slug),
-            eq(tables.technologies.slug, ui),
-            eq(tables.technologies.type, "ui")
-          )
-        )
-    ));
-  }
-  if (includeAdult !== "1") conditions.push(eq(tables.sites.isAdultContent, 0));
-
   const results = await DB.select({
     url: tables.sites.url,
     hostname: tables.sites.hostname,
@@ -60,27 +13,12 @@ export default defineEventHandler(async (event) => {
     .from(tables.sites)
     .leftJoin(tables.icons, eq(tables.sites.slug, tables.icons.siteSlug))
     .leftJoin(tables.technologies, eq(tables.sites.slug, tables.technologies.siteSlug))
-    .where(and(...conditions))
     .groupBy(tables.sites.slug)
-    .orderBy(dbOrder)
-    .limit(pageSize).offset(offset).all();
+    .orderBy(desc(tables.sites.createdAt)).all();
 
-  const totalResultCount = await DB.select({ count: count(tables.sites.slug) })
-    .from(tables.sites)
-    .where(and(...conditions)).get();
-
-  return {
-    pageInfo: {
-      currentPage,
-      limit: pageSize,
-      hasNextPage: totalResultCount?.count ? currentPage < Math.ceil(totalResultCount?.count / pageSize) : false,
-      totalPages: totalResultCount?.count ? Math.ceil(totalResultCount.count / pageSize) : 1,
-      totalRecords: totalResultCount?.count || 0
-    },
-    data: results.map(row => ({
-      ...row,
-      icons: row.icons ? JSON.parse(row.icons).filter((el: { url: string }) => el.url) : [],
-      technologies: row.technologies ? JSON.parse(row.technologies).filter((el: { slug: string }) => el.slug) : []
-    }))
-  };
+  return results.map(row => ({
+    ...row,
+    icons: JSON.parse(row.icons).filter((el: { url: string }) => el.url),
+    technologies: JSON.parse(row.technologies).filter((el: { slug: string }) => el.slug)
+  }));
 });

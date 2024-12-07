@@ -1,5 +1,8 @@
 <script setup lang="ts">
 definePageMeta({ layout: "explore" });
+const router = useRouter();
+const { framework, ui, sort, page } = useRoute().query as Record<string, string>;
+const { data: results } = await useFetch<VueTrackerResponse[]>("/api/explore");
 
 const frameworksOptions = computed(() => Object.entries({ ...frameworks, vue: { metas: vue } }).map(([_key, value]) => ({
   label: value.metas.name,
@@ -13,87 +16,58 @@ const uiOptions = computed(() => Object.entries(uis).map(([_key, value]) => ({
 
 const filters = [{
   name: "Date added",
-  value: "created"
+  value: "added"
 }, {
   name: "Date updated",
   value: "updated"
 }];
 
-const filter = ref("created");
-const sortIcon = ref("ph:arrow-down-bold");
-const sortDesc = ref(true);
-const selectedFramework = ref(undefined);
-const selectedUI = ref(undefined);
-const loading = ref(false);
-const results = ref<VueTrackerResponse[]>([]);
-const totalResults = ref(0);
+const sortType = ref(sort || "added");
+const selectedFramework = ref(framework || undefined);
+const selectedUI = ref(ui || undefined);
 const openSideBar = ref(false);
-const count = ref(1);
-const hasNextPage = ref(false);
-const nexted = ref(false);
-const lastSite = useTemplateRef<HTMLElement[]>("lastSite");
-
-const getData = async () => {
-  return (await $fetch<{ pageInfo: PageInfo, data: VueTrackerResponse[] }>("/api/explore", {
-    query: {
-      ...selectedFramework.value ? selectedFramework.value !== "vue" ? { framework: selectedFramework.value } : { vueOnly: 1 } : {},
-      ...selectedUI.value ? { ui: selectedUI.value } : {},
-      sort: filter.value,
-      order: sortDesc.value ? "desc" : "asc",
-      page: count.value
+const totalResults = ref(results.value?.length || 0);
+const pageSize = 24;
+const currentPage = ref(Number(page) || 1);
+const computedResults = ref(results.value);
+const filteredResults = computed({
+  get: () => computedResults.value?.slice((currentPage.value - 1) * pageSize, currentPage.value * pageSize),
+  set: (value) => {
+    if (!value) return;
+    if (selectedFramework.value) {
+      value = value.filter(result => selectedFramework.value === "vue" ? !result.technologies.some(tech => tech.type === "framework") : result.technologies.some(tech => tech.slug === selectedFramework.value));
     }
-  }).catch(() => null) || { pageInfo: { totalRecords: 0, hasNextPage: false, currentPage: 1 }, data: [] });
-};
-
-const fetchNewFilter = async () => {
-  loading.value = true;
-  results.value = [];
-  count.value = 1;
-  nexted.value = false;
-  hasNextPage.value = false;
-  totalResults.value = 0;
-  const { pageInfo, data } = await getData();
-  totalResults.value = pageInfo.totalRecords;
-  hasNextPage.value = pageInfo.hasNextPage;
-  results.value = data;
-  count.value = pageInfo.currentPage + 1;
-  loading.value = false;
-};
-
-watch(selectedFramework, async () => await fetchNewFilter());
-watch(selectedUI, async () => await fetchNewFilter());
-watch(filter, async () => await fetchNewFilter());
-watch(sortDesc, async () => await fetchNewFilter());
-
-const toggleSort = () => {
-  sortDesc.value = !sortDesc.value;
-  sortIcon.value = sortDesc.value ? "ph:arrow-down-bold" : "ph:arrow-up-bold";
-};
-
-const getNextData = async () => {
-  nexted.value = true;
-  const { pageInfo, data } = await getData();
-  results.value?.push(...data);
-  if (count.value === 1) totalResults.value = pageInfo.totalRecords;
-  hasNextPage.value = pageInfo.hasNextPage;
-  count.value = pageInfo.currentPage + 1;
-  nexted.value = false;
-};
-
-const scrollHandler = async () => {
-  if (lastSite.value?.length && onScreen(lastSite.value[0]!) && !nexted.value && count.value && hasNextPage.value) {
-    await getNextData();
+    if (selectedUI.value)
+      value = value.filter(result => result.technologies.some(tech => tech.slug === selectedUI.value));
+    value = value.toSorted((a, b) => {
+      if (sortType.value === "added")
+        return (a.createdAt - b.createdAt) * -1;
+      else
+        return (a.updatedAt - b.updatedAt) * -1;
+    });
+    router.push({
+      query: {
+        framework: selectedFramework.value,
+        ui: selectedUI.value,
+        sort: sortType.value,
+        page: currentPage.value.toString()
+      }
+    });
+    totalResults.value = value.length;
+    computedResults.value = value;
   }
-};
+});
+
+filteredResults.value = results.value;
+watch(selectedFramework, () => filteredResults.value = results.value);
+watch(selectedUI, () => filteredResults.value = results.value);
+watch(sortType, () => filteredResults.value = results.value);
+watch(currentPage, () => filteredResults.value = results.value);
 
 onMounted(async () => {
   addEventListener("resize", () => {
     openSideBar.value = false;
   });
-  loading.value = true;
-  await getNextData();
-  loading.value = false;
-  addEventListener("scroll", scrollHandler);
 });
 
 useSeoMeta({
@@ -135,7 +109,7 @@ useHead({
               <h3 class="text-lg font-semibold text-primary-600 dark:text-primary-400">Framework</h3>
               <button v-if="selectedFramework" class="text-xs border px-2 rounded bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600 hover:bg-rose-500 hover:text-gray-100 hover:dark:bg-rose-700" @click="selectedFramework = undefined">Clear</button>
             </div>
-            <URadioGroup v-model="selectedFramework" :options="frameworksOptions" :ui="{ fieldset: 'space-y-1' }" :ui-radio="{ inner: 'ms-1' }" :disabled="loading || nexted">
+            <URadioGroup v-model="selectedFramework" :options="frameworksOptions" :ui="{ fieldset: 'space-y-1' }" :ui-radio="{ inner: 'ms-1' }">
               <template #label="{ option }">
                 <div class="flex gap-1 items-center text-base">
                   <Icon :name="'vuetracker:' + (option.value !== 'vue' ? getTechnologyMetas('framework', option.value)?.icon! : vue.icon)" width="1.2em" height="1.2em" />
@@ -149,7 +123,7 @@ useHead({
               <h3 class="text-lg font-semibold text-primary-600 dark:text-primary-400">UI Framework</h3>
               <button v-if="selectedUI" class="text-xs border px-2 rounded bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600 hover:bg-rose-500 hover:text-gray-100 hover:dark:bg-rose-700" @click="selectedUI = undefined">Clear</button>
             </div>
-            <URadioGroup v-model="selectedUI" :options="uiOptions" :ui="{ fieldset: 'space-y-1' }" :ui-radio="{ inner: 'ms-1' }" :disabled="loading || nexted">
+            <URadioGroup v-model="selectedUI" :options="uiOptions" :ui="{ fieldset: 'space-y-1' }" :ui-radio="{ inner: 'ms-1' }">
               <template #label="{ option }">
                 <div class="flex gap-1 items-center text-base">
                   <Icon :name="'vuetracker:' + getTechnologyMetas('ui', option.value)?.icon!" width="1.2em" height="1.2em" />
@@ -166,22 +140,21 @@ useHead({
       <div class="flex gap-2 flex-wrap justify-between items-end">
         <h3 class="text-lg tracking-tight"><b>{{ totalResults }}</b> websites found</h3>
         <div class="flex gap-1 items-center">
-          <USelect v-model="filter" :options="filters" option-attribute="name" :disabled="loading || nexted" />
-          <UButton :icon="sortIcon" :disabled="loading || nexted" @click="toggleSort" />
+          <USelect v-model="sortType" :options="filters" option-attribute="name" />
         </div>
       </div>
       <div class="flex items-center justify-start pt-2 gap-1">
         <template v-for="(tech, i) of [selectedFramework === 'vue' ? { name: 'Vue', type: 'framework' } : { name: getTechnologyMetas('framework', selectedFramework)?.name, type: 'framework' }, { name: getTechnologyMetas('ui', selectedUI)?.name, type: 'ui' }]" :key="i">
-          <UButton v-if="tech.name" variant="solid" class="flex gap-1 select-none" :disabled="loading || nexted" @click="tech.type === 'framework' ? selectedFramework = undefined : selectedUI = undefined">
+          <UButton v-if="tech.name" variant="solid" class="flex gap-1 select-none" @click="tech.type === 'framework' ? selectedFramework = undefined : selectedUI = undefined">
             <span>{{ tech.name }}</span>
             <Icon name="ph:x" />
           </UButton>
         </template>
       </div>
       <div class="relative py-4">
-        <TransitionGroup name="fade">
-          <div v-if="!loading && results" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
-            <template v-for="(r, i) of results" :key="i">
+        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
+          <TransitionGroup name="slide">
+            <template v-for="(r, i) of filteredResults" :key="i">
               <div class="flex flex-col bg-gray-200 dark:bg-gray-900 rounded overflow-hidden">
                 <div class="relative h-[100px] sm:h-[160px] md:h-[140px] lg:h-[140px] xl:h-[180px]">
                   <img v-if="r.ogImage" :src="r.ogImage" class="absolute object-cover h-full w-full" :title="r.title || r.hostname">
@@ -212,11 +185,10 @@ useHead({
                   </div>
                 </div>
               </div>
-              <span v-if="i === results?.length - 1" ref="lastSite" class="m-0 p-0" />
             </template>
-          </div>
-          <LoadingDots v-else-if="loading" class="absolute w-full top-0 mt-8" />
-        </TransitionGroup>
+          </TransitionGroup>
+        </div>
+        <UPagination v-if="computedResults?.length" v-model="currentPage" class="mt-10 justify-center" size="md" :page-count="pageSize" :total="computedResults?.length || 0" show-last show-first />
       </div>
     </div>
   </main>
