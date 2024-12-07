@@ -93,10 +93,10 @@ useHead({
 <template>
   <main>
     <div class="py-2 sm:py-3 md:py-4 relative">
-      <h1 class="text-4xl font-bold tracking-tight md:text-5xl text-balance mb-8">
+      <h1 class="text-4xl font-bold tracking-tight md:text-5xl text-balance mb-4 md:mb-8">
         <span class="text-primary-600 dark:text-primary-400">Vue</span>Tracker
       </h1>
-      <h5 class="text-md md:text-lg text-gray-500 dark:text-gray-400 text-balance mb-8">{{ SITE.description }}</h5>
+      <h5 class="text-md md:text-lg text-gray-500 dark:text-gray-400 text-balance mb-4 md:mb-8">{{ SITE.description }}</h5>
       <div class="2xl:w-1/2 xl:w-3/5 lg:w-3/4 flex flex-col mx-auto gap-6">
         <form @submit.prevent="lookup">
           <UButtonGroup size="xl" orientation="horizontal" class="w-full">
