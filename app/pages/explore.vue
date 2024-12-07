@@ -170,18 +170,20 @@ useHead({
                     </div>
                   </NuxtLink>
                   <div class="flex gap-1 items-center">
-                    <UTooltip v-if="!r.technologies.some(el => el.type === 'framework')" :text="vue.name" :popper="{ placement: 'top', arrow: true }">
-                      <span :title="vue.name">
-                        <Icon :name="'vuetracker:vue'" width="1.3em" height="1.3em" />
-                      </span>
-                    </UTooltip>
-                    <template v-for="(tech, j) of r.technologies" :key="j">
-                      <UTooltip v-if="getTechnologyMetas(tech.type, tech.slug)?.icon" :text="getTechnologyMetas(tech.type, tech.slug)?.name" :popper="{ placement: 'top', arrow: true }">
-                        <span :title="getTechnologyMetas(tech.type, tech.slug)?.name">
-                          <Icon :name="'vuetracker:' + getTechnologyMetas(tech.type, tech.slug)?.icon" width="1.3em" height="1.3em" />
+                    <ClientOnly>
+                      <UTooltip v-if="!r.technologies.some(el => el.type === 'framework')" :text="vue.name" :popper="{ placement: 'top', arrow: true }">
+                        <span :title="vue.name">
+                          <Icon :name="'vuetracker:vue'" width="1.2em" height="1.2em" />
                         </span>
                       </UTooltip>
-                    </template>
+                      <template v-for="(tech, j) of r.technologies" :key="j">
+                        <UTooltip v-if="getTechnologyMetas(tech.type, tech.slug)?.icon" :text="getTechnologyMetas(tech.type, tech.slug)?.name" :popper="{ placement: 'top', arrow: true }">
+                          <span :title="getTechnologyMetas(tech.type, tech.slug)?.name">
+                            <Icon :name="'vuetracker:' + getTechnologyMetas(tech.type, tech.slug)?.icon" width="1.2em" height="1.2em" />
+                          </span>
+                        </UTooltip>
+                      </template>
+                    </ClientOnly>
                   </div>
                 </div>
               </div>
