@@ -130,7 +130,7 @@ export default defineCachedEventHandler(async (event) => {
   console.info("Site found in database and is not expired");
   return site;
 }, {
-  swr: true,
+  swr: false,
   maxAge: 7200, // Browser cache 2 h
   group: "api",
   name: "lookup",
