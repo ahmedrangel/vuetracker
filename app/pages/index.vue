@@ -36,7 +36,12 @@ const lookup = async () => {
       return undefined;
     });
 
-    if (!result.value) return;
+    if (!result.value?.slug) {
+      result.value = undefined;
+      error.value = "An error ocurred";
+      loading.value = false;
+      return;
+    }
 
     computedSiteModules.value = result.value.technologies;
     computedSitePlugins.value = result.value.technologies;
