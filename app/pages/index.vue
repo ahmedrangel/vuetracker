@@ -133,11 +133,28 @@ useHead({
                 <TrackerDetails :result="result" :site-info="siteInfo" :site-plugins="computedSitePlugins" :site-modules="computedSiteModules" />
               </div>
             </template>
+            <div v-else-if="!result && !error && loading" class="flex flex-col gap-6">
+              <div class="flex flex-col gap-2 text-start">
+                <div class="flex gap-2 items-center justify-start">
+                  <USkeleton class="h-6 w-6" />
+                  <USkeleton class="h-6 w-36" />
+                </div>
+                <USkeleton class="h-5 w-72" />
+                <USkeleton class="h-5 w-36" />
+              </div>
+              <SkeletonTrackerDetails />
+            </div>
             <div v-else-if="!result && error && !loading" class="text-rose-600 dark:text-rose-400">{{ error }}</div>
-            <LoadingDots v-else-if="!result && !error && loading" class="absolute w-full top-0" />
           </TransitionGroup>
         </div>
       </div>
     </div>
   </main>
 </template>
+
+<style scoped>
+#results .fade-leave-active {
+  position: absolute;
+  width: 100%;
+}
+</style>
