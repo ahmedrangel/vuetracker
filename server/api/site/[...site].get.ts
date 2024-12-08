@@ -1,5 +1,6 @@
 export default defineEventHandler(async (event) => {
   const { site } = getRouterParams(event);
+  console.log(site);
   const DB = useDB();
 
   const result = await DB.select({
@@ -21,7 +22,7 @@ export default defineEventHandler(async (event) => {
     icons: sql`json_group_array(DISTINCT json_object( 'url', ${tables.icons.url}, 'sizes', ${tables.icons.sizes})) FILTER (WHERE ${tables.icons.id} IS NOT NULL)`.as("icons"),
     technologies: sql`json_group_array(DISTINCT json_object('slug', ${tables.technologies.slug}, 'name', ${tables.technologies.name}, 'type', ${tables.technologies.type}, 'version', ${tables.technologies.version})) FILTER (WHERE ${tables.technologies.id} IS NOT NULL)`.as("technologies")
   }).from(tables.sites)
-    .where(eq(tables.sites.url, `https://${site}/`))
+    .where(or(eq(tables.sites.url, `https://${site}/`), eq(tables.sites.url, `https://${site}`)))
     .leftJoin(tables.icons, eq(tables.icons.siteSlug, tables.sites.slug))
     .leftJoin(tables.technologies, eq(tables.technologies.siteSlug, tables.sites.slug))
     .get() as unknown as VueTrackerRawResponse;
