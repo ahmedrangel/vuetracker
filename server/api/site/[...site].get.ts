@@ -1,6 +1,5 @@
 export default defineEventHandler(async (event) => {
   const { site } = getRouterParams(event);
-  console.log(site);
   const DB = useDB();
 
   const result = await DB.select({
