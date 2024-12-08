@@ -58,7 +58,11 @@ useSeoMeta({
   ogTitle: `${site} | VueTracker`,
   description: result.value?.description || result.value?.title,
   ogDescription: result.value?.description || result.value?.title,
-  ogImage: result.value?.ogImage
+  ogImage: result.value?.ogImage,
+  twitterCard: "summary_large_image",
+  twitterImage: result.value?.ogImage,
+  twitterTitle: `${site} | VueTracker`,
+  twitterDescription: result.value?.description || result.value?.title
 });
 
 useHead({

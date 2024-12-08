@@ -90,7 +90,14 @@ onMounted(async () => {
 
 useSeoMeta({
   title: "Explore | VueTracker",
-  ogTitle: "Explore | VueTracker"
+  ogTitle: "Explore | VueTracker",
+  description: SITE.description,
+  ogDescription: SITE.description,
+  ogImage: `${SITE.url}${SITE.ogImage}`,
+  twitterImage: `${SITE.url}${SITE.ogImage}`,
+  twitterCard: "summary_large_image",
+  twitterTitle: "Explore | VueTracker",
+  twitterDescription: SITE.description
 });
 
 useHead({

@@ -85,7 +85,11 @@ useSeoMeta({
   ogTitle: "VueTracker",
   description: SITE.description,
   ogDescription: SITE.description,
-  ogImage: `${SITE.url}${SITE.ogImage}`
+  ogImage: `${SITE.url}${SITE.ogImage}`,
+  twitterImage: `${SITE.url}${SITE.ogImage}`,
+  twitterCard: "summary_large_image",
+  twitterTitle: "VueTracker",
+  twitterDescription: SITE.description
 });
 
 useHead({
