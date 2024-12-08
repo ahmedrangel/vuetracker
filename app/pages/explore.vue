@@ -77,6 +77,10 @@ watch(inputQuery, () => {
   currentPage.value = 1;
   filteredResults.value = results.value;
 });
+watch(openSideBar, () => {
+  if (openSideBar.value) document.body.classList.add("overflow-hidden");
+  else document.body.classList.remove("overflow-hidden");
+});
 
 onMounted(async () => {
   addEventListener("resize", () => {
