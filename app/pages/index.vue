@@ -36,7 +36,7 @@ const lookup = async () => {
       return undefined;
     });
 
-    if (!result.value?.slug) {
+    if (!result.value?.slug && error.value) {
       result.value = undefined;
       error.value = "An error ocurred";
       loading.value = false;
