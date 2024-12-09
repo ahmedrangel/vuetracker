@@ -3,6 +3,8 @@ defineProps<{
   site: VueTrackerResponse;
 }>();
 
+const removeIconOnError = (e: Event) => (e.target as HTMLImageElement).remove();
+
 onMounted(() => {
   const images = document.querySelectorAll("img");
   images.forEach((img) => {
@@ -22,7 +24,7 @@ onMounted(() => {
     <div class="flex flex-wrap gap-2 items-center justify-between p-2">
       <NuxtLink :to="`/${normalizeSITE(site.url)}`" class="hover:underline truncate">
         <div class="flex gap-1 items-center">
-          <img :src="site.icons?.[0]?.url || `https://${site.hostname}/favicon.ico`" class="max-w-4 max-h-4 min-w-4 min-h-4">
+          <img :src="site.icons?.[0]?.url || `https://${site.hostname}/favicon.ico`" class="max-w-4 max-h-4 min-w-4 min-h-4" @error="removeIconOnError">
           <h4 class="text-xs xl:text-sm font-semibold truncate">/{{ normalizeSITE(site.url) }}</h4>
         </div>
       </NuxtLink>
