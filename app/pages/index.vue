@@ -145,11 +145,11 @@ useHead({
             <div v-else-if="!result && !error && loading" class="flex flex-col gap-6">
               <div class="flex flex-col gap-2 text-start">
                 <div class="flex gap-2 items-center justify-start">
-                  <USkeleton class="h-6 w-6" />
-                  <USkeleton class="h-6 w-36" />
+                  <USkeleton class="h-6 w-6 bg-gray-200" />
+                  <USkeleton class="h-6 w-36 bg-gray-200" />
                 </div>
-                <USkeleton class="h-5 w-72" />
-                <USkeleton class="h-5 w-36" />
+                <USkeleton class="h-5 w-72 bg-gray-200" />
+                <USkeleton class="h-5 w-36 bg-gray-200" />
               </div>
               <SkeletonTrackerDetails />
             </div>
