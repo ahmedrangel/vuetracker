@@ -2,6 +2,7 @@ export default defineEventHandler(async () => {
   const DB = useDB();
   const results = await DB.select({
     url: tables.sites.url,
+    hostname: tables.sites.hostname,
     title: tables.sites.title,
     ogImage: tables.sites.ogImage,
     createdAt: tables.sites.createdAt,
