@@ -18,7 +18,7 @@ export default defineCachedEventHandler(async (event) => {
 
   const redirectedURL = (await $fetch.raw(url, {
     retry: 0,
-    headers: { "User-Agent": "VueTracker/1.0 (Cloudflare Workers); https://vuetracker.nuxt.dev" }
+    headers: { "User-Agent": "VueTracker/1.0 (Cloudflare Workers; vuetracker.nuxt.dev)" }
   }).catch(() => null))?.url;
 
   const parsedURL = parseURL(redirectedURL || url)!;
