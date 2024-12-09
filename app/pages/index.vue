@@ -43,8 +43,8 @@ const lookup = async () => {
       return;
     }
 
-    computedSiteModules.value = result.value.technologies;
-    computedSitePlugins.value = result.value.technologies;
+    computedSiteModules.value = result.value?.technologies;
+    computedSitePlugins.value = result.value?.technologies;
     const framework = computed(() => result.value?.technologies.find(el => el.type === "framework"));
     const ui = computed(() => result.value?.technologies.find(el => el.type === "ui"));
     if (result.value) {
