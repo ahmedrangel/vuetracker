@@ -9,7 +9,6 @@
     <SkeletonTechCard />
     <SkeletonTechCard />
     <SkeletonTechCard />
-    <SkeletonTechCard />
   </div>
   <div class="flex flex-col gap-5">
     <div class="flex items-center gap-2 text-primary-600 dark:text-primary-400 font-bold tracking-tight">
