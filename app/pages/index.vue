@@ -128,14 +128,14 @@ useHead({
             <template v-if="result && !error && !loading">
               <div class="flex flex-col gap-6">
                 <div class="flex flex-col gap-1 text-start">
-                  <NuxtLink :to="`/${normalizeSITE(result.url)}`" class="hover:underline">
+                  <NuxtLink :to="`/${normalizeSITE(result.url)}`" class="hover:underline w-fit">
                     <div class="flex gap-2 items-center justify-start">
                       <img v-if="!result.faviconLoadError" :src="findFavicon(result.icons) || `https://${result.hostname}/favicon.ico`" class="min-w-6 max-w-6 min-h-6 max-h-6" loading="lazy" @error="result.faviconLoadError = true" @load="result.faviconLoadError = false">
                       <h2 class="text-xl font-semibold">/{{ normalizeSITE(result.url) }}</h2>
                     </div>
                   </NuxtLink>
                   <h4 class="text-base">{{ result.title }}</h4>
-                  <NuxtLink target="_blank" :to="result.url" class="hover:underline">
+                  <NuxtLink target="_blank" :to="result.url" class="hover:underline w-fit">
                     <h6 class="text-sm">{{ result.url }}</h6>
                   </NuxtLink>
                 </div>

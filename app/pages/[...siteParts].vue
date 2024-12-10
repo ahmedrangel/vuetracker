@@ -90,7 +90,7 @@ useHead({
         <div class="text-left flex flex-col gap-1">
           <h2 v-if="result.description" class="text-xl text-start">{{ result.siteName }}</h2>
           <h5 v-if="result.description" class="text-sm text-start">{{ result.description }}</h5>
-          <NuxtLink target="_blank" :to="result.url" class="hover:underline text-sm">
+          <NuxtLink target="_blank" :to="result.url" class="hover:underline text-sm w-fit">
             <h5 v-if="result.url">{{ result.url }}</h5>
           </NuxtLink>
         </div>
