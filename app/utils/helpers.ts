@@ -18,8 +18,8 @@ export const onScreen = (el: HTMLElement) => {
   return (rect.top >= 0 && rect.left >= 0 && rect.bottom <= window.innerHeight && rect.right <= window.innerWidth);
 };
 
-export const removeImageOnError = (e: Event) => {
-  if (import.meta.client) (e.target as HTMLImageElement).remove();
+export const hideImageOnError = (e: Event) => {
+  if (import.meta.client) (e.target as HTMLImageElement).style.display = "none";
 };
 
 export const findFavicon = (icons?: VueTrackerSiteIcons[]) => {

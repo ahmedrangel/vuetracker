@@ -130,7 +130,7 @@ useHead({
                 <div class="flex flex-col gap-1 text-start">
                   <NuxtLink :to="`/${normalizeSITE(result.url)}`" class="hover:underline">
                     <div class="flex gap-2 items-center justify-start">
-                      <img :src="findFavicon(result.icons) || `https://${result.hostname}/favicon.ico`" class="min-w-6 max-w-6 min-h-6 max-h-6" loading="lazy" @error="removeImageOnError">
+                      <img :src="findFavicon(result.icons) || `https://${result.hostname}/favicon.ico`" class="min-w-6 max-w-6 min-h-6 max-h-6" loading="lazy" @error="hideImageOnError">
                       <h2 class="text-xl font-semibold">/{{ normalizeSITE(result.url) }}</h2>
                     </div>
                   </NuxtLink>
