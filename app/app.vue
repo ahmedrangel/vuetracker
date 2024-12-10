@@ -1,11 +1,5 @@
 <script setup lang="ts">
 setScrollBehavior();
-onMounted(() => {
-  const images = document.querySelectorAll("img");
-  images.forEach((img) => {
-    if (img.complete && img.naturalWidth === 0) img.remove();
-  });
-});
 </script>
 
 <template>
