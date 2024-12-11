@@ -43,7 +43,7 @@
     "typescript": "^5.7.2",
     "ufo": "^1.5.4",
     "vue-tsc": "^2.1.10",
-    "wrangler": "^3.93.0"
+    "wrangler": "^3.95.0"
   },
   "packageManager": "pnpm@9.15.0",
   "dependencies": {
