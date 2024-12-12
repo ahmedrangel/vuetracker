@@ -22,20 +22,18 @@ defineProps<{
         </div>
       </NuxtLink>
       <div class="flex gap-1 items-center">
-        <ClientOnly>
-          <UTooltip v-if="!site.technologies.some(el => el.type === 'framework')" :text="vue.name" :popper="{ placement: 'top', arrow: true }">
-            <span :title="vue.name">
-              <Icon :name="'vuetracker:vue'" width="1.2em" height="1.2em" />
+        <UTooltip v-if="!site.technologies.some(el => el.type === 'framework')" :text="vue.name" :popper="{ placement: 'top', arrow: true }">
+          <span :title="vue.name">
+            <Icon :name="'vuetracker:vue'" width="1.2em" height="1.2em" />
+          </span>
+        </UTooltip>
+        <template v-for="(tech, j) of toRaw(site.technologies)" :key="j">
+          <UTooltip v-if="getTechnologyMetas(tech.type, tech.slug)?.icon" :text="getTechnologyMetas(tech.type, tech.slug)?.name" :popper="{ placement: 'top', arrow: true }">
+            <span :title="getTechnologyMetas(tech.type, tech.slug)?.name">
+              <Icon :name="'vuetracker:' + getTechnologyMetas(tech.type, tech.slug)?.icon" width="1.2em" height="1.2em" />
             </span>
           </UTooltip>
-          <template v-for="(tech, j) of toRaw(site.technologies)" :key="j">
-            <UTooltip v-if="getTechnologyMetas(tech.type, tech.slug)?.icon" :text="getTechnologyMetas(tech.type, tech.slug)?.name" :popper="{ placement: 'top', arrow: true }">
-              <span :title="getTechnologyMetas(tech.type, tech.slug)?.name">
-                <Icon :name="'vuetracker:' + getTechnologyMetas(tech.type, tech.slug)?.icon" width="1.2em" height="1.2em" />
-              </span>
-            </UTooltip>
-          </template>
-        </ClientOnly>
+        </template>
       </div>
     </div>
   </div>
