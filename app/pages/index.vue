@@ -52,6 +52,7 @@ const lookup = async () => {
     const framework = computed(() => result.value?.technologies.find(el => el.type === "framework"));
     const ui = computed(() => result.value?.technologies.find(el => el.type === "ui"));
     if (result.value) {
+      if (preview.value) preview.value = [...preview.value, result.value];
       siteInfo.value = [{
         title: "Vue Version",
         value: result.value?.vueVersion,
