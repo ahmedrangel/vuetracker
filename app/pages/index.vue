@@ -163,7 +163,7 @@ useHead({
       </div>
       <div id="preview" class="mt-4">
         <h5 class="text-md md:text-lg text-gray-500 dark:text-gray-400 text-balance mb-4 md:mb-8">
-          <NuxtLink to="/explore" class="text-primary-600 dark:text-primary-400 hover:underline">Explore</NuxtLink> our database of {{ preview?.length }} websites
+          <NuxtLink to="/explore" class="text-primary-600 dark:text-primary-400 hover:underline font-semibold">Explore</NuxtLink> our database of {{ preview?.length }} websites
         </h5>
         <SiteGlide v-if="preview" :sites="preview" />
       </div>
