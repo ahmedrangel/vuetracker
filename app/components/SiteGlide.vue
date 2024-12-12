@@ -18,8 +18,8 @@ onMounted(() => {
       975: { peek: 100 },
       640: { peek: 40 },
       400: { peek: 30 }
-    }
-    // autoplay: 4000
+    },
+    autoplay: 5000
   }).mount();
 });
 
