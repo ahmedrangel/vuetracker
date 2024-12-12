@@ -1,4 +1,8 @@
 <script setup lang="ts">
+const state = useState<VueTrackerResponse[]>("explore");
+const preview = state.value ? state : (await useFetch<VueTrackerResponse[]>("/api/explore")).data;
+if (!state.value) useState("explore", () => shallowRef(preview.value));
+
 const input = ref("");
 const result = ref<VueTrackerResponse>();
 const siteInfo = ref<{ title: string, value?: string, icon?: string | null, url?: string }[]>();
@@ -156,6 +160,12 @@ useHead({
             <div v-else-if="!result && error && !loading" class="text-rose-600 dark:text-rose-400">{{ error }}</div>
           </TransitionGroup>
         </div>
+      </div>
+      <div id="preview" class="mt-4">
+        <h5 class="text-md md:text-lg text-gray-500 dark:text-gray-400 text-balance mb-4 md:mb-8">
+          <NuxtLink to="/explore" class="text-primary-600 dark:text-primary-400 hover:underline">Explore</NuxtLink> our database of {{ preview?.length }} websites
+        </h5>
+        <SiteGlide v-if="preview" :sites="preview" />
       </div>
     </div>
   </main>

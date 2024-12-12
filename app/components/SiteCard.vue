@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import type { HTMLAttributes } from "vue";
+
 const props = defineProps<{
   site: VueTrackerResponse;
+  imgClass?: HTMLAttributes["class"];
 }>();
 
 const order = ["framework", "ui", "plugin", "module"];
@@ -11,7 +14,7 @@ const sortedTechnologies = computed(() => props.site.technologies.toSorted((a, b
 
 <template>
   <div class="flex flex-col bg-gray-200 dark:bg-gray-900 rounded overflow-hidden">
-    <div class="relative h-[100px] sm:h-[160px] md:h-[140px] lg:h-[140px] xl:h-[180px]">
+    <div class="relative" :class="`${imgClass ? imgClass : 'h-[100px] sm:h-[160px] md:h-[140px] lg:h-[140px] xl:h-[180px]'}`">
       <!-- eslint-disable vue/no-mutating-props -->
       <img v-if="site.ogImage && !site.ogImageLoadError" :src="site.ogImage" class="absolute object-cover h-full w-full" :title="site.title || normalizeSITE(site.url)" loading="lazy" @error="site.ogImageLoadError = true" @load="site.ogImageLoadError = false">
       <div v-else class="absolute flex items-center justify-center h-full w-full bg-gray-300 dark:bg-gray-800" title="No OG Image">

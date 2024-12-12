@@ -26,11 +26,13 @@
     "db:migrate": "drizzle-kit generate --config=.config/drizzle.ts"
   },
   "devDependencies": {
+    "@glidejs/glide": "^3.7.1",
     "@iconify-json/fa6-solid": "^1.2.2",
     "@iconify-json/ph": "^1.2.1",
     "@nuxt/eslint": "^0.7.2",
     "@nuxthub/core": "^0.8.7",
     "@nuxtjs/sitemap": "^7.0.0",
+    "@types/glidejs__glide": "^3.6.5",
     "date-fns": "^4.1.0",
     "drizzle-kit": "^0.30.0",
     "drizzle-orm": "^0.38.0",

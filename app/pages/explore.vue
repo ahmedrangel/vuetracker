@@ -2,7 +2,10 @@
 definePageMeta({ layout: "explore" });
 const router = useRouter();
 const { framework, ui, sort, page } = useRoute().query as Record<string, string>;
-const { data: results } = await useFetch<VueTrackerResponse[]>("/api/explore");
+
+const state = useState<VueTrackerResponse[]>("explore");
+const results = state.value ? state : (await useFetch<VueTrackerResponse[]>("/api/explore")).data;
+if (!state.value) useState("explore", () => shallowRef(results.value));
 
 const frameworksOptions = computed(() => Object.entries({ ...frameworks, vue: { metas: vue } }).map(([_key, value]) => ({
   label: value.metas.name,
