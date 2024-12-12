@@ -3,7 +3,7 @@ const props = defineProps<{
   sites: VueTrackerResponse[];
 }>();
 
-const filteredSites = computed(() => props.sites.filter(site => site.ogImage).toSorted(() => Math.random() - 0.5).slice(0, 20));
+const filteredSites = useState("preview-array", () => props.sites.filter(site => site.ogImage).toSorted(() => Math.random() - 0.5).slice(0, 20));
 
 const { $Glide } = useNuxtApp();
 onMounted(() => {
@@ -21,6 +21,10 @@ onMounted(() => {
     }
     // autoplay: 4000
   }).mount();
+});
+
+onBeforeUnmount(() => {
+  clearNuxtState("preview-array");
 });
 </script>
 
