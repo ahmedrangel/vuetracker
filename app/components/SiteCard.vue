@@ -1,7 +1,12 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   site: VueTrackerResponse;
 }>();
+
+const order = ["framework", "ui", "plugin", "module"];
+const sortedTechnologies = computed(() => props.site.technologies.toSorted((a, b) => {
+  return order.indexOf(a.type) - order.indexOf(b.type);
+}));
 </script>
 
 <template>
@@ -27,7 +32,7 @@ defineProps<{
             <Icon :name="'vuetracker:vue'" width="1.2em" height="1.2em" />
           </span>
         </UTooltip>
-        <template v-for="(tech, j) of toRaw(site.technologies)" :key="j">
+        <template v-for="(tech, j) of sortedTechnologies" :key="j">
           <UTooltip v-if="getTechnologyMetas(tech.type, tech.slug)?.icon" :text="getTechnologyMetas(tech.type, tech.slug)?.name" :popper="{ placement: 'top', arrow: true }">
             <span :title="getTechnologyMetas(tech.type, tech.slug)?.name">
               <Icon :name="'vuetracker:' + getTechnologyMetas(tech.type, tech.slug)?.icon" width="1.2em" height="1.2em" />
