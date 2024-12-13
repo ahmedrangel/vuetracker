@@ -67,7 +67,7 @@ onBeforeUnmount(() => {
 }
 
 .swiper-slide:not(.swiper-slide-active) .site-card {
-  opacity: 0.6;
+  opacity: 0.4;
   pointer-events: none;
 }
 </style>
