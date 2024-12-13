@@ -1,10 +1,10 @@
 # VueTracker
 
-![image](https://github.com/user-attachments/assets/ba8a245b-1f0c-4fdc-a60f-bbe7d235becf)
+![image](https://github.com/user-attachments/assets/0ec2f553-5bde-4b29-9f9c-d60883e6fec5)
 
-![image](https://github.com/user-attachments/assets/f6f75f6c-b44e-4799-8bb8-a77d95a66453)
+![image](https://github.com/user-attachments/assets/1f839bae-6d71-46c0-8220-a288376980b6)
 
-![image](https://github.com/user-attachments/assets/9e001a9f-7eab-40c9-b1cd-5c02f749689c)
+![image](https://github.com/user-attachments/assets/fe3b9d8b-3ced-4ced-a45a-880db87b962a)
 
 ## Credits
 Based on [nuxtlabs/vue-telescope-website](https://github.com/nuxtlabs/vue-telescope-website) and [nuxtlabs/vue-telescope-extensions](https://github.com/nuxtlabs/vue-telescope-extensions)
