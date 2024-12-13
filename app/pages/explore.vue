@@ -56,8 +56,8 @@ const filteredResults = computed({
         framework: selectedFramework.value,
         ui: selectedUI.value,
         q: inputQuery.value ? inputQuery.value : undefined,
-        sort: sortType.value,
-        page: currentPage.value.toString()
+        sort: sortType.value === "added" ? undefined : sortType.value,
+        page: currentPage.value === 1 ? undefined : currentPage.value.toString()
       }
     });
     totalResults.value = value.length;
