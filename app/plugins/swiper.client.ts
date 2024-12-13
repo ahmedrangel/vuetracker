@@ -1,5 +1,5 @@
 import Swiper from "swiper";
-import { Autoplay, EffectCoverflow } from "swiper/modules";
+import { Autoplay, EffectCoverflow, Navigation } from "swiper/modules";
 
 declare module "#app" {
   interface NuxtApp {
@@ -13,7 +13,8 @@ export default defineNuxtPlugin(() => {
       Swiper,
       SwiperModules: {
         Autoplay,
-        EffectCoverflow
+        EffectCoverflow,
+        Navigation
       }
     }
   };

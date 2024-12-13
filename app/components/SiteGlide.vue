@@ -7,7 +7,7 @@ const filteredSites = useState("preview-array", () => props.sites.filter(site =>
 
 onMounted(() => {
   const { $Swiper, $SwiperModules } = useNuxtApp();
-  const { Autoplay, EffectCoverflow } = $SwiperModules;
+  const { Autoplay, EffectCoverflow, Navigation } = $SwiperModules;
   new $Swiper(".swiper", {
     slidesPerView: 1.1,
     centeredSlides: true,
@@ -28,7 +28,11 @@ onMounted(() => {
       640: { slidesPerView: 1.5 },
       400: { slidesPerView: 1.2 }
     },
-    modules: [Autoplay, EffectCoverflow]
+    navigation: {
+      nextEl: ".swiper-next",
+      prevEl: ".swiper-prev"
+    },
+    modules: [Autoplay, EffectCoverflow, Navigation]
   });
 });
 
@@ -43,6 +47,12 @@ onBeforeUnmount(() => {
       <div v-for="(site, i) of filteredSites" :key="i" class="swiper-slide">
         <SiteCard class="site-card" :site="site" img-class="h-[190px] sm:h-[280px] md:h-[300px] lg:h-[340px] xl:h-[350px]" />
       </div>
+    </div>
+    <div class="swiper-next absolute right-0 md:right-[10%] top-1/2 -translate-y-1/2 z-10" role="button">
+      <Icon name="ph:caret-right-bold" size="42" />
+    </div>
+    <div class="swiper-prev absolute left-0 md:left-[10%] top-1/2 -translate-y-1/2 z-10" role="button">
+      <Icon name="ph:caret-left-bold" size="42" />
     </div>
   </div>
 </template>
