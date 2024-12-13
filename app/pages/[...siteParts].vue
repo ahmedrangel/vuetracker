@@ -85,7 +85,7 @@ useHead({
         </div>
         <h4 class="text-base">{{ result.title }}</h4>
       </div>
-      <img v-if="result.ogImage && !result.ogImageLoadError" :src="result.ogImage.startsWith('/') ? `https://${result.hostname}${result.ogImage}` : result.ogImage" class="rounded-xl" loading="lazy" @error="result.ogImageLoadError = true" @load="result.ogImageLoadError = false">
+      <img v-if="result.ogImage && !result.ogImageLoadError" :src="result.ogImage.startsWith('/') ? `https://${result.hostname}${result.ogImage}` : result.ogImage" class="rounded-xl" :title="result.title || normalizeSITE(result.url)" :alt="result.title || normalizeSITE(result.url)" loading="lazy" @error="result.ogImageLoadError = true" @load="result.ogImageLoadError = false">
       <div class="tracking-tight flex gap-3 items-center rounded-xl transition">
         <div class="text-left flex flex-col gap-1">
           <h2 v-if="result.description" class="text-xl text-start">{{ result.siteName }}</h2>
