@@ -21,7 +21,11 @@ onMounted(() => {
       modifier: 1,
       slideShadows: true
     },
-    speed: 500,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false
+    },
+    speed: 300,
     breakpoints: {
       1536: { slidesPerView: 2 },
       975: { slidesPerView: 1.8 },
@@ -59,7 +63,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .swiper-slide .site-card {
-  transition: opacity .5s ease-in-out!important;
+  transition: opacity .3s ease-in-out!important;
 }
 
 .swiper-slide:not(.swiper-slide-active) .site-card {
