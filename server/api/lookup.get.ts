@@ -121,7 +121,7 @@ export default defineCachedEventHandler(async (event) => {
       isStatic: Number(result.isStatic),
       vueVersion: result.vueVersion,
       updatedAt: now
-    }).where(eq(tables.sites.slug, site.slug)).returning().get();
+    }).where(or(eq(tables.sites.slug, site.slug), eq(tables.sites.url, siteURL))).returning().get();
 
     const { icons, technologies } = await handleSiteDataInsertion(result, siteSlug);
     return {
