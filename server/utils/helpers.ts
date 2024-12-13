@@ -60,7 +60,7 @@ export const handleSiteDataInsertion = async (result: VueTrackerProxyResponse, s
 
 export const selectSite = async (condition: SQL<unknown>) => {
   const DB = useDB();
-  return await DB.select({
+  const site = await DB.select({
     slug: tables.sites.slug,
     url: tables.sites.url,
     hostname: tables.sites.hostname,
@@ -83,4 +83,9 @@ export const selectSite = async (condition: SQL<unknown>) => {
     .leftJoin(tables.icons, eq(tables.icons.siteSlug, tables.sites.slug))
     .leftJoin(tables.technologies, eq(tables.technologies.siteSlug, tables.sites.slug))
     .get() as unknown as VueTrackerRawResponse;
+  const parsedIcons = site.icons ? JSON.parse(site.icons) : [];
+  const parsedTechnologies = site.technologies ? JSON.parse(site.technologies) : [];
+  site.icons = parsedIcons;
+  site.technologies = parsedTechnologies;
+  return site;
 };

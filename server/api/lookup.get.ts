@@ -29,11 +29,6 @@ export default defineCachedEventHandler(async (event) => {
 
   const site = await selectSite(eq(tables.sites.slug, siteSlug));
 
-  const parsedIcons = site.icons ? JSON.parse(site.icons) : [];
-  const parsedTechnologies = site.technologies ? JSON.parse(site.technologies) : [];
-  site.icons = parsedIcons;
-  site.technologies = parsedTechnologies;
-
   if (!site.slug) {
     console.info("Site not found in database");
     const [result] = await Promise.all<VueTrackerProxyResponse>([
