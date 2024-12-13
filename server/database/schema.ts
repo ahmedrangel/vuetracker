@@ -2,7 +2,7 @@ import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 
 export const sites = sqliteTable("sites", {
   slug: text().primaryKey(),
-  url: text().notNull(),
+  url: text().notNull().unique(),
   hostname: text().notNull(),
   domain: text().notNull(),
   language: text(),

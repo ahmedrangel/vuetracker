@@ -27,29 +27,7 @@ export default defineCachedEventHandler(async (event) => {
   const now = Date.now();
   const DB = useDB();
 
-  const site = await DB.select({
-    slug: tables.sites.slug,
-    url: tables.sites.url,
-    hostname: tables.sites.hostname,
-    domain: tables.sites.domain,
-    language: tables.sites.language,
-    title: tables.sites.title,
-    siteName: tables.sites.siteName,
-    description: tables.sites.description,
-    ogImage: tables.sites.ogImage,
-    isAdultContent: tables.sites.isAdultContent,
-    hasSSR: tables.sites.hasSSR,
-    isStatic: tables.sites.isStatic,
-    vueVersion: tables.sites.vueVersion,
-    createdAt: tables.sites.createdAt,
-    updatedAt: tables.sites.updatedAt,
-    icons: sql`json_group_array(DISTINCT json_object( 'url', ${tables.icons.url}, 'sizes', ${tables.icons.sizes})) FILTER (WHERE ${tables.icons.id} IS NOT NULL)`.as("icons"),
-    technologies: sql`json_group_array(DISTINCT json_object('slug', ${tables.technologies.slug}, 'name', ${tables.technologies.name}, 'type', ${tables.technologies.type}, 'version', ${tables.technologies.version})) FILTER (WHERE ${tables.technologies.id} IS NOT NULL)`.as("technologies")
-  }).from(tables.sites)
-    .where(eq(tables.sites.slug, siteSlug))
-    .leftJoin(tables.icons, eq(tables.icons.siteSlug, tables.sites.slug))
-    .leftJoin(tables.technologies, eq(tables.technologies.siteSlug, tables.sites.slug))
-    .get() as unknown as VueTrackerRawResponse;
+  const site = await selectSite(eq(tables.sites.slug, siteSlug));
 
   const parsedIcons = site.icons ? JSON.parse(site.icons) : [];
   const parsedTechnologies = site.technologies ? JSON.parse(site.technologies) : [];
@@ -80,20 +58,23 @@ export default defineCachedEventHandler(async (event) => {
       vueVersion: result.vueVersion,
       createdAt: now,
       updatedAt: now
-    }).returning().get();
-    if (!site) {
+    }).onConflictDoNothing().returning().get();
+    if (site) {
+      const { icons, technologies } = await handleSiteDataInsertion(result, siteSlug);
+      return {
+        ...site,
+        icons,
+        technologies
+      };
+    }
+    const conflictedSite = await selectSite(eq(tables.sites.url, siteURL));
+    if (!conflictedSite) {
       throw createError({
-        statusCode: ErrorCode.INTERNAL_SERVER_ERROR,
-        statusMessage: "An error occurred while analyzing, please try again later"
+        statusCode: ErrorCode.NOT_FOUND,
+        statusMessage: "Site not found"
       });
     }
-
-    const { icons, technologies } = await handleSiteDataInsertion(result, siteSlug);
-    return {
-      ...site,
-      icons,
-      technologies
-    };
+    return conflictedSite;
   }
 
   // Site found in DB but outdated
