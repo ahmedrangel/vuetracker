@@ -62,9 +62,11 @@ export default defineCachedEventHandler(async (event) => {
       fetchVueTrackerProxy(url),
       DB.delete(tables.sites).where(eq(tables.sites.slug, siteSlug)).run()
     ]);
+    const parsedResultURL = parseURL(result.url);
+    const siteURL = `${parsedResultURL.protocol}//${parsedResultURL.host}${parsedResultURL.pathname}`;
     const site = await DB.insert(tables.sites).values({
       slug: siteSlug,
-      url: result.url,
+      url: siteURL,
       hostname: result.hostname,
       domain: result.domain,
       language: result.meta?.language,
@@ -103,8 +105,10 @@ export default defineCachedEventHandler(async (event) => {
       DB.delete(tables.icons).where(eq(tables.icons.siteSlug, site.slug)).run()
     ]);
 
+    const parsedResultURL = parseURL(result.url);
+    const siteURL = `${parsedResultURL.protocol}//${parsedResultURL.host}${parsedResultURL.pathname}`;
     const updatedSite = await DB.update(tables.sites).set({
-      url: result.url,
+      url: siteURL,
       hostname: result.hostname,
       domain: result.domain,
       language: result.meta?.language,
