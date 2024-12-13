@@ -15,9 +15,6 @@ importers:
         specifier: ^0.1.7
         version: 0.1.7(typescript@5.7.2)
     devDependencies:
-      '@glidejs/glide':
-        specifier: ^3.7.1
-        version: 3.7.1
       '@iconify-json/fa6-solid':
         specifier: ^1.2.2
         version: 1.2.2
@@ -33,9 +30,6 @@ importers:
       '@nuxtjs/sitemap':
         specifier: ^7.0.0
         version: 7.0.0(h3@1.13.0)(magicast@0.3.5)(rollup@4.27.4)(vite@5.4.11(@types/node@22.10.0)(sass@1.82.0)(terser@5.36.0))(vue@3.5.13(typescript@5.7.2))
-      '@types/glidejs__glide':
-        specifier: ^3.6.5
-        version: 3.6.5
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -63,6 +57,9 @@ importers:
       stylelint-config-standard-scss:
         specifier: ^14.0.0
         version: 14.0.0(postcss@8.4.49)(stylelint@16.11.0(typescript@5.7.2))
+      swiper:
+        specifier: ^11.1.15
+        version: 11.1.15
       typescript:
         specifier: ^5.7.2
         version: 5.7.2
@@ -1089,9 +1086,6 @@ packages:
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
     engines: {node: '>=14'}
 
-  '@glidejs/glide@3.7.1':
-    resolution: {integrity: sha512-8he0pZpLSqTesSFYiuWdhBmtdlYSPWxfPUCKtkkiX6ZmT8UdMdmoFPtJaOwLBXv4p2JiGxqbuPdiRGGo2e/htQ==}
-
   '@headlessui/tailwindcss@0.2.1':
     resolution: {integrity: sha512-2+5+NZ+RzMyrVeCZOxdbvkUSssSxGvcUxphkIfSVLpRiKsj+/63T2TOL9dBYMXVfj/CGr6hMxSRInzXv6YY7sA==}
     engines: {node: '>=10'}
@@ -1642,9 +1636,6 @@ packages:
 
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
-
-  '@types/glidejs__glide@3.6.5':
-    resolution: {integrity: sha512-OUjzveIu+tiK5VvyPh6jTBJ/vH6+vC+XWzC2KJzpgUW8uancMJBa7R+BlXuvtSPdLw/pQForVasy0fm1D7JWOQ==}
 
   '@types/http-proxy@1.17.15':
     resolution: {integrity: sha512-25g5atgiVNTIv0LBDTg1H74Hvayx0ajtJPLLcYE3whFv75J0pWNtOBzaXJQgDTmrX1bx5U9YC2w/n65BN1HwRQ==}
@@ -4897,6 +4888,10 @@ packages:
     engines: {node: '>=14.0.0'}
     hasBin: true
 
+  swiper@11.1.15:
+    resolution: {integrity: sha512-IzWeU34WwC7gbhjKsjkImTuCRf+lRbO6cnxMGs88iVNKDwV+xQpBCJxZ4bNH6gSrIbbyVJ1kuGzo3JTtz//CBw==}
+    engines: {node: '>= 4.7.0'}
+
   synckit@0.9.2:
     resolution: {integrity: sha512-vrozgXDQwYO72vHjUb/HnFbQx1exDjoKzqx23aXEg2a9VIg2TSFZ8FmeZpTjUCFMYw7mpX4BE2SFu8wI7asYsw==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -6181,8 +6176,6 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
-  '@glidejs/glide@3.7.1': {}
-
   '@headlessui/tailwindcss@0.2.1(tailwindcss@3.4.16)':
     dependencies:
       tailwindcss: 3.4.16
@@ -7059,8 +7052,6 @@ snapshots:
   '@trysound/sax@0.2.0': {}
 
   '@types/estree@1.0.6': {}
-
-  '@types/glidejs__glide@3.6.5': {}
 
   '@types/http-proxy@1.17.15':
     dependencies:
@@ -10735,6 +10726,8 @@ snapshots:
       css-what: 6.1.0
       csso: 5.0.5
       picocolors: 1.1.1
+
+  swiper@11.1.15: {}
 
   synckit@0.9.2:
     dependencies:
