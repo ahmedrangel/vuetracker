@@ -3,7 +3,7 @@ const props = defineProps<{
   sites: VueTrackerResponse[];
 }>();
 
-const filteredSites = useState("preview-array", () => props.sites.filter(site => site.ogImage).toSorted(() => Math.random() - 0.5).slice(0, 30));
+const filteredSites = useState("preview-array", () => props.sites.filter(site => site.ogImage).toSorted(() => Math.random() - 0.5).slice(0, 40));
 
 onMounted(() => {
   const { $Swiper, $SwiperModules } = useNuxtApp();
