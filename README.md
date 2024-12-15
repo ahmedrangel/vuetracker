@@ -1,6 +1,6 @@
 # VueTracker
 
-![image](https://github.com/user-attachments/assets/0ec2f553-5bde-4b29-9f9c-d60883e6fec5)
+![image](https://github.com/user-attachments/assets/e50094a8-16fd-4a5a-951e-f8d4bbccd1ea)
 
 ![image](https://github.com/user-attachments/assets/1f839bae-6d71-46c0-8220-a288376980b6)
 
