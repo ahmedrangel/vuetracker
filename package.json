@@ -26,10 +26,10 @@
     "db:migrate": "drizzle-kit generate --config=.config/drizzle.ts"
   },
   "devDependencies": {
-    "@iconify-json/fa6-solid": "^1.2.2",
-    "@iconify-json/ph": "^1.2.1",
+    "@iconify-json/fa6-solid": "^1.2.3",
+    "@iconify-json/ph": "^1.2.2",
     "@nuxt/eslint": "^0.7.3",
-    "@nuxthub/core": "^0.8.8",
+    "@nuxthub/core": "^0.8.9",
     "@nuxtjs/sitemap": "^7.0.0",
     "date-fns": "^4.1.0",
     "drizzle-kit": "^0.30.1",
@@ -38,13 +38,13 @@
     "nuxt": "^3.14.1592",
     "nuxt-ripple": "^0.0.8",
     "sass": "^1.83.0",
-    "stylelint": "^16.11.0",
+    "stylelint": "^16.12.0",
     "stylelint-config-standard-scss": "^14.0.0",
     "swiper": "^11.1.15",
     "typescript": "^5.7.2",
     "ufo": "^1.5.4",
     "vue-tsc": "^2.1.10",
-    "wrangler": "^3.95.0"
+    "wrangler": "^3.97.0"
   },
   "packageManager": "pnpm@9.15.0",
   "dependencies": {
