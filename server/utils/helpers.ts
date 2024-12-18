@@ -11,8 +11,7 @@ export const fetchVueTrackerProxy = async (url: string) => {
     // Cause 4 = vue not detected
     if (error?.cause?.code === 4) {
       const DB = useDB();
-      const del = await DB.delete(tables.sites).where(eq(tables.sites.url, url)).run();
-      console.info(del);
+      await DB.delete(tables.sites).where(eq(tables.sites.url, url)).run();
     }
     throw createError({
       statusCode: ErrorCode.INTERNAL_SERVER_ERROR,
