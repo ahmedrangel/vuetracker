@@ -12,7 +12,7 @@ export const fetchVueTrackerProxy = async (url: string) => {
     if (error?.cause?.code === 4) {
       console.info("Deleting site from DB");
       const DB = useDB();
-      await DB.delete(tables.sites).where(eq(tables.sites.url, url)).run();
+      DB.delete(tables.sites).where(eq(tables.sites.url, url)).run();
     }
     throw createError({
       statusCode: ErrorCode.INTERNAL_SERVER_ERROR,
