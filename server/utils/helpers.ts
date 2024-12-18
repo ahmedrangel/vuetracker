@@ -6,11 +6,17 @@ export const fetchVueTrackerProxy = async (url: string) => {
   const result = await $fetch<VueTrackerProxyResponse>(config.analyzer.proxyURL, {
     retry: 0,
     query: { url }
-  }).catch((e) => {
-    console.info(e);
+  }).catch(async (e) => {
+    const { error } = e.data;
+    // Cause 4 = vue not detected
+    if (error?.cause?.code === 4) {
+      console.info("Deleting site from DB");
+      const DB = useDB();
+      await DB.delete(tables.sites).where(eq(tables.sites.url, url)).run();
+    }
     throw createError({
       statusCode: ErrorCode.INTERNAL_SERVER_ERROR,
-      statusMessage: e.data?.error || "An error occurred while analyzing, please try again later"
+      statusMessage: error?.message || error || "An error occurred while analyzing, please try again later"
     });
   });
   return result;
