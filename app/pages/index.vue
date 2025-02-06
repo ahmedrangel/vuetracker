@@ -1,8 +1,8 @@
 <script setup lang="ts">
-const state = useState<VueTrackerResponse[]>("explore");
-const preview = state.value ? state : (await useFetch<VueTrackerResponse[]>("/api/explore")).data;
-if (!state.value) useState("explore", () => shallowRef(preview.value));
-
+const { data: preview } = await useFetch<VueTrackerResponse[]>("/api/explore", {
+  key: "explore",
+  getCachedData: (key, nuxtApp) => nuxtApp.payload.data[key]
+});
 const input = ref("");
 const result = ref<VueTrackerResponse>();
 const siteInfo = ref<{ title: string, value?: string, icon?: string | null, url?: string }[]>();
