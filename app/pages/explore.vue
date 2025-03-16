@@ -186,7 +186,7 @@ const radioGroups = computed<{
             </template>
           </TransitionGroup>
         </div>
-        <UPagination v-if="computedResults?.length" v-model="currentPage" class="mt-10 justify-center" size="md" :page-count="pageSize" :total="computedResults?.length || 0" show-last show-first />
+        <UPagination v-if="computedResults?.length" v-model:page="currentPage" class="mt-10 justify-center" size="md" :items-per-page="pageSize" :total="computedResults?.length || 0" />
       </div>
     </div>
   </main>
