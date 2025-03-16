@@ -27,12 +27,12 @@ const iconItems = computed(() => [
 </script>
 
 <template>
-  <nav class="text-gray-900 dark:text-gray-50 text-base tracking-tight sm:bg-gray-200 sm:dark:bg-gray-900">
-    <div class="mx-auto sm:px-6 lg:px-8 px-2 bg-gray-200 dark:bg-gray-900 z-20 relative" :class="route.path !== '/explore' ? 'max-w-7xl' : ''">
+  <nav class="text-neutral-900 dark:text-neutral-50 text-base tracking-tight sm:bg-neutral-200 sm:dark:bg-neutral-900">
+    <div class="mx-auto sm:px-6 lg:px-8 px-2 bg-neutral-200 dark:bg-neutral-900 z-20 relative" :class="route.path !== '/explore' ? 'max-w-7xl' : ''">
       <div class="relative flex h-14 items-center justify-between">
         <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
           <!-- Mobile menu button -->
-          <button v-ripple type="button" class="relative inline-flex items-center justify-center rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-400 dark:focus:ring-gray-700" aria-controls="mobile-menu" aria-expanded="false" @click="menuOpen = !menuOpen">
+          <button v-ripple type="button" class="relative inline-flex items-center justify-center rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-neutral-400 dark:focus:ring-neutral-700" aria-controls="mobile-menu" aria-expanded="false" @click="menuOpen = !menuOpen">
             <span class="absolute -inset-0.5" />
             <span class="sr-only">Open main menu</span>
             <Icon v-if="!menuOpen" name="ph:list" size="1.5em" />
@@ -48,16 +48,16 @@ const iconItems = computed(() => [
           <div class="hidden sm:ml-6 sm:block">
             <div class="nav-tabs flex space-x-1">
               <template v-for="(it, i) of rightItems" :key="i">
-                <NuxtLink v-if="it.type === 'link'" v-ripple :to="it.to" class="rounded-md px-2 py-1 font-semibold hover:bg-gray-100 hover:dark:bg-gray-800">{{ it.label }}</NuxtLink>
+                <NuxtLink v-if="it.type === 'link'" v-ripple :to="it.to" class="rounded-md px-2 py-1 font-semibold hover:bg-neutral-100 hover:dark:bg-neutral-800">{{ it.label }}</NuxtLink>
               </template>
             </div>
           </div>
           <div class="nav-tabs flex space-x-1">
             <template v-for="(it, i) of iconItems" :key="i">
-              <button v-if="it.type === 'button'" v-ripple type="button" class="rounded-md px-1 py-1 hover:bg-gray-100 hover:dark:bg-gray-800" @click="it.action">
+              <button v-if="it.type === 'button'" v-ripple type="button" class="rounded-md px-1 py-1 hover:bg-neutral-100 hover:dark:bg-neutral-800" @click="it.action">
                 <Icon :name="it.icon" size="1.4em" />
               </button>
-              <NuxtLink v-else-if="it.type === 'link'" v-ripple :to="it.to" :target="it.target" class="rounded-md px-2 py-1 hover:bg-gray-100 hover:dark:bg-gray-800">
+              <NuxtLink v-else-if="it.type === 'link'" v-ripple :to="it.to" :target="it.target" class="rounded-md px-2 py-1 hover:bg-neutral-100 hover:dark:bg-neutral-800">
                 <Icon :name="it.icon" size="1.4em" />
               </NuxtLink>
             </template>
@@ -68,10 +68,10 @@ const iconItems = computed(() => [
 
     <!-- Mobile menu -->
     <Transition name="slide-menu">
-      <div v-if="menuOpen" id="mobile-menu" class="sm:hidden bg-gray-300 dark:bg-gray-900 z-10 absolute w-full">
+      <div v-if="menuOpen" id="mobile-menu" class="sm:hidden bg-neutral-300 dark:bg-neutral-900 z-10 absolute w-full">
         <div class="nav-tabs space-y-1 px-2 pb-3 pt-2">
           <template v-for="(it, i) of rightItems" :key="i">
-            <NuxtLink v-if="it.type === 'link'" v-ripple :to="it.to" class="block rounded-md px-3 py-2 font-semibold hover:bg-gray-200 hover:dark:bg-gray-800" @click="menuOpen = false">{{ it.label }}</NuxtLink>
+            <NuxtLink v-if="it.type === 'link'" v-ripple :to="it.to" class="block rounded-md px-3 py-2 font-semibold hover:bg-neutral-200 hover:dark:bg-neutral-800" @click="menuOpen = false">{{ it.label }}</NuxtLink>
           </template>
         </div>
       </div>
@@ -79,13 +79,13 @@ const iconItems = computed(() => [
   </nav>
 </template>
 
-<style scoped lang="postcss">
+<style scoped>
 .dark .nav-tabs .router-link-exact-active {
-  @apply bg-gray-950;
+  background-color: var(--color-neutral-950);
 }
 
 .light .nav-tabs .router-link-exact-active {
-  @apply bg-gray-50;
+  background-color: var(--color-neutral-50);
 }
 
 .slide-menu-enter-active,

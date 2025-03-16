@@ -13,11 +13,11 @@ const sortedTechnologies = computed(() => props.site.technologies.toSorted((a, b
 </script>
 
 <template>
-  <div class="flex flex-col bg-gray-200 dark:bg-gray-900 rounded overflow-hidden">
+  <div class="flex flex-col bg-neutral-200 dark:bg-neutral-900 rounded overflow-hidden">
     <div class="relative" :class="`${imgClass ? imgClass : 'h-[100px] sm:h-[160px] md:h-[140px] lg:h-[140px] xl:h-[180px]'}`">
       <!-- eslint-disable vue/no-mutating-props -->
       <img v-if="site.ogImage && !site.ogImageLoadError" :src="site.ogImage.startsWith('/') ? `https://${site.hostname}${site.ogImage}` : site.ogImage" class="absolute object-cover h-full w-full" :title="site.title || normalizeSITE(site.url)" :alt="site.title || normalizeSITE(site.url)" loading="lazy" @error="site.ogImageLoadError = true" @load="site.ogImageLoadError = false">
-      <div v-else class="absolute flex items-center justify-center h-full w-full bg-gray-300 dark:bg-gray-800" title="No OG Image">
+      <div v-else class="absolute flex items-center justify-center h-full w-full bg-neutral-300 dark:bg-neutral-800" title="No OG Image">
         <Icon name="ph:image" size="2em" />
       </div>
     </div>
@@ -30,13 +30,13 @@ const sortedTechnologies = computed(() => props.site.technologies.toSorted((a, b
         </div>
       </NuxtLink>
       <div class="flex gap-1 items-center">
-        <UTooltip v-if="!site.technologies.some(el => el.type === 'framework')" :text="vue.name" :popper="{ placement: 'top', arrow: true }">
+        <UTooltip v-if="!site.technologies.some(el => el.type === 'framework')" :text="vue.name" :content="{ side: 'top' }" arrow>
           <span :title="vue.name">
             <Icon :name="'vuetracker:vue'" width="1.2em" height="1.2em" />
           </span>
         </UTooltip>
         <template v-for="(tech, j) of sortedTechnologies" :key="j">
-          <UTooltip v-if="getTechnologyMetas(tech.type, tech.slug)?.icon" :text="getTechnologyMetas(tech.type, tech.slug)?.name" :popper="{ placement: 'top', arrow: true }">
+          <UTooltip v-if="getTechnologyMetas(tech.type, tech.slug)?.icon" :text="getTechnologyMetas(tech.type, tech.slug)?.name" :content="{ side: 'top' }" arrow>
             <span :title="getTechnologyMetas(tech.type, tech.slug)?.name">
               <Icon :name="'vuetracker:' + getTechnologyMetas(tech.type, tech.slug)?.icon" width="1.2em" height="1.2em" />
             </span>

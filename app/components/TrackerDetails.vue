@@ -18,7 +18,7 @@ defineProps<{
     <template v-for="(info, i) of siteInfo" :key="i">
       <template v-if="info.value">
         <NuxtLink v-if="info.url" target="_blank" :to="info.url">
-          <TechCard v-ripple :title="info.title" :icon="info.icon" :value="info.value" class="hover:bg-gray-100 hover:dark:bg-gray-900" />
+          <TechCard v-ripple :title="info.title" :icon="info.icon" :value="info.value" class="hover:bg-neutral-100 hover:dark:bg-neutral-900" />
         </NuxtLink>
         <TechCard v-else :title="info.title" :icon="info.icon" :value="info.value" />
       </template>
@@ -32,7 +32,7 @@ defineProps<{
     <div class="flex flex-wrap items-start gap-2">
       <template v-for="(tech, i) of sitePlugins" :key="i">
         <NuxtLink v-if="getTechnologyMetas('plugin', tech.slug)?.url" target="_blank" :to="getTechnologyMetas('plugin', tech.slug)?.url">
-          <TechCardBasic v-ripple :value="tech.name" class="hover:bg-gray-100 hover:dark:bg-gray-900" />
+          <TechCardBasic v-ripple :value="tech.name" class="hover:bg-neutral-100 hover:dark:bg-neutral-900" />
         </NuxtLink>
         <TechCardBasic v-else :value="tech.name" />
       </template>
@@ -46,11 +46,11 @@ defineProps<{
     <div class="flex flex-wrap items-start gap-2">
       <template v-for="(tech, i) of siteModules" :key="i">
         <NuxtLink v-if="getTechnologyMetas('module', tech.slug)?.url" target="_blank" :to="getTechnologyMetas('module', tech.slug)?.url">
-          <TechCardBasic v-ripple :value="tech.name" class="hover:bg-gray-100 hover:dark:bg-gray-900" />
+          <TechCardBasic v-ripple :value="tech.name" class="hover:bg-neutral-100 hover:dark:bg-neutral-900" />
         </NuxtLink>
         <TechCardBasic v-else :value="tech.name" />
       </template>
     </div>
   </div>
-  <h5 class="text-sm text-start text-gray-500 dark:text-gray-400">Last updated: {{ format(result.updatedAt, "Pp") }}</h5>
+  <h5 class="text-sm text-start text-neutral-500 dark:text-neutral-400">Last updated: {{ format(result.updatedAt, "Pp") }}</h5>
 </template>

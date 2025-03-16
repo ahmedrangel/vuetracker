@@ -7,19 +7,14 @@ setScrollBehavior();
     <NuxtLoadingIndicator :throttle="0" />
     <NavBar />
     <NuxtLayout>
-      <NuxtPage />
+      <UApp>
+        <NuxtPage />
+      </UApp>
     </NuxtLayout>
   </div>
 </template>
 
-<style lang="postcss">
-.light {
-  @apply bg-gray-100 text-gray-900;
-}
-.dark {
-  @apply bg-gray-950 text-gray-50;
-}
-
+<style>
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease-in-out;

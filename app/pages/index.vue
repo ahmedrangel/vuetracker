@@ -110,21 +110,23 @@ useHead({
       <h1 class="text-4xl font-bold tracking-tight md:text-5xl text-balance mb-4 md:mb-8">
         <span class="text-primary-600 dark:text-primary-400">Vue</span>Tracker
       </h1>
-      <h5 class="text-md md:text-lg text-gray-500 dark:text-gray-400 text-balance mb-4 md:mb-8">{{ SITE.description }}</h5>
+      <h5 class="text-md md:text-lg text-neutral-500 dark:text-neutral-400 text-balance mb-4 md:mb-8">{{ SITE.description }}</h5>
       <div class="2xl:w-1/2 xl:w-3/5 lg:w-3/4 flex flex-col mx-auto gap-6">
         <form @submit.prevent="lookup">
           <UButtonGroup size="xl" orientation="horizontal" class="w-full">
-            <UInput v-model="input" class="w-full" :ui="{ leading: { padding: { xl: 'ps-[4.2rem] py-4' } } }" required>
+            <UInput v-model="input" class="w-full" :ui="{ base: 'ps-[4.2rem] py-4 bg-neutral-50 dark:bg-neutral-900' }" required>
               <template #leading>
-                <span class="text-base text-gray-400">https://</span>
+                <span class="text-base text-neutral-400">https://</span>
               </template>
             </UInput>
-            <UButton v-ripple class="md:px-10 w-20 sm:w-32 relative justify-center" type="submit" :disabled="loading">
-              <div v-if="!loading" class="absolute">
-                <span class="hidden sm:block font-bold">Lookup</span>
-                <Icon name="ph:magnifying-glass-duotone" class="sm:hidden block text-2xl" />
+            <UButton class="m-0 p-0 relative" type="submit" :disabled="loading">
+              <div v-ripple class="md:px-10 w-20 sm:w-32 flex justify-center cursor-pointer absolute h-full items-center">
+                <div v-if="!loading">
+                  <span class="hidden sm:block font-bold">Lookup</span>
+                  <Icon name="ph:magnifying-glass-duotone" class="sm:hidden block text-2xl" />
+                </div>
+                <LoadingSpinner v-else />
               </div>
-              <LoadingSpinner v-else class="absolute" />
             </UButton>
           </UButtonGroup>
         </form>
@@ -150,11 +152,11 @@ useHead({
             <div v-else-if="!result && !error && loading" class="flex flex-col gap-6">
               <div class="flex flex-col gap-2 text-start">
                 <div class="flex gap-2 items-center justify-start">
-                  <USkeleton class="h-6 w-6 bg-gray-200" />
-                  <USkeleton class="h-6 w-36 bg-gray-200" />
+                  <USkeleton class="h-6 w-6 bg-neutral-200 dark:bg-neutral-800" />
+                  <USkeleton class="h-6 w-36 bg-neutral-200 dark:bg-neutral-800" />
                 </div>
-                <USkeleton class="h-5 w-72 bg-gray-200" />
-                <USkeleton class="h-5 w-36 bg-gray-200" />
+                <USkeleton class="h-5 w-72 bg-neutral-200 dark:bg-neutral-800" />
+                <USkeleton class="h-5 w-36 bg-neutral-200 dark:bg-neutral-800" />
               </div>
               <SkeletonTrackerDetails />
             </div>
@@ -163,7 +165,7 @@ useHead({
         </div>
       </div>
       <div id="preview" class="mt-6">
-        <h5 class="text-md md:text-lg text-gray-500 dark:text-gray-400 text-balance mb-4 md:mb-8">
+        <h5 class="text-md md:text-lg text-neutral-500 dark:text-neutral-400 text-balance mb-4 md:mb-8">
           <NuxtLink to="/explore" class="text-primary-600 dark:text-primary-400 hover:underline font-semibold">Explore</NuxtLink> our database of {{ preview?.length }} websites
         </h5>
         <SiteGlide v-if="preview" :sites="preview" />

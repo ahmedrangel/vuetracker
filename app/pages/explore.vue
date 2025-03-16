@@ -19,10 +19,10 @@ const uiOptions = computed(() => Object.entries(uis).map(([_key, value]) => ({
 })).toSorted((a, b) => a.label.localeCompare(b.label)));
 
 const filters = [{
-  name: "Date added",
+  label: "Date added",
   value: "added"
 }, {
-  name: "Date updated",
+  label: "Date updated",
   value: "updated"
 }];
 
@@ -123,13 +123,13 @@ const radioGroups = computed<{
 
 <template>
   <main>
-    <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mb-5 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" @click="openSideBar = !openSideBar">
+    <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mb-5 text-sm text-neutral-500 rounded-lg md:hidden hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-neutral-200 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:focus:ring-neutral-600" @click="openSideBar = !openSideBar">
       <span class="sr-only">Open sidebar</span>
       <Icon name="ph:sliders-horizontal-bold" size="1.8em" />
     </button>
 
     <aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-full md:w-64 h-screen transition-transform md:translate-x-0" aria-label="Sidebar" :class="{ '-translate-x-full': !openSideBar, 'translate-x-0': openSideBar }">
-      <div class="text-start h-full px-3 py-4 overflow-y-auto bg-gray-200 dark:bg-gray-900 flex flex-col gap-4">
+      <div class="text-start h-full px-3 py-4 overflow-y-auto bg-neutral-200 dark:bg-neutral-900 flex flex-col gap-4">
         <NuxtLink v-if="!openSideBar" class="text-center" to="/">
           <h1 class="font-bold tracking-tight"><span class="text-primary-600 dark:text-primary-400">Vue</span>Tracker</h1>
         </NuxtLink>
@@ -147,13 +147,13 @@ const radioGroups = computed<{
             <div class="space-y-1">
               <div class="flex gap-2 justify-between">
                 <h3 class="text-lg font-semibold text-primary-600 dark:text-primary-400">{{ radio.name }}</h3>
-                <button v-if="radio.vModel.value" class="text-xs border px-2 rounded bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600 hover:bg-rose-500 hover:text-gray-100 hover:dark:bg-rose-700" @click="radio.vModel.value = undefined">Clear</button>
+                <button v-if="radio.vModel.value" class="text-xs border px-2 rounded bg-neutral-100 dark:bg-neutral-800 border-neutral-300 dark:border-neutral-600 hover:bg-rose-500 hover:text-neutral-100 hover:dark:bg-rose-700" @click="radio.vModel.value = undefined">Clear</button>
               </div>
-              <URadioGroup v-model="radio.vModel.value" :name="radio.name" :options="radio.options" :ui="{ fieldset: 'space-y-1' }" :ui-radio="{ inner: 'ms-1' }">
-                <template #label="{ option }">
+              <URadioGroup v-model="radio.vModel.value" :name="radio.name" :items="radio.options" :ui="{ fieldset: 'gap-1', wrapper: 'ms-1' }">
+                <template #label="{ item }">
                   <div class="flex gap-1 items-center text-base">
-                    <Icon :name="'vuetracker:' + (option.value !== 'vue' ? getTechnologyMetas(radio.type, option.value)?.icon! : vue.icon)" width="1.2em" height="1.2em" />
-                    <span class="text-gray-950 dark:text-gray-50">{{ option.label }}</span>
+                    <Icon :name="'vuetracker:' + (item.value !== 'vue' ? getTechnologyMetas(radio.type, item.value)?.icon! : vue.icon)" width="1.2em" height="1.2em" />
+                    <span class="text-neutral-950 dark:text-neutral-50">{{ item.label }}</span>
                   </div>
                 </template>
               </URadioGroup>
@@ -167,7 +167,7 @@ const radioGroups = computed<{
       <div class="flex gap-2 flex-wrap justify-between items-end">
         <h3 class="text-lg tracking-tight"><b>{{ totalResults }}</b> websites found</h3>
         <div class="flex gap-1 items-center">
-          <USelect v-model="sortType" :options="filters" option-attribute="name" />
+          <USelect v-model="sortType" :items="filters" class="bg-neutral-50 dark:bg-neutral-900" />
         </div>
       </div>
       <div v-if="selectedFramework || selectedUI" class="flex items-center justify-start pt-2 gap-1">

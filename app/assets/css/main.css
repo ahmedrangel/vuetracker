@@ -1,0 +1,10 @@
+@import "tailwindcss" theme(static);
+@import "@nuxt/ui";
+
+:root {
+  --ui-bg: var(--ui-color-neutral-100);
+}
+
+.dark {
+  --ui-bg: var(--ui-color-neutral-950);
+}
