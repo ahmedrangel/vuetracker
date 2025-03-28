@@ -110,14 +110,21 @@ useHead({
   ]
 });
 
+const filteredFrameworksOptions = computed(() => {
+  return [...frameworksOptions.value.filter(el => results.value?.some(f => f.technologies.some(tech => tech.slug === el.value))), { label: "Vue", value: "vue" }];
+});
+const filteredUIOptions = computed(() => {
+  return uiOptions.value.filter(el => results.value?.some(f => f.technologies.some(tech => tech.slug === el.value)));
+});
+
 const radioGroups = computed<{
   name: string;
   options: { label: string, value: string }[];
   type: "framework" | "ui";
   vModel: Ref<string | undefined>;
 }[]>(() => [
-  { name: "Frameworks", options: frameworksOptions.value, type: "framework" as const, vModel: selectedFramework },
-  { name: "UI Framework", options: uiOptions.value, type: "ui" as const, vModel: selectedUI }
+  { name: "Frameworks", options: filteredFrameworksOptions.value, type: "framework" as const, vModel: selectedFramework },
+  { name: "UI Framework", options: filteredUIOptions.value, type: "ui" as const, vModel: selectedUI }
 ]);
 </script>
 
