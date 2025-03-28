@@ -23,34 +23,35 @@
     "lint:stylelint": "stylelint \"**/*.{css,scss,sass}\" --config .config/stylelint.json",
     "lint:eslint:inspect": "npx @eslint/config-inspector --config .config/eslint.mjs",
     "test:types": "vue-tsc --noEmit",
-    "db:migrate": "drizzle-kit generate --config=.config/drizzle.ts"
+    "db:migrate": "drizzle-kit generate --config=.config/drizzle.ts",
+    "local:start": "node local/index.js"
   },
   "devDependencies": {
     "@iconify-json/fa6-solid": "^1.2.3",
     "@iconify-json/ph": "^1.2.2",
     "@nuxt/eslint": "^1.2.0",
-    "@nuxthub/core": "^0.8.18",
+    "@nuxthub/core": "^0.8.21",
     "@nuxtjs/sitemap": "^7.2.9",
-    "@whatwg-node/server": "^0.10.1",
+    "@whatwg-node/server": "^0.10.3",
     "date-fns": "^4.1.0",
-    "drizzle-kit": "^0.30.5",
-    "drizzle-orm": "^0.39.2",
-    "eslint": "^9.22.0",
+    "drizzle-kit": "^0.30.6",
+    "drizzle-orm": "^0.41.0",
+    "eslint": "^9.23.0",
     "itty-router": "^5.0.18",
-    "nuxt": "^3.16.0",
+    "nuxt": "^3.16.1",
     "nuxt-ripple": "^0.0.8",
-    "sass": "^1.85.1",
-    "stylelint": "^16.16.0",
+    "sass": "^1.86.0",
+    "stylelint": "^16.17.0",
     "stylelint-config-standard-scss": "^14.0.0",
-    "swiper": "^11.2.5",
+    "swiper": "^11.2.6",
     "typescript": "^5.8.2",
     "ufo": "^1.5.4",
     "vue-tsc": "^2.2.8",
-    "wrangler": "^4.0.0"
+    "wrangler": "^4.6.0"
   },
-  "packageManager": "pnpm@10.6.3",
+  "packageManager": "pnpm@10.7.0",
   "dependencies": {
-    "@nuxt/ui": "^3.0.0",
+    "@nuxt/ui": "^3.0.2",
     "vuetracker-analyzer": "^0.1.9"
   },
   "pnpm": {
