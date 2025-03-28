@@ -118,10 +118,6 @@ export default defineNuxtConfig({
     }
   },
 
-  tailwindcss: {
-    configPath: ".config/tailwind"
-  },
-
   hub: {
     cache: true,
     database: true
