@@ -188,7 +188,7 @@ const radioGroups = computed<{
       <div class="relative py-4">
         <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
           <TransitionGroup name="slide">
-            <template v-for="(site, i) of filteredResults" :key="i">
+            <template v-for="site of filteredResults" :key="site.slug">
               <SiteCard :site="site" />
             </template>
           </TransitionGroup>
