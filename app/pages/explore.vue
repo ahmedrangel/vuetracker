@@ -51,7 +51,11 @@ const filteredResults = computed(() => {
     return siteURL.includes(searchQuery.replace(/[^a-zA-Z0-9]/g, ""));
   }).sort((a, b) => {
     return sortType.value === "added" ? b.createdAt - a.createdAt : b.updatedAt - a.updatedAt;
-  }).slice((currentPage.value - 1) * pageSize, currentPage.value * pageSize);
+  });
+});
+
+const slicedResults = computed(() => {
+  return filteredResults.value?.slice((currentPage.value - 1) * pageSize, currentPage.value * pageSize) || [];
 });
 
 const totalResults = computed(() => filteredResults.value?.length || 0);
@@ -60,13 +64,12 @@ const generalWatch = computed(() => {
     selectedFramework: selectedFramework.value,
     selectedUI: selectedUI.value,
     inputQuery: inputQuery.value,
-    sortType: sortType.value,
-    currentPage: currentPage.value
+    sortType: sortType.value
   };
 });
 
 watch(generalWatch, () => {
-  currentPage.value = Math.ceil((filteredResults.value?.length || 1) / pageSize);
+  currentPage.value = 1;
   const newPath = withQuery(path, {
     framework: selectedFramework.value,
     ui: selectedUI.value,
@@ -184,7 +187,7 @@ const radioGroups = computed<{
       <div class="relative py-4">
         <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
           <TransitionGroup name="list">
-            <div v-for="site in filteredResults" :key="site.url">
+            <div v-for="site in slicedResults" :key="site.slug">
               <SiteCard :site="site" />
             </div>
           </TransitionGroup>
