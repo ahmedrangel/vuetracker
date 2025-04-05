@@ -87,15 +87,4 @@ const iconItems = computed(() => [
 .light .nav-tabs .router-link-exact-active {
   background-color: var(--color-neutral-50);
 }
-
-.slide-menu-enter-active,
-.slide-menu-leave-active {
-  transition: all 0.2s;
-}
-.slide-menu-enter-from {
-  transform: translate(0, -100px);
-}
-.slide-menu-leave-to {
-  transform: translate(0, -100px);
-}
 </style>

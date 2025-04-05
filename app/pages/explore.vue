@@ -1,7 +1,7 @@
 <script setup lang="ts">
 definePageMeta({ layout: "explore" });
-const router = useRouter();
 const { framework, ui, sort, page } = useRoute().query as Record<string, string>;
+const path = useRoute().path;
 
 const { data: results } = await useFetch<VueTrackerResponse[]>("/api/explore", {
   key: "explore",
@@ -31,56 +31,52 @@ const sortType = ref(sort || "added");
 const selectedFramework = ref(framework || undefined);
 const selectedUI = ref(ui || undefined);
 const openSideBar = ref(false);
-const totalResults = ref(results.value?.length || 0);
 const pageSize = 32;
 const currentPage = ref(Number(page) || 1);
-const computedResults = ref<VueTrackerResponse[] | undefined>(results.value);
-const filteredResults = computed({
-  get: () => computedResults.value?.slice((currentPage.value - 1) * pageSize, currentPage.value * pageSize),
-  set: (value) => {
-    if (!value) return;
-    if (selectedFramework.value) {
-      value = value.filter(result => selectedFramework.value === "vue" ? !result.technologies.some(tech => tech.type === "framework") : result.technologies.some(tech => tech.slug === selectedFramework.value));
-    }
-    if (selectedUI.value)
-      value = value.filter(result => result.technologies.some(tech => tech.slug === selectedUI.value));
-    value = value.toSorted((a, b) => {
-      if (sortType.value === "added")
-        return (a.createdAt - b.createdAt) * -1;
-      else
-        return (a.updatedAt - b.updatedAt) * -1;
-    });
-    if (inputQuery.value)
-      value = value.filter(value => normalizeSITE(value.url).toLowerCase().replace(/[^a-zA-Z0-9]/g, "").includes(inputQuery.value.toLowerCase().replace(/[^a-zA-Z0-9]/g, "")));
-    router.push({
-      query: {
-        framework: selectedFramework.value,
-        ui: selectedUI.value,
-        q: inputQuery.value ? inputQuery.value : undefined,
-        sort: sortType.value === "added" ? undefined : sortType.value,
-        page: currentPage.value === 1 ? undefined : currentPage.value.toString()
-      }
-    });
-    totalResults.value = value.length;
-    computedResults.value = value;
-  }
+const filteredResults = computed(() => {
+  return results.value?.filter((result) => {
+    const techs = result.technologies;
+    const isVue = selectedFramework.value === "vue";
+    const isSelectedFramework = techs.some(tech => tech.slug === selectedFramework.value);
+    const hasTypeFramework = techs.some(tech => tech.type === "framework");
+    const isSelectedUI = techs.some(tech => tech.slug === selectedUI.value);
+    if (selectedFramework.value && selectedUI.value) return isVue ? !hasTypeFramework && isSelectedUI : isSelectedFramework && isSelectedUI;
+    if (selectedFramework.value) return isVue ? !hasTypeFramework : isSelectedFramework;
+    if (selectedUI.value) return isSelectedUI;
+    return true;
+  })?.filter((result) => {
+    const searchQuery = inputQuery.value.trim().toLowerCase();
+    const siteURL = normalizeSITE(result.url).toLowerCase().replace(/[^a-zA-Z0-9]/g, "");
+    if (!searchQuery) return true;
+    return siteURL.includes(searchQuery.replace(/[^a-zA-Z0-9]/g, ""));
+  }).sort((a, b) => {
+    return sortType.value === "added" ? b.createdAt - a.createdAt : b.updatedAt - a.updatedAt;
+  }).slice((currentPage.value - 1) * pageSize, currentPage.value * pageSize);
 });
 
-filteredResults.value = results.value;
-watch(selectedFramework, () => {
-  currentPage.value = 1;
-  filteredResults.value = results.value;
+const totalResults = computed(() => filteredResults.value?.length || 0);
+const generalWatch = computed(() => {
+  return {
+    selectedFramework: selectedFramework.value,
+    selectedUI: selectedUI.value,
+    inputQuery: inputQuery.value,
+    sortType: sortType.value,
+    currentPage: currentPage.value
+  };
 });
-watch(selectedUI, () => {
-  currentPage.value = 1;
-  filteredResults.value = results.value;
-});
-watch(sortType, () => filteredResults.value = results.value);
-watch(currentPage, () => filteredResults.value = results.value);
-watch(inputQuery, () => {
-  currentPage.value = 1;
-  filteredResults.value = results.value;
-});
+
+watch(generalWatch, () => {
+  currentPage.value = Math.ceil((filteredResults.value?.length || 1) / pageSize);
+  const newPath = withQuery(path, {
+    framework: selectedFramework.value,
+    ui: selectedUI.value,
+    q: inputQuery.value ? inputQuery.value : undefined,
+    sort: sortType.value === "added" ? undefined : sortType.value,
+    page: currentPage.value === 1 ? undefined : currentPage.value.toString()
+  });
+  window.history.replaceState({}, "", newPath);
+}, { deep: true });
+
 watch(openSideBar, () => {
   if (openSideBar.value) document.body.classList.add("overflow-hidden");
   else document.body.classList.remove("overflow-hidden");
@@ -187,11 +183,13 @@ const radioGroups = computed<{
       </div>
       <div class="relative py-4">
         <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
-          <TransitionGroup name="slide">
-            <SiteCard v-for="site of filteredResults" :key="site.slug" :site="site" />
+          <TransitionGroup name="list">
+            <div v-for="site in filteredResults" :key="site.url">
+              <SiteCard :site="site" />
+            </div>
           </TransitionGroup>
         </div>
-        <UPagination v-if="computedResults?.length" v-model:page="currentPage" class="mt-10 justify-center" size="md" :items-per-page="pageSize" :total="computedResults?.length || 0" />
+        <UPagination v-if="filteredResults?.length" v-model:page="currentPage" class="mt-10 justify-center" size="md" :items-per-page="pageSize" :total="filteredResults?.length || 0" />
       </div>
     </div>
   </main>
