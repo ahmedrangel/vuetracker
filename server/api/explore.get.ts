@@ -1,6 +1,7 @@
 export default defineEventHandler(async () => {
   const DB = useDB();
   const results = await DB.select({
+    slug: tables.sites.slug,
     url: tables.sites.url,
     hostname: tables.sites.hostname,
     title: tables.sites.title,
