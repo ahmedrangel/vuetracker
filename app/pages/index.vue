@@ -102,6 +102,10 @@ useHead({
     { rel: "canonical", href: SITE.url }
   ]
 });
+
+const faviconErrored = ref(false);
+const ogImageErrored = ref(false);
+const faviconFallbackErrored = ref(false);
 </script>
 
 <template>
@@ -138,7 +142,9 @@ useHead({
                   <div class="flex flex-col gap-1 text-start">
                     <NuxtLink :to="`/${normalizeSITE(result.url)}`" class="hover:underline w-fit">
                       <div class="flex gap-2 items-center justify-start">
-                        <img v-if="!result.faviconLoadError" :src="findFavicon(result.icons) || `https://${result.hostname}/favicon.ico`" class="min-w-6 max-w-6 min-h-6 max-h-6" loading="lazy" @error="result.faviconLoadError = true" @load="result.faviconLoadError = false">
+                        <img v-if="!faviconErrored" :src="findFavicon(result.icons) || `https://${result.hostname}/favicon.ico`" class="min-w-6 max-w-6 min-h-6 max-h-6" loading="lazy" @error="faviconErrored = true" @load="faviconErrored = false">
+                        <img v-else-if="faviconErrored && !faviconFallbackErrored" :src="`https://${result.hostname}/favicon.ico`" class="min-w-6 max-w-6 min-h-6 max-h-6" loading="lazy" @error="faviconFallbackErrored = true" @load="faviconFallbackErrored = false">
+                        <img v-else-if="faviconFallbackErrored" :src="`https://www.google.com/s2/favicons?domain=${result.hostname}`" class="min-w-6 max-w-6 min-h-6 max-h-6" loading="lazy">
                         <h2 class="text-xl font-semibold">/{{ normalizeSITE(result.url) }}</h2>
                       </div>
                     </NuxtLink>
@@ -147,7 +153,7 @@ useHead({
                       <h6 class="text-sm">{{ result.url }}</h6>
                     </NuxtLink>
                   </div>
-                  <img v-if="result.ogImage && !result.ogImageLoadError" :src="fixOgImage(result.hostname, result.ogImage)" class="rounded-xl w-auto h-[70px] border-2 border-neutral-300 dark:border-neutral-700" :title="result.title || normalizeSITE(result.url)" :alt="result.title || normalizeSITE(result.url)" loading="lazy" @error="result.ogImageLoadError = true" @load="result.ogImageLoadError = false">
+                  <img v-if="result.ogImage && !ogImageErrored" :src="fixOgImage(result.hostname, result.ogImage)" class="rounded-xl w-auto h-[70px] border-2 border-neutral-300 dark:border-neutral-700" :title="result.title || normalizeSITE(result.url)" :alt="result.title || normalizeSITE(result.url)" loading="lazy" @error="ogImageErrored = true" @load="ogImageErrored = false">
                 </div>
                 <TrackerDetails :result="result" :site-info="siteInfo" :site-plugins="computedSitePlugins" :site-modules="computedSiteModules" />
               </div>

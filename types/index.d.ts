@@ -62,8 +62,6 @@ declare global {
     vueVersion: string;
     updatedAt: number;
     createdAt: number;
-    faviconLoadError?: boolean;
-    ogImageLoadError?: boolean;
   }
 
   interface VueTrackerRawResponse extends VueTrackerResponse, Omit<icons, technologies> {
