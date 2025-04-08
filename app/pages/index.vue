@@ -147,7 +147,7 @@ useHead({
                       <h6 class="text-sm">{{ result.url }}</h6>
                     </NuxtLink>
                   </div>
-                  <img v-if="result.ogImage && !result.ogImageLoadError" :src="fixOgImage(result.hostname, result.ogImage)" class="rounded-xl w-auto h-[70px]" :title="result.title || normalizeSITE(result.url)" :alt="result.title || normalizeSITE(result.url)" loading="lazy" @error="result.ogImageLoadError = true" @load="result.ogImageLoadError = false">
+                  <img v-if="result.ogImage && !result.ogImageLoadError" :src="fixOgImage(result.hostname, result.ogImage)" class="rounded-xl w-auto h-[70px] border-2 border-neutral-300 dark:border-neutral-700" :title="result.title || normalizeSITE(result.url)" :alt="result.title || normalizeSITE(result.url)" loading="lazy" @error="result.ogImageLoadError = true" @load="result.ogImageLoadError = false">
                 </div>
                 <TrackerDetails :result="result" :site-info="siteInfo" :site-plugins="computedSitePlugins" :site-modules="computedSiteModules" />
               </div>
