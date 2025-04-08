@@ -23,3 +23,10 @@ export const findFavicon = (icons?: VueTrackerSiteIcons[]) => {
   const favicon = icons.find(el => el.url.includes("/favicon.ico")) || icons[0];
   return favicon?.url;
 };
+
+export const fixOgImage = (hostname?: string, url?: string | null) => {
+  if (!url || !hostname) return undefined;
+  if (url.startsWith("//")) return `https:${url}`;
+  if (url.startsWith("/")) return `https://${hostname}${url}`;
+  return url;
+};

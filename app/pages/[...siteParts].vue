@@ -58,9 +58,9 @@ useSeoMeta({
   ogTitle: `${site} | VueTracker`,
   description: result.value?.description || result.value?.title,
   ogDescription: result.value?.description || result.value?.title,
-  ogImage: result.value?.ogImage,
+  ogImage: fixOgImage(result.value?.hostname, result.value?.ogImage),
   twitterCard: "summary_large_image",
-  twitterImage: result.value?.ogImage,
+  twitterImage: fixOgImage(result.value?.hostname, result.value?.ogImage),
   twitterTitle: `${site} | VueTracker`,
   twitterDescription: result.value?.description || result.value?.title
 });
@@ -85,7 +85,7 @@ useHead({
         </div>
         <h4 class="text-base">{{ result.title }}</h4>
       </div>
-      <img v-if="result.ogImage && !result.ogImageLoadError" :src="result.ogImage.startsWith('/') ? `https://${result.hostname}${result.ogImage}` : result.ogImage" class="rounded-xl" :title="result.title || normalizeSITE(result.url)" :alt="result.title || normalizeSITE(result.url)" loading="lazy" @error="result.ogImageLoadError = true" @load="result.ogImageLoadError = false">
+      <img v-if="result.ogImage && !result.ogImageLoadError" :src="fixOgImage(result.hostname, result.ogImage)" class="rounded-xl" :title="result.title || normalizeSITE(result.url)" :alt="result.title || normalizeSITE(result.url)" loading="lazy" @error="result.ogImageLoadError = true" @load="result.ogImageLoadError = false">
       <div class="tracking-tight flex gap-3 items-center rounded-xl transition">
         <div class="text-left flex flex-col gap-1">
           <h2 v-if="result.description" class="text-xl text-start">{{ result.siteName }}</h2>
