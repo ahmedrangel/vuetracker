@@ -123,7 +123,7 @@ const radioGroups = computed<{
   vModel: Ref<string | undefined>;
 }[]>(() => [
   { name: "Frameworks", options: filteredFrameworksOptions.value, type: "framework" as const, vModel: selectedFramework },
-  { name: "UI Framework", options: filteredUIOptions.value, type: "ui" as const, vModel: selectedUI }
+  { name: "UI Frameworks", options: filteredUIOptions.value, type: "ui" as const, vModel: selectedUI }
 ]);
 </script>
 
