@@ -52,7 +52,7 @@
   "packageManager": "pnpm@10.8.0",
   "dependencies": {
     "@nuxt/ui": "^3.0.2",
-    "vuetracker-analyzer": "^0.2.0"
+    "vuetracker-analyzer": "^0.2.1"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

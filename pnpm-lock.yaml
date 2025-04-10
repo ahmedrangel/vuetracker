@@ -12,8 +12,8 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2(@babel/parser@7.27.0)(db0@0.3.1(drizzle-orm@0.41.0(@cloudflare/workers-types@4.20250409.0)(gel@2.0.1)))(embla-carousel@8.5.2)(ioredis@5.6.0)(magicast@0.3.5)(typescript@5.8.3)(vite@6.2.5(@types/node@22.13.14)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.86.3)(terser@5.39.0)(yaml@2.7.0))(zod@3.24.2)
       vuetracker-analyzer:
-        specifier: ^0.2.0
-        version: 0.2.0(typescript@5.8.3)
+        specifier: ^0.2.1
+        version: 0.2.1(typescript@5.8.3)
     devDependencies:
       '@iconify-json/fa6-solid':
         specifier: ^1.2.3
@@ -1658,8 +1658,8 @@ packages:
     resolution: {integrity: sha512-aQypoot0HPSJa6gDPEPTntc1GT6QINrSbgRlRhadGW2WaYqUK3tK4Bw9SBMZXhmxd3GeAlZjVcODHgiu+THY7A==}
     engines: {node: '>=18'}
 
-  '@puppeteer/browsers@2.9.0':
-    resolution: {integrity: sha512-8+xM+cFydYET4X/5/3yZMHs7sjS6c9I6H5I3xJdb6cinzxWUT/I2QVw4avxCQ8QDndwdHkG/FiSZIrCjAbaKvQ==}
+  '@puppeteer/browsers@2.10.0':
+    resolution: {integrity: sha512-HdHF4rny4JCvIcm7V1dpvpctIGqM3/Me255CB44vW7hDG1zYMmcBMjpNqZEDxdCfXGLkx5kP0+Jz5DUS+ukqtA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -4694,12 +4694,12 @@ packages:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
 
-  puppeteer-core@24.6.0:
-    resolution: {integrity: sha512-Cukxysy12m0v350bhl/Gzof0XQYmtON9l2VvGp3D4BOQZVgyf+y5wIpcjDZQ/896Okoi95dKRGRV8E6a7SYAQQ==}
+  puppeteer-core@24.6.1:
+    resolution: {integrity: sha512-sMCxsY+OPWO2fecBrhIeCeJbWWXJ6UaN997sTid6whY0YT9XM0RnxEwLeUibluIS5/fRmuxe1efjb5RMBsky7g==}
     engines: {node: '>=18'}
 
-  puppeteer@24.6.0:
-    resolution: {integrity: sha512-wYTB8WkzAr7acrlsp+0at1PZjOJPOxe6dDWKOG/kaX4Zjck9RXCFx3CtsxsAGzPn/Yv6AzgJC/CW1P5l+qxsqw==}
+  puppeteer@24.6.1:
+    resolution: {integrity: sha512-/4ocGfu8LNvDbWUqJZV2VmwEWpbOdJa69y2Jivd213tV0ekAtUh/bgT1hhW63SDN/CtrEucOPwoomZ+9M+eBEg==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -5594,8 +5594,8 @@ packages:
       typescript:
         optional: true
 
-  vuetracker-analyzer@0.2.0:
-    resolution: {integrity: sha512-wOJRXr2QfyMwTXgs5K3E4yhIrS0jt16xGpAPJRu9vScXFaDOH2rUvHZzXqY8j4Xlju2RIYO9G7wfFKH8Cx88bA==}
+  vuetracker-analyzer@0.2.1:
+    resolution: {integrity: sha512-+wFBchpvUR18yqsLPQkjzFhqXZ59Z/uxVjhJqMSlGqN/msInfsaSOQYVml0ibErc1VO1JoFvRs3QIOqNjIAqAQ==}
 
   webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
@@ -7385,7 +7385,7 @@ snapshots:
 
   '@poppinss/exception@1.2.1': {}
 
-  '@puppeteer/browsers@2.9.0':
+  '@puppeteer/browsers@2.10.0':
     dependencies:
       debug: 4.4.0
       extract-zip: 2.0.1
@@ -10641,9 +10641,9 @@ snapshots:
 
   punycode@2.3.1: {}
 
-  puppeteer-core@24.6.0:
+  puppeteer-core@24.6.1:
     dependencies:
-      '@puppeteer/browsers': 2.9.0
+      '@puppeteer/browsers': 2.10.0
       chromium-bidi: 3.0.0(devtools-protocol@0.0.1425554)
       debug: 4.4.0
       devtools-protocol: 0.0.1425554
@@ -10655,13 +10655,13 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  puppeteer@24.6.0(typescript@5.8.3):
+  puppeteer@24.6.1(typescript@5.8.3):
     dependencies:
-      '@puppeteer/browsers': 2.9.0
+      '@puppeteer/browsers': 2.10.0
       chromium-bidi: 3.0.0(devtools-protocol@0.0.1425554)
       cosmiconfig: 9.0.0(typescript@5.8.3)
       devtools-protocol: 0.0.1425554
-      puppeteer-core: 24.6.0
+      puppeteer-core: 24.6.1
       typed-query-selector: 2.12.0
     transitivePeerDependencies:
       - bare-buffer
@@ -11673,10 +11673,10 @@ snapshots:
     optionalDependencies:
       typescript: 5.8.3
 
-  vuetracker-analyzer@0.2.0(typescript@5.8.3):
+  vuetracker-analyzer@0.2.1(typescript@5.8.3):
     dependencies:
       consola: 3.4.2
-      puppeteer: 24.6.0(typescript@5.8.3)
+      puppeteer: 24.6.1(typescript@5.8.3)
       tld-extract: 2.1.0
     transitivePeerDependencies:
       - bare-buffer
