@@ -51,13 +51,13 @@ onBeforeMount(() => {
         </div>
       </div>
       <div class="flex flex-wrap gap-2 items-center justify-between p-2">
-        <NuxtLink :to="`/${normalizeSITE(site.url)}`" class="hover:underline truncate site-link">
+        <div class="hover:underline truncate site-link">
           <div class="flex gap-1 items-center">
             <img v-if="!faviconErrored" :src="favicon" class="max-w-4 max-h-4 min-w-4 min-h-4" loading="lazy">
             <img v-if="faviconErrored" :src="faviconFallback" class="max-w-4 max-h-4 min-w-4 min-h-4" loading="lazy">
             <h4 class="text-xs xl:text-sm font-semibold truncate">/{{ normalizeSITE(site.url) }}</h4>
           </div>
-        </NuxtLink>
+        </div>
         <div class="flex gap-1 items-center">
           <UTooltip v-if="!site.technologies.some(el => el.type === 'framework')" :text="vue.name" :content="{ side: 'top' }" arrow>
             <span :title="vue.name">
