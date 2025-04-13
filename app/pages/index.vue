@@ -123,7 +123,7 @@ const fixInput = (payload: string | number) => {
       <div class="2xl:w-1/2 xl:w-3/5 lg:w-3/4 flex flex-col mx-auto gap-6">
         <form @submit.prevent="lookup">
           <UButtonGroup size="xl" orientation="horizontal" class="w-full">
-            <UInput id="input-lookup" v-model="input" class="w-full" :ui="{ base: 'ps-[4.2rem] py-4 bg-neutral-50 dark:bg-neutral-900' }" required @update:model-value="fixInput">
+            <UInput id="input-lookup" v-model="input" class="w-full" :ui="{ base: 'ps-[4.0rem] py-4 bg-neutral-50 dark:bg-neutral-900' }" required @update:model-value="fixInput">
               <template #leading>
                 <span class="text-base text-neutral-400">https://</span>
               </template>
