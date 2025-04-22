@@ -74,7 +74,7 @@ const lookup = async () => {
       },
       {
         title: "Rendering",
-        value: result.value.hasSSR && !result.value.isStatic ? "Universal" : "Client-side"
+        value: result.value.hasSSR ? "Universal" : "Client-side"
       },
       {
         title: "Deployment",
