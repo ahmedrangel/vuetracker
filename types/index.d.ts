@@ -57,7 +57,7 @@ declare global {
     ogImage?: string | null;
     icons: VueTrackerSiteIcons[];
     technologies: VueTrackerTechnology[];
-    isStatic: number;
+    isStatic?: number;
     hasSSR: number;
     vueVersion: string;
     updatedAt: number;

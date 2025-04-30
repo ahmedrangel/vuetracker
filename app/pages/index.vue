@@ -78,7 +78,7 @@ const lookup = async () => {
       },
       {
         title: "Deployment",
-        value: result.value.hasSSR && result.value.isStatic ? "Static" : result.value.hasSSR && !result.value.isStatic ? "Server" : undefined
+        value: result.value.hasSSR && result.value.isStatic ? "Static" : result.value.hasSSR && !result.value.isStatic && result.value.isStatic != undefined ? "Server" : undefined
       }];
     }
   }

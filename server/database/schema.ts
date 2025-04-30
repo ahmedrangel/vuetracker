@@ -12,7 +12,7 @@ export const sites = sqliteTable("sites", {
   ogImage: text(),
   isAdultContent: integer().notNull().default(0),
   hasSSR: integer().notNull().default(0),
-  isStatic: integer().notNull().default(1),
+  isStatic: integer(),
   vueVersion: text().notNull(),
   createdAt: integer().notNull(),
   updatedAt: integer().notNull()
