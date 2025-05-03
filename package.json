@@ -34,11 +34,11 @@
     "@nuxtjs/sitemap": "^7.2.10",
     "@whatwg-node/server": "^0.10.5",
     "date-fns": "^4.1.0",
-    "drizzle-kit": "^0.31.0",
+    "drizzle-kit": "^0.31.1",
     "drizzle-orm": "^0.43.1",
-    "eslint": "^9.25.1",
+    "eslint": "^9.26.0",
     "itty-router": "^5.0.18",
-    "nuxt": "^3.17.0",
+    "nuxt": "^3.17.1",
     "nuxt-ripple": "^0.0.8",
     "sass": "^1.87.0",
     "stylelint": "^16.19.1",
@@ -47,11 +47,11 @@
     "typescript": "^5.8.3",
     "ufo": "^1.6.1",
     "vue-tsc": "^2.2.10",
-    "wrangler": "^4.14.0"
+    "wrangler": "^4.14.1"
   },
   "packageManager": "pnpm@10.10.0",
   "dependencies": {
-    "@nuxt/ui": "^3.1.0",
+    "@nuxt/ui": "^3.1.1",
     "vuetracker-analyzer": "^0.3.4"
   },
   "pnpm": {
