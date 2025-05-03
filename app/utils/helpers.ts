@@ -1,3 +1,5 @@
+import type { UseFetchOptions } from "nuxt/app";
+
 export const sleep = async (ms?: number) => {
   return await new Promise(resolve => setTimeout(resolve, ms));
 };
@@ -29,4 +31,26 @@ export const fixOgImage = (hostname?: string, url?: string | null) => {
   if (url.startsWith("//")) return `https:${url}`;
   if (url.startsWith("/")) return `https://${hostname}${url}`;
   return url;
+};
+
+export const useCachedFetch = async <T>(url: string, options: UseFetchOptions<T> & { key: string }) => {
+  const nuxtData = useNuxtData<T>(options.key);
+
+  if (!nuxtData.data.value) {
+    const { data: resultsFetch } = await useFetch(url, {
+      ...options,
+      getCachedData: (key, nuxtApp) => nuxtApp.payload.data[key]
+    });
+
+    if (options.lazy) {
+      watch(resultsFetch, () => {
+        nuxtData.data.value = resultsFetch.value as T;
+      });
+    }
+    else {
+      nuxtData.data.value = resultsFetch.value as T;
+    }
+  }
+
+  return nuxtData;
 };
