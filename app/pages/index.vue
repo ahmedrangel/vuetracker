@@ -1,8 +1,14 @@
 <script setup lang="ts">
-const { data: preview } = await useFetch<VueTrackerResponse[]>("/api/explore", {
-  key: "explore",
-  getCachedData: (key, nuxtApp) => nuxtApp.payload.data[key]
-});
+const { data: preview } = useNuxtData<VueTrackerResponse[]>("explore");
+
+if (!preview.value?.length) {
+  const { data: previewFetch } = await useFetch<VueTrackerResponse[]>("/api/explore", {
+    key: "explore",
+    getCachedData: (key, nuxtApp) => nuxtApp.payload.data[key]
+  });
+  preview.value = previewFetch.value;
+}
+
 const input = ref("");
 const result = ref<VueTrackerResponse>();
 const siteInfo = ref<{ title: string, value?: string, icon?: string | null, url?: string }[]>();

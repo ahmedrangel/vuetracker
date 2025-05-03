@@ -3,10 +3,15 @@ definePageMeta({ layout: "explore" });
 const { framework, ui, sort, page } = useRoute().query as Record<string, string>;
 const path = useRoute().path;
 
-const { data: results } = await useFetch<VueTrackerResponse[]>("/api/explore", {
-  key: "explore",
-  getCachedData: (key, nuxtApp) => nuxtApp.payload.data[key]
-});
+const { data: results } = useNuxtData<VueTrackerResponse[]>("explore");
+
+if (!results.value?.length) {
+  const { data: resultsFetch } = await useFetch<VueTrackerResponse[]>("/api/explore", {
+    key: "explore",
+    getCachedData: (key, nuxtApp) => nuxtApp.payload.data[key]
+  });
+  results.value = resultsFetch.value;
+}
 
 const frameworksOptions = computed(() => Object.entries({ ...frameworks, vue: { metas: vue } }).map(([_key, value]) => ({
   label: value.metas.name,
