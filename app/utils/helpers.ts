@@ -1,4 +1,4 @@
-import type { UseFetchOptions } from "nuxt/app";
+import type { NuxtApp } from "nuxt/app";
 
 export const sleep = async (ms?: number) => {
   return await new Promise(resolve => setTimeout(resolve, ms));
@@ -33,24 +33,31 @@ export const fixOgImage = (hostname?: string, url?: string | null) => {
   return url;
 };
 
-export const useCachedFetch = async <T>(url: string, options: UseFetchOptions<T> & { key: string }) => {
-  const nuxtData = useNuxtData<T>(options.key);
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const cachedData: Record<string, Ref<any>> = ({});
 
-  if (!nuxtData.data.value) {
-    const { data: resultsFetch } = await useFetch(url, {
-      ...options,
-      getCachedData: (key, nuxtApp) => nuxtApp.payload.data[key]
-    });
+export const useCachedData = <T = any>(key: string, getValue?: () => T): Ref<T> => {
+  const isFunction = typeof getValue === "function";
 
-    if (options.lazy) {
-      watch(resultsFetch, () => {
-        nuxtData.data.value = resultsFetch.value as T;
-      });
-    }
-    else {
-      nuxtData.data.value = resultsFetch.value as T;
-    }
+  if (!cachedData[key]) {
+    cachedData[key] = ref(isFunction ? getValue() : undefined);
+  }
+  else if (isFunction) {
+    cachedData[key].value = getValue();
   }
 
-  return nuxtData;
+  return cachedData[key];
+};
+
+export const setupCachedData = <T>(key: string, { payload }: NuxtApp): T => {
+  const cachedData = useCachedData(key);
+  if (cachedData.value) {
+    return cachedData.value;
+  }
+
+  const payloadData = payload.data[key];
+  if (payloadData) {
+    useCachedData(key, () => payloadData);
+  }
+  return payloadData;
 };

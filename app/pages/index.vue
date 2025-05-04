@@ -1,7 +1,11 @@
 <script setup lang="ts">
-const { data: preview } = await useCachedFetch<VueTrackerResponse[]>("/api/explore", {
-  key: "explore"
+const { data: preview, execute } = await useFetch<VueTrackerResponse[]>("/api/explore", {
+  key: "explore",
+  immediate: false,
+  getCachedData: setupCachedData
 });
+
+await execute();
 
 const input = ref("");
 const result = ref<VueTrackerResponse>();
@@ -52,7 +56,10 @@ const lookup = async () => {
     const framework = computed(() => result.value?.technologies.find(el => el.type === "framework"));
     const ui = computed(() => result.value?.technologies.find(el => el.type === "ui"));
     if (result.value) {
-      if (preview.value && !preview.value.some(el => el.hostname === result.value?.hostname)) preview.value = [...preview.value, result.value];
+      if (preview.value && !preview.value.some(el => el.hostname === result.value?.hostname)) {
+        const newPreview = [...preview.value, result.value];
+        preview.value = useCachedData<VueTrackerResponse[]>("explore", () => newPreview).value;
+      }
       siteInfo.value = [{
         title: "Vue Version",
         value: result.value?.vueVersion,
