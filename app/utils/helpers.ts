@@ -1,5 +1,3 @@
-import type { NuxtApp } from "nuxt/app";
-
 export const sleep = async (ms?: number) => {
   return await new Promise(resolve => setTimeout(resolve, ms));
 };
@@ -49,15 +47,22 @@ export const useCachedData = <T = any>(key: string, getValue?: () => T): Ref<T> 
   return cachedData[key];
 };
 
-export const setupCachedData = <T>(key: string, { payload }: NuxtApp): T => {
+export const setupCachedData = <T>(key: string): T => {
   const cachedData = useCachedData(key);
+
   if (cachedData.value) {
     return cachedData.value;
   }
 
-  const payloadData = payload.data[key];
-  if (payloadData) {
-    useCachedData(key, () => payloadData);
+  const { data } = useNuxtData(key);
+
+  if (data.value) {
+    useCachedData(key, () => data.value);
   }
-  return payloadData;
+  else {
+    watch(data, (newData) => {
+      useCachedData(key, () => newData);
+    });
+  }
+  return data.value;
 };
