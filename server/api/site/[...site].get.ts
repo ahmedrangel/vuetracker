@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
   const parsedIcons = result.icons ? JSON.parse(result.icons) : [];
   const parsedTechnologies = result.technologies ? JSON.parse(result.technologies) : [];
   result.icons = parsedIcons;
-  result.technologies = parsedTechnologies;
+  result.technologies = parsedTechnologies.sort((a: { name: string }, b: { name: string }) => a.name.localeCompare(b.name));
 
   if (!result.slug) {
     throw createError({
