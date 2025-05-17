@@ -1,0 +1,27 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "vuetracker",
+  "compatibility_date": "2025-05-17",
+  "main": "dist/server/index.mjs",
+  "compatibility_flags": ["nodejs_compat"],
+  "limits": {
+    "cpu_ms": 300000
+  },
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "dist/public"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "vue-tracker",
+      "database_id": "9e8cef84-9f97-4f2e-b5a1-cba878453cb9"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "CACHE",
+      "id": "e3967ee99019445c8b120334953d2910",
+    }
+  ]
+}
