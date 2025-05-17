@@ -81,8 +81,7 @@ export default defineNuxtConfig({
     },
     experimental: {
       tasks: true
-    },
-    preset: "cloudflare-module"
+    }
   },
 
   sitemap: {
