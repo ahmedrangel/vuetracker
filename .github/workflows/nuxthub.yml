@@ -6,7 +6,7 @@ jobs:
     name: "Deploy to NuxtHub"
     runs-on: ubuntu-latest
     environment:
-      name: ${{ github.ref == 'refs/heads/pages' && 'production' || 'preview' }}
+      name: ${{ github.ref == 'refs/heads/main' && 'production' || 'preview' }}
       url: ${{ steps.deploy.outputs.deployment-url }}
     permissions:
       contents: read
@@ -37,4 +37,4 @@ jobs:
         uses: nuxt-hub/action@v1
         id: deploy
         with:
-          project-key: vuetracker-page-2dzq
+          project-key: vuetracker-pctm
