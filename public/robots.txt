@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://vuetracker.nuxt.dev/sitemap.xml
+Sitemap: https://vuetracker.pages.dev/sitemap.xml
