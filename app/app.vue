@@ -6,10 +6,10 @@ setScrollBehavior();
   <div>
     <NuxtLoadingIndicator :throttle="0" />
     <NavBar />
-    <NuxtLayout>
-      <UApp>
+    <UApp>
+      <NuxtLayout>
         <NuxtPage />
-      </UApp>
-    </NuxtLayout>
+      </NuxtLayout>
+    </UApp>
   </div>
 </template>
