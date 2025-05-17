@@ -3,7 +3,7 @@ import { SITE } from "../app/utils/site";
 export default defineNuxtConfig({
   future: { compatibilityVersion: 4 },
   devtools: { enabled: true },
-  compatibilityDate: "2025-05-17",
+  compatibilityDate: "2024-11-27",
 
   app: {
     head: {
@@ -121,7 +121,6 @@ export default defineNuxtConfig({
 
   hub: {
     cache: true,
-    database: true,
-    workers: true
+    database: true
   }
 });
