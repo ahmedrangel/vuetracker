@@ -42,8 +42,8 @@
     "nuxt-ripple": "^0.0.8",
     "sass": "^1.89.0",
     "stylelint": "^16.19.1",
-    "stylelint-config-standard-scss": "^15.0.0",
-    "swiper": "^11.2.6",
+    "stylelint-config-standard-scss": "^15.0.1",
+    "swiper": "^11.2.7",
     "typescript": "^5.8.3",
     "ufo": "^1.6.1",
     "vue-tsc": "^2.2.10",
@@ -52,7 +52,7 @@
   "packageManager": "pnpm@10.11.0",
   "dependencies": {
     "@nuxt/ui": "^3.1.2",
-    "vuetracker-analyzer": "^0.3.8"
+    "vuetracker-analyzer": "^0.3.9"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
