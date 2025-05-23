@@ -3,7 +3,7 @@ export default defineEventHandler(async () => {
   const DB = useDB();
   const sites = await DB.select({
     url: tables.sites.url,
-    updatedAt: tables.sites.updatedAt,
+    updatedAt: tables.sites.updatedAt
   }).from(tables.sites).all();
   routeRules.push({ loc: "/explore", lastmod: new Date().toISOString() });
 
