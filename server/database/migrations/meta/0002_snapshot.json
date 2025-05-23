@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "24b574e3-9013-482d-ad5d-876fa6930d8b",
+  "id": "fbb2d828-a282-4524-ade1-90380647c9c0",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "icons": {
@@ -82,6 +82,13 @@
         },
         "domain": {
           "name": "domain",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "input_url": {
+          "name": "input_url",
           "type": "text",
           "primaryKey": false,
           "notNull": true,

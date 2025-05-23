@@ -5,6 +5,7 @@ export const sites = sqliteTable("sites", {
   url: text().notNull().unique(),
   hostname: text().notNull(),
   domain: text().notNull(),
+  inputURL: text().notNull(),
   language: text(),
   title: text(),
   siteName: text(),

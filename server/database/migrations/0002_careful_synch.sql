@@ -11,6 +11,7 @@ CREATE TABLE `sites` (
 	`url` text NOT NULL,
 	`hostname` text NOT NULL,
 	`domain` text NOT NULL,
+	`input_url` text NOT NULL,
 	`language` text,
 	`title` text,
 	`site_name` text,

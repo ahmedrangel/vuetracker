@@ -11,8 +11,8 @@ export default defineCachedEventHandler(async (event) => {
     });
   }
 
-  const { protocol, host, pathname } = parseURL(rawURL);
-  const url = protocol + "//" + host + (pathname || "/");
+  const { protocol, host } = parseURL(rawURL);
+  const url = protocol + "//" + host;
   const redirectedURL = (await $fetch.raw(url, {
     retry: 0,
     headers: { "User-Agent": "VueTracker/1.0 (Cloudflare Workers; +vuetracker.pages.dev)" }
@@ -38,6 +38,7 @@ export default defineCachedEventHandler(async (event) => {
       url: siteURL,
       hostname: result.hostname,
       domain: result.domain,
+      inputURL: rawURL,
       language: result.meta?.language,
       title: result.meta?.title,
       siteName: result.meta?.siteName,
