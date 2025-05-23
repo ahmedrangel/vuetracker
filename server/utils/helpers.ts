@@ -3,7 +3,8 @@ import type { SQL } from "drizzle-orm";
 export const fetchVueTrackerProxy = async (url: string) => {
   console.info("Fetching data from proxy");
   const config = useRuntimeConfig();
-  const result = await $fetch<VueTrackerProxyResponse>(config.analyzer.proxyURL, {
+  const result = await $fetch<VueTrackerProxyResponse>("/analyze", {
+    baseURL: config.analyzer.proxyURL,
     retry: 0,
     query: { url }
   }).catch(async (e) => {

@@ -3,18 +3,33 @@ import { loadEnvFile } from "node:process";
 import { createServerAdapter } from "@whatwg-node/server";
 import { AutoRouter } from "itty-router";
 import { analyze } from "vuetracker-analyzer";
+import { $fetch } from "ofetch";
 
 loadEnvFile();
 const router = AutoRouter();
 
+const userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 VueTracker/1.0 (Debian GNU/Linux 12; arm64; +vuetracker.pages.dev)";
+
 router.get("/analyze?", async (req) => {
   const { url } = req.query;
   return await analyze(url, {
-    userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 VueTracker/1.0 (Debian GNU/Linux 12; arm64; +vuetracker.pages.dev)",
+    userAgent,
     executablePath: process.env.NUXT_ANALYZER_PROXY_OS === "windows" ? undefined : "/usr/bin/chromium"
   }).catch((e) => {
     return Response.json({ success: false, error: { message: e.message, cause: e.cause } }, { status: 500 });
   });
+});
+
+router.get("/redirection?", async (req) => {
+  const { url } = req.query;
+  const redirectedURL = (await $fetch.raw(url, {
+    retry: 0,
+    headers: { "User-Agent": userAgent }
+  }).catch(() => null))?.url;
+  if (!redirectedURL) {
+    return Response.json({ success: false, error: "Failed to fetch the URL" }, { status: 500 });
+  }
+  return { success: true, url: redirectedURL };
 });
 
 router.all("*", () =>

@@ -14,11 +14,11 @@ export default defineCachedEventHandler(async (event) => {
   const { protocol, host } = parseURL(rawURL);
   const url = protocol + "//" + host;
 
-  const redirectedURL = (await $fetch.raw(url, {
-    retry: 0,
-    headers: { "User-Agent": "VueTracker/1.0 (Cloudflare Workers; +vuetracker.pages.dev)" }
+  const config = useRuntimeConfig(event);
+  const redirectedURL = (await $fetch.raw("/redirection", {
+    baseURL: config.analyzer.proxyURL,
+    query: { url }
   }).catch(() => null))?.url;
-
   const parsedURL = parseURL(redirectedURL || url)!;
   const finalURL = `${parsedURL.protocol}//${parsedURL.host}${parsedURL.pathname || ""}`;
   const siteSlug = normalizeSITE(finalURL)?.replaceAll(".", "-").replaceAll("/", "_");
