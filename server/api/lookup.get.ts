@@ -15,7 +15,7 @@ export default defineCachedEventHandler(async (event) => {
   const url = protocol + "//" + host;
 
   const config = useRuntimeConfig(event);
-  const redirectedURL = (await $fetch.raw(`${config.analyzer.proxyURL}/redirection`, {
+  const redirectedURL = (await $fetch<{ url: string }>(`${config.analyzer.proxyURL}/redirection`, {
     query: { url }
   }).catch(() => null))?.url;
   const parsedURL = parseURL(redirectedURL || url)!;
