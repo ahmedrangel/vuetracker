@@ -84,6 +84,7 @@ export default defineCachedEventHandler(async (event) => {
       url: siteURL,
       hostname: result.hostname,
       domain: result.domain,
+      inputURL: rawURL,
       language: result.meta?.language,
       title: result.meta?.title,
       siteName: result.meta?.siteName,
