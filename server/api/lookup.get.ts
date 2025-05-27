@@ -15,7 +15,11 @@ export default defineCachedEventHandler(async (event) => {
   const url = protocol + "//" + host;
   const redirectedURL = (await $fetch.raw(url, {
     retry: 0,
-    headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 VueTracker/1.0 (Debian GNU/Linux 12; arm64; +vuetracker.pages.dev)" }
+    headers: {
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 VueTracker/1.0 (Debian GNU/Linux 12; arm64; +vuetracker.pages.dev)",
+      "Accept-Language": "en-US,en;q=0.9",
+      "X-Forwarded-For": "23.45.67.89"
+    }
   }).catch(() => null))?.url;
   const parsedURL = parseURL(redirectedURL || url)!;
   const finalURL = `${parsedURL.protocol}//${parsedURL.host?.replace("www.", "")}${parsedURL.pathname || ""}`;
