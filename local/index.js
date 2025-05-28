@@ -26,7 +26,6 @@ router.get("/redirection?", async (req) => {
     return Response.json({ success: false, error: "URL is required" }, { status: 400 });
   }
   const response = await $fetch.raw(url, { headers: { "User-Agent": userAgent } });
-  console.log(`Redirecting to: ${response.url}`);
   return { success: true, url: response.url };
 });
 
