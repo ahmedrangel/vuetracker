@@ -28,7 +28,8 @@ router.get("/redirection?", async (req) => {
   const response = await $fetch.raw(url, {
     headers: {
       "User-Agent": userAgent,
-      "Accept-Language": "en-US,en;q=0.9"
+      "Accept-Language": "en-US,en;q=0.9",
+      "X-Forwarded-For": "23.45.67.89"
     }
   });
   return { success: true, url: response.url };
