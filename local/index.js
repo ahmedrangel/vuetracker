@@ -3,6 +3,7 @@ import { loadEnvFile } from "node:process";
 import { createServerAdapter } from "@whatwg-node/server";
 import { AutoRouter } from "itty-router";
 import { analyze } from "vuetracker-analyzer";
+import { $fetch } from "ofetch";
 
 loadEnvFile();
 const router = AutoRouter();
@@ -17,6 +18,16 @@ router.get("/analyze?", async (req) => {
   }).catch((e) => {
     return Response.json({ success: false, error: { message: e.message, cause: e.cause } }, { status: 500 });
   });
+});
+
+router.get("/redirection?", async (req) => {
+  const { url } = req.query;
+  if (!url) {
+    return Response.json({ success: false, error: "URL is required" }, { status: 400 });
+  }
+  const response = await $fetch.raw(url, { headers: { "User-Agent": userAgent } });
+  console.log(`Redirecting to: ${response.url}`);
+  return { success: true, url: response.url };
 });
 
 router.all("*", () =>

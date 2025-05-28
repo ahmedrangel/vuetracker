@@ -13,11 +13,9 @@ export default defineCachedEventHandler(async (event) => {
 
   const { protocol, host } = parseURL(rawURL);
   const url = protocol + "//" + host;
-  const redirectedURL = (await $fetch.raw(url, {
-    retry: 0,
-    headers: {
-      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 VueTracker/1.0 (Debian GNU/Linux 12; arm64; +vuetracker.pages.dev)"
-    }
+  const config = useRuntimeConfig(event);
+  const redirectedURL = (await $fetch<{ url: string }>(`${config.analyzer.proxyURL}/redirection`, {
+    query: { url }
   }).catch(() => null))?.url;
   const parsedURL = parseURL(redirectedURL || url)!;
   const finalURL = `${parsedURL.protocol}//${parsedURL.host?.replace("www.", "")}${parsedURL.pathname || ""}`;
