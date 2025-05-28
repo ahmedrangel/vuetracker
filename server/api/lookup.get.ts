@@ -1,7 +1,6 @@
 const maxAge = 1 * 60 * 60 * 24 * 1000; // 1 day
 
 export default defineCachedEventHandler(async (event) => {
-  console.info("Country:", event.context.cloudflare.request.cf?.country);
   const rawURL = getQuery(event)?.url as string;
 
   const regex = /^(https?:\/\/)?[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}(:\d+)?(\/[^\s]*)?$/;
@@ -20,10 +19,9 @@ export default defineCachedEventHandler(async (event) => {
       "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 VueTracker/1.0 (Debian GNU/Linux 12; arm64; +vuetracker.pages.dev)"
     }
   }).catch(() => null))?.url;
-  console.info("Redirected URL:", redirectedURL);
   const parsedURL = parseURL(redirectedURL || url)!;
   const finalURL = `${parsedURL.protocol}//${parsedURL.host?.replace("www.", "")}${parsedURL.pathname || ""}`;
-  const siteSlug = normalizeSITE(finalURL)?.replaceAll(".", "-").replaceAll("/", "_");
+  const siteSlug = normalizeSITE(redirectedURL || url)?.replaceAll(".", "-").replaceAll("/", "_");
   const now = Date.now();
   const DB = useDB();
 
@@ -116,5 +114,14 @@ export default defineCachedEventHandler(async (event) => {
   maxAge: 3600, // Browser/KV cache 1 h
   group: "api",
   name: "lookup",
-  getKey: event => normalizeSITE((getQuery(event)?.url as string))?.replace(/[-./]/g, "_")
+  getKey: async (event) => {
+    const url = getQuery(event)?.url as string;
+    const redirectedURL = (await $fetch.raw(url, {
+      retry: 0,
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 VueTracker/1.0 (Debian GNU/Linux 12; arm64; +vuetracker.pages.dev)"
+      }
+    }).catch(() => null))?.url;
+    return normalizeSITE(redirectedURL || url)?.replaceAll(".", "-").replaceAll("/", "_");
+  }
 });
