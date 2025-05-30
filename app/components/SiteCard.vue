@@ -46,8 +46,10 @@ onBeforeMount(() => {
       <div class="relative" :class="`${imgClass ? imgClass : 'h-[100px] sm:h-[160px] md:h-[140px] lg:h-[140px] xl:h-[180px]'}`">
         <!-- eslint-disable vue/no-mutating-props -->
         <img v-if="site.ogImage && !ogImageErrored" :src="ogImage" class="absolute object-cover h-full w-full" :title="site.title || normalizeSITE(site.url)" :alt="site.title || normalizeSITE(site.url)" loading="lazy">
-        <div v-else class="absolute flex items-center justify-center h-full w-full bg-neutral-300 dark:bg-neutral-800" title="No OG Image">
-          <Icon name="ph:image" size="2em" />
+        <div v-else class="absolute flex items-center justify-center h-full w-full bg-neutral-300 dark:bg-neutral-800 gap-2 px-2 md:px-4" :title="site.title || normalizeSITE(site.url)" :alt="site.title || normalizeSITE(site.url)">
+          <img v-if="!faviconErrored" :src="favicon" class="max-w-4 max-h-4 min-w-4 min-h-4" loading="lazy">
+          <img v-if="faviconErrored" :src="faviconFallback" class="max-w-4 max-h-4 min-w-4 min-h-4" loading="lazy">
+          <small class="truncate">{{ site.title || normalizeSITE(site.url) }}</small>
         </div>
       </div>
       <div class="flex flex-wrap gap-2 items-center justify-between p-2">
