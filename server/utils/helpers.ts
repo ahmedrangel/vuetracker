@@ -85,6 +85,8 @@ export const selectSite = async (condition: SQL<unknown>) => {
     .where(condition)
     .get() as unknown as VueTrackerResponse;
 
+  if (!site) return;
+
   const [icons, technologies] = await Promise.all([
     DB.select({
       url: tables.icons.url,

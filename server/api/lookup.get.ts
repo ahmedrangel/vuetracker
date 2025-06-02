@@ -25,7 +25,7 @@ export default defineCachedEventHandler(async (event) => {
 
   const site = await selectSite(eq(tables.sites.slug, siteSlug));
 
-  if (!site.slug) {
+  if (!site) {
     console.info("Site not found in database");
     const [result] = await Promise.all<VueTrackerProxyResponse>([
       fetchVueTrackerProxy(finalURL),
