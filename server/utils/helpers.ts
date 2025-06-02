@@ -80,17 +80,27 @@ export const selectSite = async (condition: SQL<unknown>) => {
     isStatic: tables.sites.isStatic,
     vueVersion: tables.sites.vueVersion,
     createdAt: tables.sites.createdAt,
-    updatedAt: tables.sites.updatedAt,
-    icons: sql`json_group_array(DISTINCT json_object( 'url', ${tables.icons.url}, 'sizes', ${tables.icons.sizes})) FILTER (WHERE ${tables.icons.id} IS NOT NULL)`.as("icons"),
-    technologies: sql`json_group_array(DISTINCT json_object('slug', ${tables.technologies.slug}, 'name', ${tables.technologies.name}, 'type', ${tables.technologies.type}, 'version', ${tables.technologies.version})) FILTER (WHERE ${tables.technologies.id} IS NOT NULL)`.as("technologies")
+    updatedAt: tables.sites.updatedAt
   }).from(tables.sites)
     .where(condition)
-    .leftJoin(tables.icons, eq(tables.icons.siteSlug, tables.sites.slug))
-    .leftJoin(tables.technologies, eq(tables.technologies.siteSlug, tables.sites.slug))
-    .get() as unknown as VueTrackerRawResponse;
-  const parsedIcons = site.icons ? JSON.parse(site.icons) : [];
-  const parsedTechnologies = site.technologies ? JSON.parse(site.technologies) : [];
-  site.icons = parsedIcons;
-  site.technologies = parsedTechnologies;
-  return site;
+    .get() as unknown as VueTrackerResponse;
+
+  const [icons, technologies] = await Promise.all([
+    DB.select({
+      url: tables.icons.url,
+      sizes: tables.icons.sizes
+    }).from(tables.icons).where(eq(tables.icons.siteSlug, site.slug)).all() as unknown as VueTrackerSiteIcons[],
+    DB.select({
+      slug: tables.technologies.slug,
+      name: tables.technologies.name,
+      type: tables.technologies.type,
+      version: tables.technologies.version
+    }).from(tables.technologies).where(eq(tables.technologies.siteSlug, site.slug)).all() as unknown as VueTrackerTechnology[]
+  ]);
+
+  return {
+    ...site,
+    icons,
+    technologies
+  };
 };

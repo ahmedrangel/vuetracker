@@ -63,9 +63,4 @@ declare global {
     updatedAt: number;
     createdAt: number;
   }
-
-  interface VueTrackerRawResponse extends VueTrackerResponse, Omit<icons, technologies> {
-    icons: string;
-    technologies: string;
-  }
 }
