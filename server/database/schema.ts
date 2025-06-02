@@ -1,4 +1,4 @@
-import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
+import { sqliteTable, text, integer, index } from "drizzle-orm/sqlite-core";
 
 export const sites = sqliteTable("sites", {
   slug: text().primaryKey(),
@@ -24,7 +24,9 @@ export const icons = sqliteTable("icons", {
   siteSlug: text().notNull().references(() => sites.slug, { onDelete: "cascade" }),
   url: text().notNull(),
   sizes: text()
-});
+}, table => [
+  index("idx_icons_site_slug").on(table.siteSlug)
+]);
 
 export const technologies = sqliteTable("technologies", {
   id: integer().primaryKey({ autoIncrement: true }),
@@ -33,4 +35,6 @@ export const technologies = sqliteTable("technologies", {
   name: text().notNull(),
   type: text().notNull(),
   version: text()
-});
+}, table => [
+  index("idx_technologies_site_slug").on(table.siteSlug)
+]);
