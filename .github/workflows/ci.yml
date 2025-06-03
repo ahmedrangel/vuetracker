@@ -46,7 +46,7 @@ jobs:
             export NVM_DIR=/usr/local/nvm
             source /usr/local/nvm/nvm.sh
             corepack enable pnpm
-            pnpm i
             npx puppeteer browsers install chrome
+            pnpm i
             export PM2_HOME=/usr/local/share/pm2
             /usr/local/share/pnpm/pm2 restart vuetracker --silent
