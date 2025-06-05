@@ -91,21 +91,30 @@ const lookup = async () => {
 };
 
 useSeoMeta({
-  title: "VueTracker",
-  ogTitle: "VueTracker",
+  title: `${SITE.name} | ${SITE.shortDescription}`,
+  ogTitle: `${SITE.name} | ${SITE.shortDescription}`,
   description: SITE.description,
   ogDescription: SITE.description,
   ogImage: `${SITE.url}${SITE.ogImage}`,
   twitterImage: `${SITE.url}${SITE.ogImage}`,
   twitterCard: "summary_large_image",
-  twitterTitle: "VueTracker",
+  twitterTitle: `${SITE.name} | ${SITE.shortDescription}`,
   twitterDescription: SITE.description
 });
 
 useHead({
   link: [
     { rel: "canonical", href: SITE.url }
-  ]
+  ],
+  script: [{
+    type: "application/ld+json",
+    innerHTML: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": SITE.name,
+      "url": SITE.url
+    })
+  }]
 });
 
 const faviconErrored = ref(false);
