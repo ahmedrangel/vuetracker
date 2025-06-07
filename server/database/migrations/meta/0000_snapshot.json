@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "fbb2d828-a282-4524-ade1-90380647c9c0",
+  "id": "acb010be-8582-43cf-b794-e4dc676bab48",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "icons": {
@@ -36,7 +36,15 @@
           "autoincrement": false
         }
       },
-      "indexes": {},
+      "indexes": {
+        "idx_icons_site_slug": {
+          "name": "idx_icons_site_slug",
+          "columns": [
+            "site_slug"
+          ],
+          "isUnique": false
+        }
+      },
       "foreignKeys": {
         "icons_site_slug_sites_slug_fk": {
           "name": "icons_site_slug_sites_slug_fk",
@@ -234,7 +242,15 @@
           "autoincrement": false
         }
       },
-      "indexes": {},
+      "indexes": {
+        "idx_technologies_site_slug": {
+          "name": "idx_technologies_site_slug",
+          "columns": [
+            "site_slug"
+          ],
+          "isUnique": false
+        }
+      },
       "foreignKeys": {
         "technologies_site_slug_sites_slug_fk": {
           "name": "technologies_site_slug_sites_slug_fk",

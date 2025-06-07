@@ -6,6 +6,7 @@ CREATE TABLE `icons` (
 	FOREIGN KEY (`site_slug`) REFERENCES `sites`(`slug`) ON UPDATE no action ON DELETE cascade
 );
 
+CREATE INDEX `idx_icons_site_slug` ON `icons` (`site_slug`);
 CREATE TABLE `sites` (
 	`slug` text PRIMARY KEY NOT NULL,
 	`url` text NOT NULL,
@@ -35,3 +36,5 @@ CREATE TABLE `technologies` (
 	`version` text,
 	FOREIGN KEY (`site_slug`) REFERENCES `sites`(`slug`) ON UPDATE no action ON DELETE cascade
 );
+
+CREATE INDEX `idx_technologies_site_slug` ON `technologies` (`site_slug`);
