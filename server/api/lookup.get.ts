@@ -18,8 +18,8 @@ export default defineCachedEventHandler(async (event) => {
     query: { url }
   }).catch(() => null))?.url;
   const parsedURL = parseURL(redirectedURL || url)!;
-  const finalURL = `${parsedURL.protocol}//${parsedURL.host?.replace("www.", "")}${parsedURL.pathname || ""}`;
-  const siteSlug = normalizeSITE(finalURL)?.replaceAll(".", "-").replaceAll("/", "_");
+  const finalURL = `${parsedURL.protocol}//${parsedURL.host}${parsedURL.pathname || ""}`;
+  const siteSlug = normalizeSITE(finalURL)?.replace("www.", "")?.replaceAll(".", "-")?.replaceAll("/", "_");
   const now = Date.now();
   const DB = useDB();
 
