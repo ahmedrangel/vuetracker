@@ -46,7 +46,7 @@
     "swiper": "^11.2.8",
     "typescript": "^5.8.3",
     "ufo": "^1.6.1",
-    "vue-tsc": "^2.2.10",
+    "vue-tsc": "^3.0.1",
     "wrangler": "^4.20.0"
   },
   "packageManager": "pnpm@10.12.1",
