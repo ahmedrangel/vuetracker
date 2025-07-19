@@ -38,7 +38,7 @@
     "drizzle-orm": "^0.44.3",
     "eslint": "^9.31.0",
     "itty-router": "^5.0.18",
-    "nuxt": "^3.17.7",
+    "nuxt": "^4.0.0",
     "nuxt-ripple": "^0.0.8",
     "sass": "^1.89.2",
     "stylelint": "^16.22.0",
@@ -52,7 +52,7 @@
   "packageManager": "pnpm@10.13.1",
   "dependencies": {
     "@nuxt/ui": "^3.2.0",
-    "vuetracker-analyzer": "^0.3.12"
+    "vuetracker-analyzer": "^0.3.13"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
