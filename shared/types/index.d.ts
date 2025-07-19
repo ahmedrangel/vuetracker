@@ -1,5 +1,5 @@
-import type { CacheEntry as C } from "nitropack/runtime/types";
-import type { ErrorCode } from "~~/server/utils/errors";
+import type { CacheEntry as C } from "nitropack";
+import type { ErrorCode } from "../../server/utils/errors";
 
 export {};
 
@@ -34,10 +34,9 @@ declare global {
     frameworkModules?: VueTrackerTechnology[];
     hasSSR: number;
     hostname: string;
-    meta: Meta;
+    meta?: Meta;
     isAdultContent: number;
     isStatic: number;
-    meta?: Meta;
     plugins?: VueTrackerTechnology[];
     ui?: VueTrackerTechnology | null;
     url: string;
@@ -55,7 +54,6 @@ declare global {
     siteName?: string | null;
     title?: string;
     ogImage?: string | null;
-    icons: VueTrackerSiteIcons[];
     technologies: VueTrackerTechnology[];
     isStatic?: number;
     hasSSR: number;
