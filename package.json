@@ -53,18 +53,5 @@
   "dependencies": {
     "@nuxt/ui": "^3.2.0",
     "vuetracker-analyzer": "^0.3.13"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "puppeteer"
-    ],
-    "ignoredBuiltDependencies": [
-      "@parcel/watcher",
-      "esbuild",
-      "sharp",
-      "unrs-resolver",
-      "vue-demi",
-      "workerd"
-    ]
   }
 }

@@ -1,0 +1,14 @@
+shamefullyHoist: true
+strictPeerDependencies: false
+
+onlyBuiltDependencies:
+  - puppeteer
+
+ignoredBuiltDependencies:
+  - '@parcel/watcher'
+  - esbuild
+  - sharp
+  - unrs-resolver
+  - vue-demi
+  - workerd
+  
