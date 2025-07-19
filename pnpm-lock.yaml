@@ -12,8 +12,8 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0(@babel/parser@7.28.0)(@netlify/blobs@9.1.2)(db0@0.3.2(drizzle-orm@0.44.3(@cloudflare/workers-types@4.20250719.0)))(embla-carousel@8.6.0)(ioredis@5.6.1)(jwt-decode@4.0.0)(magicast@0.3.5)(typescript@5.8.3)(vite@7.0.5(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(sass@1.89.2)(terser@5.43.1)(yaml@2.8.0))(vue-router@4.5.1(vue@3.5.17(typescript@5.8.3)))(vue@3.5.17(typescript@5.8.3))(zod@3.25.76)
       vuetracker-analyzer:
-        specifier: ^0.3.12
-        version: 0.3.12(typescript@5.8.3)
+        specifier: ^0.3.13
+        version: 0.3.13(typescript@5.8.3)
     devDependencies:
       '@iconify-json/fa6-solid':
         specifier: ^1.2.3
@@ -6071,8 +6071,8 @@ packages:
       typescript:
         optional: true
 
-  vuetracker-analyzer@0.3.12:
-    resolution: {integrity: sha512-qGOlKWHWZORywEPgdVye4LY9hzxMsS9eevytvtSXQfd8aVaukldaLExbskOnn9NPNh8hEBqaXXh1nrF5EDvXuA==}
+  vuetracker-analyzer@0.3.13:
+    resolution: {integrity: sha512-s0G3A0O1sHAUSwetOoLoZV8oZhC+J7xjfPCEjBQA1xnpJekj9xhtmjOh8XmTkM4gL7ALmFews6MrUk0BOjPJkA==}
 
   web-streams-polyfill@3.3.3:
     resolution: {integrity: sha512-d2JWLCivmZYTSIoge9MsgFCZrt571BikcWGYkjC1khllbTeDlGqZ2D8vD8E/lJa8WGWbb7Plm8/XJYV7IJHZZw==}
@@ -12716,7 +12716,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.8.3
 
-  vuetracker-analyzer@0.3.12(typescript@5.8.3):
+  vuetracker-analyzer@0.3.13(typescript@5.8.3):
     dependencies:
       consola: 3.4.2
       puppeteer: 24.14.0(typescript@5.8.3)

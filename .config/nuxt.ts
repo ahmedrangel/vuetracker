@@ -1,9 +1,8 @@
 import { SITE } from "../app/utils/site";
 
 export default defineNuxtConfig({
-  future: { compatibilityVersion: 4 },
   devtools: { enabled: true },
-  compatibilityDate: "2024-11-27",
+  compatibilityDate: "2025-07-18",
 
   app: {
     head: {
@@ -87,6 +86,10 @@ export default defineNuxtConfig({
   sitemap: {
     discoverImages: false,
     sources: ["/api/__sitemap"],
+    urls: [
+      { loc: "/", priority: 1, lastmod: new Date().toISOString() }
+    ],
+    defaults: { priority: 0.8, lastmod: new Date().toISOString() },
     xslColumns: [
       { label: "URL", width: "65%" },
       { label: "Priority", select: "sitemap:priority", width: "12.5%" },
@@ -95,8 +98,7 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    "/": { sitemap: { priority: 1 } },
-    "/*/**": { sitemap: { priority: 0.8, lastmod: new Date().toISOString() } }
+    "/": {}
   },
 
   features: {
@@ -112,7 +114,6 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          api: "modern-compiler",
           silenceDeprecations: ["mixed-decls", "color-functions", "import", "global-builtin"]
         }
       }
