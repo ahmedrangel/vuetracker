@@ -27,18 +27,18 @@
     "local:start": "node local/index.js"
   },
   "devDependencies": {
-    "@iconify-json/fa6-solid": "^1.2.3",
+    "@iconify-json/fa6-solid": "^1.2.4",
     "@iconify-json/ph": "^1.2.2",
-    "@nuxt/eslint": "^1.6.0",
+    "@nuxt/eslint": "^1.7.1",
     "@nuxthub/core": "^0.9.0",
     "@nuxtjs/sitemap": "^7.4.3",
     "@whatwg-node/server": "^0.10.10",
     "date-fns": "^4.1.0",
     "drizzle-kit": "^0.31.4",
     "drizzle-orm": "^0.44.3",
-    "eslint": "^9.31.0",
+    "eslint": "^9.32.0",
     "itty-router": "^5.0.18",
-    "nuxt": "^4.0.0",
+    "nuxt": "^4.0.1",
     "nuxt-ripple": "^0.0.8",
     "sass": "^1.89.2",
     "stylelint": "^16.22.0",
@@ -46,12 +46,12 @@
     "swiper": "^11.2.10",
     "typescript": "^5.8.3",
     "ufo": "^1.6.1",
-    "vue-tsc": "^3.0.3",
-    "wrangler": "^4.25.0"
+    "vue-tsc": "^3.0.4",
+    "wrangler": "^4.26.0"
   },
   "packageManager": "pnpm@10.13.1",
   "dependencies": {
-    "@nuxt/ui": "^3.2.0",
+    "@nuxt/ui": "^3.3.0",
     "vuetracker-analyzer": "^0.3.13"
   }
 }
