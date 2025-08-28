@@ -19,7 +19,7 @@ export default defineNuxtConfig({
       ],
       meta: [
         { name: "robots", content: "index, follow" },
-        { property: "og:site:name", content: SITE.name },
+        { property: "og:site_name", content: SITE.name },
         { name: "google-site-verification", content: "-wH8J1lsOCA1vhveMd1oet1kJcje51W6XAFhvDRsxS0" }
       ]
     }
