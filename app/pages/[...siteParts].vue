@@ -25,33 +25,42 @@ const computedSiteModules = computed({
 
 const framework = computed(() => result.value?.technologies.find(el => el.type === "framework"));
 const ui = computed(() => result.value?.technologies.find(el => el.type === "ui"));
-const siteInfo = ref([{
-  title: "Vue Version",
-  value: result.value?.vueVersion,
-  icon: vue.icon,
-  url: vue.url
-},
-{
-  title: framework.value?.version ? framework.value.name : "Framework",
-  value: framework.value?.version ? framework.value.version : framework.value?.name,
-  icon: getTechnologyMetas("framework", framework.value?.slug)?.icon,
-  url: getTechnologyMetas("framework", framework.value?.slug)?.url
+const server = computed(() => result.value?.technologies.find(el => el.type === "server"));
+const siteInfo = ref([
+  {
+    title: "Vue Version",
+    value: result.value?.vueVersion,
+    icon: vue.icon,
+    url: vue.url
+  },
+  {
+    title: framework.value?.version ? framework.value.name : "Framework",
+    value: framework.value?.version ? framework.value.version : framework.value?.name,
+    icon: getTechnologyMetas("framework", framework.value?.slug)?.icon,
+    url: getTechnologyMetas("framework", framework.value?.slug)?.url
 
-},
-{
-  title: "UI Framework",
-  value: ui.value?.name,
-  icon: getTechnologyMetas("ui", ui.value?.slug)?.icon,
-  url: getTechnologyMetas("ui", ui.value?.slug)?.url
-},
-{
-  title: "Rendering",
-  value: result.value?.hasSSR ? "Universal" : "Client-side"
-},
-{
-  title: "Deployment",
-  value: result.value.isStatic ? "Static" : result.value?.hasSSR && !result.value.isStatic && result.value.isStatic != undefined ? "Server" : undefined
-}]);
+  },
+  {
+    title: "UI Framework",
+    value: ui.value?.name,
+    icon: getTechnologyMetas("ui", ui.value?.slug)?.icon,
+    url: getTechnologyMetas("ui", ui.value?.slug)?.url
+  },
+  {
+    title: "Rendering",
+    value: result.value?.hasSSR ? "Universal" : "Client-side"
+  },
+  {
+    title: "Deployment",
+    value: result.value.isStatic ? "Static" : result.value?.hasSSR && !result.value.isStatic && result.value.isStatic != undefined ? "Server" : undefined
+  },
+  {
+    title: "Server",
+    value: server.value?.name,
+    icon: getTechnologyMetas("server", server.value?.slug)?.icon,
+    url: getTechnologyMetas("server", server.value?.slug)?.url
+  }
+]);
 
 useSeoMeta({
   title: `${site} | VueTracker`,

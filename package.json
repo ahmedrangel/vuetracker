@@ -36,22 +36,22 @@
     "date-fns": "^4.1.0",
     "drizzle-kit": "^0.31.4",
     "drizzle-orm": "^0.44.5",
-    "eslint": "^9.34.0",
+    "eslint": "^9.35.0",
     "itty-router": "^5.0.22",
-    "nuxt": "^4.0.3",
+    "nuxt": "^4.1.0",
     "nuxt-ripple": "^0.0.8",
-    "sass": "^1.91.0",
+    "sass": "^1.92.0",
     "stylelint": "^16.23.1",
     "stylelint-config-standard-scss": "^15.0.1",
     "swiper": "^11.2.10",
     "typescript": "^5.9.2",
     "ufo": "^1.6.1",
     "vue-tsc": "^3.0.6",
-    "wrangler": "^4.33.1"
+    "wrangler": "^4.34.0"
   },
-  "packageManager": "pnpm@10.15.0",
+  "packageManager": "pnpm@10.15.1",
   "dependencies": {
-    "@nuxt/ui": "^3.3.2",
-    "vuetracker-analyzer": "^0.3.13"
+    "@nuxt/ui": "^3.3.3",
+    "vuetracker-analyzer": "^0.3.14"
   }
 }

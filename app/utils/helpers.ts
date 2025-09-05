@@ -4,8 +4,8 @@ export const sleep = async (ms?: number) => {
 
 export const getTechnologyMetas = (type: VueTrackerTechnology["type"], slug?: string) => {
   if (!slug) return undefined;
-  const technology = [frameworks, modules, plugins, uis];
-  const types = ["framework", "module", "plugin", "ui"] as const;
+  const technology = [frameworks, modules, plugins, uis, servers];
+  const types = ["framework", "module", "plugin", "ui", "server"] as const;
   const index = types.indexOf(type);
   const technologyType = technology[index];
   if (!technologyType) return undefined;

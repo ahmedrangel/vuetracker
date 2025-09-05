@@ -9,7 +9,7 @@ declare global {
   interface VueTrackerTechnology {
     slug: string;
     name: string;
-    type: "framework" | "module" | "plugin" | "ui";
+    type: "framework" | "module" | "plugin" | "ui" | "server";
     version?: string | null;
   }
 
@@ -39,6 +39,7 @@ declare global {
     isStatic: number;
     plugins?: VueTrackerTechnology[];
     ui?: VueTrackerTechnology | null;
+    server?: VueTrackerTechnology;
     url: string;
     vueVersion: string;
   }

@@ -48,6 +48,9 @@ export const handleSiteDataInsertion = async (result: VueTrackerProxyResponse, s
   if (result.ui) {
     technologies.push({ slug: result.ui.slug, name: result.ui.name, siteSlug, type: "ui" });
   }
+  if (result.server) {
+    technologies.push({ slug: result.server.slug, name: result.server.name, siteSlug, type: "server" });
+  }
   if (result.meta?.icons?.length) {
     const iconsToInsert = result.meta.icons.map((icon) => {
       return { siteSlug, url: icon.url, sizes: icon.sizes };
