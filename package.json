@@ -42,7 +42,7 @@
     "nuxt-ripple": "^0.0.8",
     "sass": "^1.93.0",
     "stylelint": "^16.24.0",
-    "stylelint-config-standard-scss": "^15.0.1",
+    "stylelint-config-standard-scss": "^16.0.0",
     "swiper": "^11.2.10",
     "typescript": "^5.9.2",
     "ufo": "^1.6.1",
