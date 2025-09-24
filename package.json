@@ -52,6 +52,6 @@
   "packageManager": "pnpm@10.17.1",
   "dependencies": {
     "@nuxt/ui": "^4.0.0",
-    "vuetracker-analyzer": "^0.3.14"
+    "vuetracker-analyzer": "^0.3.15"
   }
 }
