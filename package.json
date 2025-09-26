@@ -34,7 +34,7 @@
     "@nuxtjs/sitemap": "^7.4.7",
     "@whatwg-node/server": "^0.10.12",
     "date-fns": "^4.1.0",
-    "drizzle-kit": "^0.31.4",
+    "drizzle-kit": "^0.31.5",
     "drizzle-orm": "^0.44.5",
     "eslint": "^9.36.0",
     "itty-router": "^5.0.22",
@@ -47,7 +47,7 @@
     "typescript": "^5.9.2",
     "ufo": "^1.6.1",
     "vue-tsc": "^3.0.8",
-    "wrangler": "^4.40.1"
+    "wrangler": "^4.40.2"
   },
   "packageManager": "pnpm@10.17.1",
   "dependencies": {
