@@ -47,11 +47,11 @@
     "typescript": "^5.9.2",
     "ufo": "^1.6.1",
     "vue-tsc": "^3.0.8",
-    "wrangler": "^4.39.0"
+    "wrangler": "^4.40.1"
   },
   "packageManager": "pnpm@10.17.1",
   "dependencies": {
     "@nuxt/ui": "^4.0.0",
-    "vuetracker-analyzer": "^0.3.15"
+    "vuetracker-analyzer": "^0.3.16"
   }
 }
