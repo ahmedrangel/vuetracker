@@ -40,6 +40,7 @@
     "itty-router": "^5.0.22",
     "nuxt": "^4.2.0",
     "nuxt-ripple": "^0.0.8",
+    "ofetch": "^1.5.1",
     "sass": "^1.93.3",
     "stylelint": "^16.25.0",
     "stylelint-config-standard-scss": "^16.0.0",
