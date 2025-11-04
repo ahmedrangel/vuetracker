@@ -72,8 +72,8 @@ export default defineCachedEventHandler(async (event) => {
   // Site found in DB but outdated
   if (site.slug && site.updatedAt < now - maxAge) {
     console.info("Site outdated, updating");
-    const [result] = await Promise.all<VueTrackerProxyResponse>([
-      fetchVueTrackerProxy(finalURL),
+    const result = await fetchVueTrackerProxy(finalURL);
+    await Promise.all([
       DB.delete(tables.technologies).where(eq(tables.technologies.siteSlug, site.slug)).run(),
       DB.delete(tables.icons).where(eq(tables.icons.siteSlug, site.slug)).run()
     ]);
