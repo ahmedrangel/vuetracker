@@ -1,5 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "vuetracker",
   "compatibility_flags": ["nodejs_compat"],
   "d1_databases": [
     {
