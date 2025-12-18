@@ -1,6 +1,5 @@
 {
   "compatibility_date": "2025-12-18",
-  "pages_build_output_dir": "..",
   "name": "vuetracker",
   "compatibility_flags": ["nodejs_compat"],
   "d1_databases": [
