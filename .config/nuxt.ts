@@ -122,7 +122,7 @@ export default defineNuxtConfig({
   },
 
   hub: {
-    cache: true,
-    db: { dialect: "sqlite", casing: "snake_case" }
+    cache: { driver: "cloudflare-kv-binding", namespaceId: "597740bcf7904251b5f3964ef8577e0a", binding: "CACHE" },
+    db: { driver: "d1", dialect: "sqlite", casing: "snake_case", connection: { databaseId: "b2e68ee0-ec60-48e1-9d52-99b516e35f74" } }
   }
 });
