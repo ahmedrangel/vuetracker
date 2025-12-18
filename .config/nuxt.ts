@@ -1,14 +1,8 @@
 import { SITE } from "../app/utils/site";
 
 export default defineNuxtConfig({
-
-  modules: [
-    "@nuxt/ui",
-    "@nuxt/eslint",
-    "@nuxtjs/sitemap",
-    "@nuxthub/core",
-    "nuxt-ripple"
-  ], devtools: { enabled: true },
+  devtools: { enabled: true },
+  compatibilityDate: "2025-07-18",
 
   app: {
     head: {
@@ -36,11 +30,27 @@ export default defineNuxtConfig({
     "~/assets/scss/app.scss"
   ],
 
-  site: { url: SITE.url },
+  modules: [
+    "@nuxt/ui",
+    "@nuxt/eslint",
+    "@nuxtjs/sitemap",
+    "@nuxthub/core",
+    "nuxt-ripple"
+  ],
 
-  colorMode: {
-    preference: "light",
-    fallback: "light"
+  icon: {
+    mode: "svg",
+    clientBundle: { scan: true, sizeLimitKb: 2048 },
+    customCollections: [
+      { prefix: "vuetracker", dir: "./node_modules/vuetracker-analyzer/dist/icons" }
+    ]
+  },
+
+  eslint: {
+    config: {
+      autoInit: false,
+      stylistic: true
+    }
   },
 
   runtimeConfig: {
@@ -49,19 +59,12 @@ export default defineNuxtConfig({
     }
   },
 
-  routeRules: {
-    "/": {}
+  colorMode: {
+    preference: "light",
+    fallback: "light"
   },
 
-  features: {
-    inlineStyles: false
-  },
-
-  experimental: {
-    typedPages: true,
-    viewTransition: true
-  },
-  compatibilityDate: "2025-07-18",
+  site: { url: SITE.url },
 
   nitro: {
     preset: "cloudflare-pages",
@@ -81,36 +84,6 @@ export default defineNuxtConfig({
     }
   },
 
-  hub: {
-    cache: true,
-    db: { dialect: "sqlite", casing: "snake_case" }
-  },
-
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          silenceDeprecations: ["mixed-decls", "color-functions", "import", "global-builtin"]
-        }
-      }
-    }
-  },
-
-  eslint: {
-    config: {
-      autoInit: false,
-      stylistic: true
-    }
-  },
-
-  icon: {
-    mode: "svg",
-    clientBundle: { scan: true, sizeLimitKb: 2048 },
-    customCollections: [
-      { prefix: "vuetracker", dir: "./node_modules/vuetracker-analyzer/dist/icons" }
-    ]
-  },
-
   sitemap: {
     discoverImages: false,
     sources: ["/api/__sitemap"],
@@ -123,5 +96,33 @@ export default defineNuxtConfig({
       { label: "Priority", select: "sitemap:priority", width: "12.5%" },
       { label: "Last Modified", select: "sitemap:lastmod", width: "35%" }
     ]
+  },
+
+  routeRules: {
+    "/": {}
+  },
+
+  features: {
+    inlineStyles: false
+  },
+
+  experimental: {
+    typedPages: true,
+    viewTransition: true
+  },
+
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          silenceDeprecations: ["mixed-decls", "color-functions", "import", "global-builtin"]
+        }
+      }
+    }
+  },
+
+  hub: {
+    cache: true,
+    db: { dialect: "sqlite", casing: "snake_case" }
   }
 });
