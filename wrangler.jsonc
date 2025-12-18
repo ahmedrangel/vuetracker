@@ -9,7 +9,6 @@
       "binding": "DB",
       "database_name": "vuetracker",
       "database_id": "b2e68ee0-ec60-48e1-9d52-99b516e35f74",
-      "migrations_dir": ".database/migrations"
     }
   ],
   "kv_namespaces": [
