@@ -122,7 +122,7 @@ export default defineNuxtConfig({
 
   hub: {
     cache: true,
-    database: true,
+    db: { dialect: "sqlite", casing: "snake_case" },
     workers: false
   }
 });
