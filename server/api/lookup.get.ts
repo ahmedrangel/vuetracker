@@ -21,7 +21,6 @@ export default defineCachedEventHandler(async (event) => {
   const finalURL = `${parsedURL.protocol}//${parsedURL.host}${parsedURL.pathname || ""}`;
   const siteSlug = normalizeSITE(finalURL)?.replace("www.", "")?.replaceAll(".", "-")?.replaceAll("/", "_");
   const now = Date.now();
-  const DB = useDB();
 
   const site = await selectSite(eq(tables.sites.slug, siteSlug));
 
@@ -29,11 +28,11 @@ export default defineCachedEventHandler(async (event) => {
     console.info("Site not found in database");
     const [result] = await Promise.all<VueTrackerProxyResponse>([
       fetchVueTrackerProxy(finalURL),
-      DB.delete(tables.sites).where(eq(tables.sites.slug, siteSlug)).run()
+      db.delete(tables.sites).where(eq(tables.sites.slug, siteSlug)).run()
     ]);
     const parsedResultURL = parseURL(result.url);
     const siteURL = `${parsedResultURL.protocol}//${parsedResultURL.host}${parsedResultURL.pathname}`;
-    const site = await DB.insert(tables.sites).values({
+    const site = await db.insert(tables.sites).values({
       slug: siteSlug,
       url: siteURL,
       hostname: result.hostname,
@@ -74,13 +73,13 @@ export default defineCachedEventHandler(async (event) => {
     console.info("Site outdated, updating");
     const result = await fetchVueTrackerProxy(finalURL);
     await Promise.all([
-      DB.delete(tables.technologies).where(eq(tables.technologies.siteSlug, site.slug)).run(),
-      DB.delete(tables.icons).where(eq(tables.icons.siteSlug, site.slug)).run()
+      db.delete(tables.technologies).where(eq(tables.technologies.siteSlug, site.slug)).run(),
+      db.delete(tables.icons).where(eq(tables.icons.siteSlug, site.slug)).run()
     ]);
 
     const parsedResultURL = parseURL(result.url);
     const siteURL = `${parsedResultURL.protocol}//${parsedResultURL.host}${parsedResultURL.pathname}`;
-    const updatedSite = await DB.update(tables.sites).set({
+    const updatedSite = await db.update(tables.sites).set({
       url: siteURL,
       hostname: result.hostname,
       domain: result.domain,

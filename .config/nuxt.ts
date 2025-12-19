@@ -77,7 +77,8 @@ export default defineNuxtConfig({
         routes: {
           exclude: ["/images/*", "/icons/*"]
         }
-      }
+      },
+      nodeCompat: true
     },
     experimental: {
       tasks: true
