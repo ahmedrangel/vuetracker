@@ -1,8 +1,22 @@
 import { SITE } from "../app/utils/site";
 
 export default defineNuxtConfig({
+
+  modules: [
+    "@nuxt/ui",
+    "@nuxt/eslint",
+    "@nuxtjs/sitemap",
+    "@nuxthub/core",
+    "nuxt-ripple"
+  ],
+
+  $production: {
+    nitro: {
+      preset: "cloudflare-pages"
+    }
+  },
+
   devtools: { enabled: true },
-  compatibilityDate: "2025-07-18",
 
   app: {
     head: {
@@ -30,27 +44,11 @@ export default defineNuxtConfig({
     "~/assets/scss/app.scss"
   ],
 
-  modules: [
-    "@nuxt/ui",
-    "@nuxt/eslint",
-    "@nuxtjs/sitemap",
-    "@nuxthub/core",
-    "nuxt-ripple"
-  ],
+  site: { url: SITE.url },
 
-  icon: {
-    mode: "svg",
-    clientBundle: { scan: true, sizeLimitKb: 2048 },
-    customCollections: [
-      { prefix: "vuetracker", dir: "./node_modules/vuetracker-analyzer/dist/icons" }
-    ]
-  },
-
-  eslint: {
-    config: {
-      autoInit: false,
-      stylistic: true
-    }
+  colorMode: {
+    preference: "light",
+    fallback: "light"
   },
 
   runtimeConfig: {
@@ -59,15 +57,21 @@ export default defineNuxtConfig({
     }
   },
 
-  colorMode: {
-    preference: "light",
-    fallback: "light"
+  routeRules: {
+    "/": {}
   },
 
-  site: { url: SITE.url },
+  features: {
+    inlineStyles: false
+  },
+
+  experimental: {
+    typedPages: true,
+    viewTransition: true
+  },
+  compatibilityDate: "2025-07-18",
 
   nitro: {
-    preset: "cloudflare-pages",
     prerender: {
       autoSubfolderIndex: false,
       crawlLinks: false
@@ -85,31 +89,16 @@ export default defineNuxtConfig({
     }
   },
 
-  sitemap: {
-    discoverImages: false,
-    sources: ["/api/__sitemap"],
-    urls: [
-      { loc: "/", priority: 1, lastmod: new Date().toISOString() }
-    ],
-    defaults: { priority: 0.8, lastmod: new Date().toISOString() },
-    xslColumns: [
-      { label: "URL", width: "65%" },
-      { label: "Priority", select: "sitemap:priority", width: "12.5%" },
-      { label: "Last Modified", select: "sitemap:lastmod", width: "35%" }
-    ]
-  },
-
-  routeRules: {
-    "/": {}
-  },
-
-  features: {
-    inlineStyles: false
-  },
-
-  experimental: {
-    typedPages: true,
-    viewTransition: true
+  hub: {
+    cache: {
+      namespaceId: "597740bcf7904251b5f3964ef8577e0a",
+      binding: "CACHE"
+    },
+    db: {
+      dialect: "sqlite",
+      casing: "snake_case",
+      connection: { databaseId: "b2e68ee0-ec60-48e1-9d52-99b516e35f74" }
+    }
   },
 
   vite: {
@@ -122,11 +111,32 @@ export default defineNuxtConfig({
     }
   },
 
-  hub: {
-    cache: true,
-    db: {
-      dialect: "sqlite",
-      casing: "snake_case"
+  eslint: {
+    config: {
+      autoInit: false,
+      stylistic: true
     }
+  },
+
+  icon: {
+    mode: "svg",
+    clientBundle: { scan: true, sizeLimitKb: 2048 },
+    customCollections: [
+      { prefix: "vuetracker", dir: "./node_modules/vuetracker-analyzer/dist/icons" }
+    ]
+  },
+
+  sitemap: {
+    discoverImages: false,
+    sources: ["/api/__sitemap"],
+    urls: [
+      { loc: "/", priority: 1, lastmod: new Date().toISOString() }
+    ],
+    defaults: { priority: 0.8, lastmod: new Date().toISOString() },
+    xslColumns: [
+      { label: "URL", width: "65%" },
+      { label: "Priority", select: "sitemap:priority", width: "12.5%" },
+      { label: "Last Modified", select: "sitemap:lastmod", width: "35%" }
+    ]
   }
 });
