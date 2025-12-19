@@ -91,8 +91,7 @@ export default defineNuxtConfig({
 
   hub: {
     cache: {
-      namespaceId: "597740bcf7904251b5f3964ef8577e0a",
-      binding: "CACHE"
+      namespaceId: "597740bcf7904251b5f3964ef8577e0a"
     },
     db: {
       dialect: "sqlite",
