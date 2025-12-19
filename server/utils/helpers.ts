@@ -10,8 +10,7 @@ export const fetchVueTrackerProxy = async (url: string) => {
     const { error } = e.data;
     // Cause 4 = vue not detected
     if (error?.cause?.code === 4) {
-      const DB = useDB();
-      await DB.delete(tables.sites).where(eq(tables.sites.url, url)).run();
+      await db.delete(tables.sites).where(eq(tables.sites.url, url)).run();
     }
     throw createError({
       statusCode: ErrorCode.INTERNAL_SERVER_ERROR,
@@ -23,7 +22,6 @@ export const fetchVueTrackerProxy = async (url: string) => {
 
 export const handleSiteDataInsertion = async (result: VueTrackerProxyResponse, siteSlug: string) => {
   const technologies = [], icons = [];
-  const DB = useDB();
   if (result.framework) {
     technologies.push({
       slug: result.framework.slug,
@@ -59,16 +57,15 @@ export const handleSiteDataInsertion = async (result: VueTrackerProxyResponse, s
   }
 
   await Promise.all([
-    technologies.length ? DB.insert(tables.technologies).values(technologies).returning({ slug: tables.technologies.slug, name: tables.technologies.name, type: tables.technologies.type, version: tables.technologies.version }).run() : null,
-    icons.length ? DB.insert(tables.icons).values(icons).returning({ url: tables.icons.url, sizes: tables.icons.sizes }).run() : null
+    technologies.length ? db.insert(tables.technologies).values(technologies).returning({ slug: tables.technologies.slug, name: tables.technologies.name, type: tables.technologies.type, version: tables.technologies.version }).run() : null,
+    icons.length ? db.insert(tables.icons).values(icons).returning({ url: tables.icons.url, sizes: tables.icons.sizes }).run() : null
   ]);
 
   return { icons, technologies };
 };
 
 export const selectSite = async (condition: SQL<unknown>) => {
-  const DB = useDB();
-  const site = await DB.select({
+  const site = await db.select({
     slug: tables.sites.slug,
     url: tables.sites.url,
     hostname: tables.sites.hostname,
@@ -91,11 +88,11 @@ export const selectSite = async (condition: SQL<unknown>) => {
   if (!site) return;
 
   const [icons, technologies] = await Promise.all([
-    DB.select({
+    db.select({
       url: tables.icons.url,
       sizes: tables.icons.sizes
     }).from(tables.icons).where(eq(tables.icons.siteSlug, site.slug)).all() as unknown as VueTrackerSiteIcons[],
-    DB.select({
+    db.select({
       slug: tables.technologies.slug,
       name: tables.technologies.name,
       type: tables.technologies.type,

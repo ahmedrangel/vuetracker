@@ -1,7 +1,6 @@
 export default defineEventHandler(async () => {
-  const DB = useDB();
   const [sites, icons, technologies] = await Promise.all([
-    DB.select({
+    db.select({
       slug: tables.sites.slug,
       url: tables.sites.url,
       hostname: tables.sites.hostname,
@@ -10,12 +9,12 @@ export default defineEventHandler(async () => {
       createdAt: tables.sites.createdAt,
       updatedAt: tables.sites.updatedAt
     }).from(tables.sites).groupBy(tables.sites.slug).orderBy(desc(tables.sites.createdAt)).all(),
-    DB.select({
+    db.select({
       siteSlug: tables.icons.siteSlug,
       url: tables.icons.url,
       sizes: tables.icons.sizes
     }).from(tables.icons).all(),
-    DB.select({
+    db.select({
       siteSlug: tables.technologies.siteSlug,
       slug: tables.technologies.slug,
       type: tables.technologies.type

@@ -1,8 +1,7 @@
 export default defineEventHandler(async (event) => {
   const { domain } = getRouterParams(event);
-  const DB = useDB();
 
-  const site = await DB.select({
+  const site = await db.select({
     slug: tables.sites.slug,
     url: tables.sites.url,
     hostname: tables.sites.hostname,
@@ -30,11 +29,11 @@ export default defineEventHandler(async (event) => {
   }
 
   const [icons, technologies] = await Promise.all([
-    DB.select({
+    db.select({
       url: tables.icons.url,
       sizes: tables.icons.sizes
     }).from(tables.icons).where(eq(tables.icons.siteSlug, site.slug)).all() as unknown as VueTrackerSiteIcons[],
-    DB.select({
+    db.select({
       slug: tables.technologies.slug,
       name: tables.technologies.name,
       type: tables.technologies.type,
