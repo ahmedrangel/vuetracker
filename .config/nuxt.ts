@@ -10,6 +10,12 @@ export default defineNuxtConfig({
     "nuxt-ripple"
   ],
 
+  $production: {
+    nitro: {
+      preset: "cloudflare-pages"
+    }
+  },
+
   devtools: { enabled: true },
 
   app: {
