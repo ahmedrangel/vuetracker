@@ -32,7 +32,7 @@
     "@libsql/client": "^0.15.15",
     "@nuxt/eslint": "^1.12.1",
     "@nuxthub/core": "^0.10.3",
-    "@nuxtjs/sitemap": "^7.5.0",
+    "@nuxtjs/sitemap": "^8.5.0",
     "@whatwg-node/server": "^0.10.17",
     "date-fns": "^4.1.0",
     "drizzle-kit": "^0.31.8",
