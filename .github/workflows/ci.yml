@@ -31,7 +31,7 @@ jobs:
 
     steps:
       - name: Connect and run command on remote server
-        uses: and-fm/cloudflared-ssh-action@v3
+        uses: and-fm/cloudflared-ssh-action@v4
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
