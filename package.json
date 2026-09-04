@@ -37,7 +37,7 @@
     "date-fns": "^4.1.0",
     "drizzle-kit": "^0.31.8",
     "drizzle-orm": "^0.45.1",
-    "eslint": "^9.39.2",
+    "eslint": "^10.10.0",
     "itty-router": "^5.0.22",
     "nuxt": "^4.2.2",
     "nuxt-ripple": "^0.0.8",
