@@ -7,7 +7,8 @@ export default defineNuxtConfig({
     "@nuxt/eslint",
     "@nuxtjs/sitemap",
     "@nuxthub/core",
-    "nuxt-ripple"
+    "nuxt-ripple",
+    "nuxt-ui-colors-no-inline"
   ],
 
   $production: {
@@ -137,5 +138,15 @@ export default defineNuxtConfig({
       { label: "Priority", select: "sitemap:priority", width: "12.5%" },
       { label: "Last Modified", select: "sitemap:lastmod", width: "35%" }
     ]
+  },
+
+  ui: {
+    theme: {
+      colors: ["primary"]
+    },
+    colors: {
+      neutral: "zinc",
+      primary: "green"
+    }
   }
 });

@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@iconify-json/fa6-solid": "^1.2.4",
+    "@iconify-json/logos": "^1.2.21",
     "@iconify-json/ph": "^1.2.2",
     "@libsql/client": "^0.18.0",
     "@nuxt/eslint": "^1.17.0",
@@ -41,6 +42,7 @@
     "itty-router": "^5.0.24",
     "nuxt": "^4.7.0",
     "nuxt-ripple": "^0.0.8",
+    "nuxt-ui-colors-no-inline": "^0.0.6",
     "ofetch": "^1.5.1",
     "sass": "^1.108.2",
     "stylelint": "^18.1.0",
