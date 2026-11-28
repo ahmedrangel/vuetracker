@@ -1,14 +1,14 @@
+minimumReleaseAge: 0
 shamefullyHoist: true
 strictPeerDependencies: false
 
-onlyBuiltDependencies:
-  - puppeteer
+allowBuilds:
+  '@parcel/watcher': false
+  esbuild: false
+  puppeteer: true
+  vue-demi: false
+  workerd: false
 
-ignoredBuiltDependencies:
-  - '@parcel/watcher'
-  - esbuild
-  - sharp
-  - unrs-resolver
-  - vue-demi
-  - workerd
-  
+permissions:
+  '@nuxtjs/sitemap':
+    skills: false

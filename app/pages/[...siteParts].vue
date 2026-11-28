@@ -6,8 +6,8 @@ const { data: result, error } = await useFetch<VueTrackerResponse>(`/api/site/${
 
 if (error.value || !result.value) {
   throw createError({
-    statusCode: 404,
-    statusMessage: "Site not found"
+    status: 404,
+    message: "Site not found"
   });
 }
 

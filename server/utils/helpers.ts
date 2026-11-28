@@ -13,8 +13,8 @@ export const fetchVueTrackerProxy = async (url: string) => {
       await db.delete(tables.sites).where(eq(tables.sites.url, url)).run();
     }
     throw createError({
-      statusCode: ErrorCode.INTERNAL_SERVER_ERROR,
-      statusMessage: error?.message || error || "An error occurred while analyzing, please try again later"
+      status: ErrorCode.INTERNAL_SERVER_ERROR,
+      message: error?.message || error || "An error occurred while analyzing, please try again later"
     });
   });
   return result;

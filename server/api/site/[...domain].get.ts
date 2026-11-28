@@ -23,8 +23,8 @@ export default defineEventHandler(async (event) => {
 
   if (!site) {
     throw createError({
-      statusCode: ErrorCode.NOT_FOUND,
-      statusMessage: "Site not found"
+      status: ErrorCode.NOT_FOUND,
+      message: "Site not found"
     });
   }
 

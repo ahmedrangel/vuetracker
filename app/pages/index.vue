@@ -36,7 +36,7 @@ const lookup = async () => {
       retry: 0,
       query: { url: `https://${input.value}` }
     }).catch((e) => {
-      error.value = e.data?.message || e.message;
+      error.value = e?.data?.message || e.message;
       loading.value = false;
       return undefined;
     });

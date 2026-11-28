@@ -6,8 +6,8 @@ export default defineCachedEventHandler(async (event) => {
   const regex = /^(https?:\/\/)?[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}(:\d+)?(\/[^\s]*)?$/;
   if (!regex.test(rawURL)) {
     throw createError({
-      statusCode: ErrorCode.BAD_REQUEST,
-      statusMessage: "Invalid URL"
+      status: ErrorCode.BAD_REQUEST,
+      message: "Invalid URL"
     });
   }
 
@@ -26,10 +26,16 @@ export default defineCachedEventHandler(async (event) => {
 
   if (!site) {
     console.info("Site not found in database");
-    const [result] = await Promise.all<VueTrackerProxyResponse>([
+    const [result] = await Promise.all([
       fetchVueTrackerProxy(finalURL),
       db.delete(tables.sites).where(eq(tables.sites.slug, siteSlug)).run()
     ]);
+    if (!result) {
+      throw createError({
+        status: ErrorCode.NOT_FOUND,
+        message: "Failed to fetch site data"
+      });
+    }
     const parsedResultURL = parseURL(result.url);
     const siteURL = `${parsedResultURL.protocol}//${parsedResultURL.host}${parsedResultURL.pathname}`;
     const site = await db.insert(tables.sites).values({
@@ -61,14 +67,14 @@ export default defineCachedEventHandler(async (event) => {
     const conflictedSite = await selectSite(eq(tables.sites.url, siteURL));
     if (!conflictedSite) {
       throw createError({
-        statusCode: ErrorCode.NOT_FOUND,
-        statusMessage: "Site not found"
+        status: ErrorCode.NOT_FOUND,
+        message: "Site not found"
       });
     }
     return conflictedSite;
   }
 
-  // Site found in DB but outdated
+  // Site found in db but outdated
   if (site.slug && site.updatedAt < now - maxAge) {
     console.info("Site outdated, updating");
     const result = await fetchVueTrackerProxy(finalURL);
