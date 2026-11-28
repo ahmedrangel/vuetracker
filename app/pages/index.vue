@@ -144,7 +144,7 @@ const fixInput = (payload: string | number) => {
       </h1>
       <h5 class="text-md md:text-lg text-neutral-500 dark:text-neutral-400 text-balance mb-4 md:mb-8">{{ SITE.description }}</h5>
       <div class="2xl:w-1/2 xl:w-3/5 lg:w-3/4 flex flex-col mx-auto gap-6">
-        <form @submit.prevent="lookup">
+        <UForm @submit.prevent="lookup">
           <UFieldGroup size="xl" orientation="horizontal" class="w-full">
             <UInput id="input-lookup" v-model="input" class="w-full" :ui="{ base: 'ps-[4.0rem] py-4 bg-neutral-50 dark:bg-neutral-900' }" required @update:model-value="fixInput">
               <template #leading>
@@ -161,7 +161,7 @@ const fixInput = (payload: string | number) => {
               </div>
             </UButton>
           </UFieldGroup>
-        </form>
+        </UForm>
         <div id="results" class="relative">
           <TransitionGroup name="fade">
             <template v-if="result && !error && !loading">
@@ -206,6 +206,25 @@ const fixInput = (payload: string | number) => {
           <NuxtLink to="/explore" class="text-primary-600 dark:text-primary-400 hover:underline font-semibold">Explore</NuxtLink> our database of {{ preview?.length }} websites
         </h5>
         <SiteGlide v-if="preview" :sites="preview" />
+      </div>
+      <div id="browser-extension" class="mt-10 flex justify-center items-center">
+        <div class="flex flex-row gap-2 items-center justify-between rounded-md border border-neutral-200 bg-neutral-50 p-4 dark:border-neutral-700 dark:bg-neutral-900 w-120">
+          <div class="flex items-start gap-4">
+            <div>
+              <h2 class="text-base md:text-lg font-semibold">Browser Extension</h2>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-3 sm:shrink-0">
+            <UButton
+              :to="SITE.extensionURL"
+              target="_blank"
+              class="inline-flex items-center justify-center rounded-lg px-4 py-2 font-semibold"
+            >
+              <span>Add to Chrome</span>
+              <Icon name="logos:chrome-web-store" class="ml-2 text-sm md:text-lg" />
+            </UButton>
+          </div>
+        </div>
       </div>
     </div>
   </main>
