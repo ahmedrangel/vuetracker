@@ -31,7 +31,7 @@ jobs:
 
     steps:
       - name: Connect and run command on remote server
-        uses: and-fm/cloudflared-ssh-action@v3
+        uses: and-fm/cloudflared-ssh-action@v4
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
@@ -43,10 +43,7 @@ jobs:
             cd /apps/vuetracker
             git fetch
             git pull --rebase
-            export NVM_DIR=/usr/local/nvm
-            source /usr/local/nvm/nvm.sh
-            corepack enable pnpm
+            export PATH="/usr/local/share/pnpm/bin:$PATH"
             npx puppeteer browsers install chrome
             pnpm i
-            export PM2_HOME=/usr/local/share/pm2
-            /usr/local/share/pnpm/pm2 restart vuetracker --silent
+            pm2 restart vuetracker --silent
