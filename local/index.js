@@ -1,28 +1,28 @@
 import { createServer } from "node:http";
 import { platform } from "node:process";
 import { createServerAdapter } from "@whatwg-node/server";
-import { AutoRouter } from "itty-router";
+import { AutoRouter, json } from "itty-router";
 import { analyze } from "vuetracker-analyzer";
 import { $fetch } from "ofetch";
 
 const router = AutoRouter();
 
-const userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 VueTracker/1.0 (Debian GNU/Linux 12; arm64; +vuetracker.pages.dev)";
+const userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 VueTracker/1.0 (Debian GNU/Linux 12; arm64; +vuetracker.pages.dev)";
 
 router.get("/analyze?", async (req) => {
   const { url } = req.query;
-  return await analyze(url, {
+  return analyze(url, {
     userAgent,
     ...platform === "linux" && { executablePath: "/usr/bin/chromium" }
   }).catch((e) => {
-    return Response.json({ success: false, error: { message: e.message, cause: e.cause } }, { status: 500 });
+    return json({ success: false, error: { message: e.message, cause: e.cause } }, { status: 500 });
   });
 });
 
 router.get("/redirection?", async (req) => {
   const { url } = req.query;
   if (!url) {
-    return Response.json({ success: false, error: "URL is required" }, { status: 400 });
+    return json({ success: false, error: "URL is required" }, { status: 400 });
   }
   const response = await $fetch.raw(url, {
     headers: {
@@ -34,9 +34,7 @@ router.get("/redirection?", async (req) => {
   return { success: true, url: response.url };
 });
 
-router.all("*", () =>
-  Response.json({ success: false, error: "Route not found" }, { status: 404 })
-);
+router.all("*", () => json({ success: false, error: "Route not found" }, { status: 404 }));
 
 const ittyServer = createServerAdapter(router.fetch);
 const httpServer = createServer(ittyServer);
