@@ -207,21 +207,21 @@ const fixInput = (payload: string | number) => {
         </h5>
         <SiteGlide v-if="preview" :sites="preview" />
       </div>
-      <div id="browser-extension" class="mt-10 flex justify-center items-center">
-        <div class="flex flex-row gap-2 items-center justify-between rounded-md border border-neutral-200 bg-neutral-50 p-4 dark:border-neutral-700 dark:bg-neutral-900 w-120">
+      <div id="browser-extension" class="mt-8 flex justify-center items-center">
+        <div class="flex flex-row gap-2 items-center justify-between rounded-md border border-neutral-200 bg-neutral-50 p-4 dark:border-neutral-700 dark:bg-neutral-900 w-100">
           <div class="flex items-start gap-4">
             <div>
-              <h2 class="text-base md:text-lg font-semibold">Browser Extension</h2>
+              <h2 class="font-semibold text-sm md:text-base">Browser Extension</h2>
             </div>
           </div>
-          <div class="flex flex-wrap gap-3 sm:shrink-0">
+          <div class="flex flex-wrap">
             <UButton
               :to="SITE.extensionURL"
               target="_blank"
-              class="inline-flex items-center justify-center rounded-lg px-4 py-2 font-semibold"
+              class="inline-flex items-center justify-center rounded-lg px-3 py-2"
             >
               <span>Add to Chrome</span>
-              <Icon name="logos:chrome-web-store" class="ml-2 text-sm md:text-lg" />
+              <Icon name="logos:chrome-web-store" class="text-xl" />
             </UButton>
           </div>
         </div>
